@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@application/*": ["src/application/*"],
+      "@core/*": ["src/core/*"],
+      "@domain/*": ["src/domain/*"],
+      "@functions/*": ["src/functions/*"],
+      "@utils/*": ["src/infrastructure/uteis/*"],
+      "@adapter/*": ["src/infrastructure/adapter/*"],
+      "@middlewares/*": ["src/middlewares/*"],
+      "@presentation/*": ["src/presentation/*"],
+      "@infrastructure/*": ["src/infrastructure/*"],
+      "@resources/*": ["resources/*"]
+    }
+  }
+}
