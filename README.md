@@ -43,6 +43,7 @@ Para as próximas etapas do projeto, planejamos:
 
  Em seguida vamos cuidar dos seguintes aspectos.
 
+
  - Estabilidade
  - Confiabilidade 
  - Escalabilidade
