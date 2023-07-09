@@ -1,12 +1,15 @@
 
+import { DatabaseAdapter } from '@adapter/database/database-interface';
+import UserMongoSchema from '@adapter/database/mongodb/scheme/user-scheme';
 import IUserSavePostUC from '@application/interfaces/user-save-post-interface';
 import { IUserSaveUC } from '@application/interfaces/user-save-uc-interface';
 import { UserEntity } from '@domain/entities/user-entity';
-import { injectable } from 'inversify';
+import { TYPES } from '@infrastructure/config/type-injector';
+import { inject, injectable } from 'inversify';
 
 @injectable()
 export class UserSaveUC implements IUserSaveUC {
-  constructor() {}
+  constructor(@inject(TYPES.DatabaseAdapter) private databaseAdapter: DatabaseAdapter) {}
 
   async execute(input: IUserSavePostUC): Promise<UserEntity> {
     
@@ -22,7 +25,7 @@ export class UserSaveUC implements IUserSaveUC {
       input.address,
       input.status
     );
-
-    return user;
+    await this.databaseAdapter.setConfig(UserMongoSchema, 'User');
+    return await this.databaseAdapter.create<UserEntity>(user);
   }
 }
