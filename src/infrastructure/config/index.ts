@@ -11,6 +11,8 @@ import { UserUpdateUC } from '@application/use_case/user-update-uc';
 import { IUserUpdateUC } from '@application/interfaces/user-update-uc-interface';
 import { IUserViewUC } from '@application/interfaces/user-view-uc-interface';
 import { UserViewUC } from '@application/use_case/user-view-uc';
+import { IUserDeleteUC } from '@application/interfaces/user-delete-uc-interface';
+import { UserDeleteUC } from '@application/use_case/user-delete-uc';
 
 const container = new Container();
 
@@ -19,6 +21,7 @@ container.bind<DatabaseAdapter>(TYPES.DatabaseAdapter).to(MongoService).inSingle
 container.bind<IUserSaveUC>(TYPES.IUserSaveUC).to(UserSaveUC).inTransientScope();
 container.bind<IUserUpdateUC>(TYPES.IUserUpdateUC).to(UserUpdateUC).inTransientScope();
 container.bind<IUserViewUC>(TYPES.IUserViewUC).to(UserViewUC).inTransientScope();
+container.bind<IUserDeleteUC>(TYPES.IUserDeleteUC).to(UserDeleteUC).inTransientScope()
 container.bind<LambdaHandler>(TYPES.LambdaHandler).to(LambdaHandler).inSingletonScope()
 
 export { container };
