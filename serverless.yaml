@@ -21,6 +21,13 @@ functions:
       - http:
           method: post
           path: /user
+  user-update:
+    handler: src/presentation/routes/user-update-put.main
+    timeout: 30
+    events:
+      - http:
+          method: put
+          path: /user/{id}
 package:
   individually: true
 custom:

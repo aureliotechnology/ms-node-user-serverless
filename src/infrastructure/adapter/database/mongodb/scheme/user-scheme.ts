@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { v4 as uuidv4 } from 'uuid';
 
 const AddressSchema = new mongoose.Schema({
   street: String,
@@ -12,6 +13,7 @@ const AddressSchema = new mongoose.Schema({
 }, { _id : false });
 
 const UserMongoSchema = new mongoose.Schema({
+  _id: { type: String, default: uuidv4 },
   username: String,
   pass: String,
   name: String,
@@ -24,7 +26,7 @@ const UserMongoSchema = new mongoose.Schema({
 }, { versionKey: false });
 
 UserMongoSchema.virtual('id').get(function(){
-    return this._id.toHexString();
+    return this._id.toString();
 });
 
 UserMongoSchema.set('toJSON', {
