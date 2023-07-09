@@ -1,7 +1,7 @@
 
 import { DatabaseAdapter } from '@adapter/database/database-interface';
 import UserMongoSchema from '@adapter/database/mongodb/scheme/user-scheme';
-import { IUserViewUC } from '@application/interfaces/user-view-uc-interface';
+import { IUserDeleteUC } from '@application/interfaces/user-delete-uc-interface';
 import { UserEntity } from '@domain/entities/user-entity';
 import { TYPES } from '@infrastructure/config/type-injector';
 import { inject, injectable } from 'inversify';
