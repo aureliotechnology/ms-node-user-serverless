@@ -28,6 +28,13 @@ functions:
       - http:
           method: put
           path: /user/{id}
+  user-view:
+    handler: src/presentation/routes/user-view-get.main
+    timeout: 30
+    events:
+      - http:
+          method: get
+          path: /user/{id}
 package:
   individually: true
 custom:

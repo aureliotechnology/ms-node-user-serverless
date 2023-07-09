@@ -9,6 +9,8 @@ import { MongoService } from '@adapter/database/mongodb/mongo-service';
 import { MongoConnectionService } from '@adapter/database/mongodb/mongo-connect';
 import { UserUpdateUC } from '@application/use_case/user-update-uc';
 import { IUserUpdateUC } from '@application/interfaces/user-update-uc-interface';
+import { IUserViewUC } from '@application/interfaces/user-view-uc-interface';
+import { UserViewUC } from '@application/use_case/user-view-uc';
 
 const container = new Container();
 
@@ -16,6 +18,7 @@ container.bind<MongoConnectionService>(TYPES.MongoConnectionService).to(MongoCon
 container.bind<DatabaseAdapter>(TYPES.DatabaseAdapter).to(MongoService).inSingletonScope();
 container.bind<IUserSaveUC>(TYPES.IUserSaveUC).to(UserSaveUC).inTransientScope();
 container.bind<IUserUpdateUC>(TYPES.IUserUpdateUC).to(UserUpdateUC).inTransientScope();
+container.bind<IUserViewUC>(TYPES.IUserViewUC).to(UserViewUC).inTransientScope();
 container.bind<LambdaHandler>(TYPES.LambdaHandler).to(LambdaHandler).inSingletonScope()
 
 export { container };

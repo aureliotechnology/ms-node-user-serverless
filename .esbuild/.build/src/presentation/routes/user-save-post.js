@@ -59662,8 +59662,8 @@ var require_reflection_utils = __commonJS({
       }
       return targets;
     }
-    function _getServiceIdentifierForProperty(inject4, multiInject, propertyName, className) {
-      var serviceIdentifier = inject4 || multiInject;
+    function _getServiceIdentifierForProperty(inject5, multiInject, propertyName, className) {
+      var serviceIdentifier = inject5 || multiInject;
       if (serviceIdentifier === void 0) {
         var msg = ERROR_MSGS.MISSING_INJECTABLE_ANNOTATION + " for property " + String(propertyName) + " in class " + className + ".";
         throw new Error(msg);
@@ -62637,7 +62637,7 @@ var require_injectable = __commonJS({
     exports.injectable = void 0;
     var ERRORS_MSGS = __importStar(require_error_msgs());
     var METADATA_KEY = __importStar(require_metadata_keys());
-    function injectable6() {
+    function injectable7() {
       return function(target) {
         if (Reflect.hasOwnMetadata(METADATA_KEY.PARAM_TYPES, target)) {
           throw new Error(ERRORS_MSGS.DUPLICATED_INJECTABLE_DECORATOR);
@@ -62647,7 +62647,7 @@ var require_injectable = __commonJS({
         return target;
       };
     }
-    exports.injectable = injectable6;
+    exports.injectable = injectable7;
   }
 });
 
@@ -62770,8 +62770,8 @@ var require_inject = __commonJS({
     exports.inject = void 0;
     var METADATA_KEY = __importStar(require_metadata_keys());
     var inject_base_1 = require_inject_base();
-    var inject4 = (0, inject_base_1.injectBase)(METADATA_KEY.INJECT_TAG);
-    exports.inject = inject4;
+    var inject5 = (0, inject_base_1.injectBase)(METADATA_KEY.INJECT_TAG);
+    exports.inject = inject5;
   }
 });
 
@@ -63558,156 +63558,156 @@ var require_package3 = __commonJS({
 var require_schemas = __commonJS({
   "node_modules/joi/lib/schemas.js"(exports) {
     "use strict";
-    var Joi4 = require_lib10();
+    var Joi5 = require_lib10();
     var internals = {};
-    internals.wrap = Joi4.string().min(1).max(2).allow(false);
-    exports.preferences = Joi4.object({
-      allowUnknown: Joi4.boolean(),
-      abortEarly: Joi4.boolean(),
-      artifacts: Joi4.boolean(),
-      cache: Joi4.boolean(),
-      context: Joi4.object(),
-      convert: Joi4.boolean(),
-      dateFormat: Joi4.valid("date", "iso", "string", "time", "utc"),
-      debug: Joi4.boolean(),
+    internals.wrap = Joi5.string().min(1).max(2).allow(false);
+    exports.preferences = Joi5.object({
+      allowUnknown: Joi5.boolean(),
+      abortEarly: Joi5.boolean(),
+      artifacts: Joi5.boolean(),
+      cache: Joi5.boolean(),
+      context: Joi5.object(),
+      convert: Joi5.boolean(),
+      dateFormat: Joi5.valid("date", "iso", "string", "time", "utc"),
+      debug: Joi5.boolean(),
       errors: {
-        escapeHtml: Joi4.boolean(),
-        label: Joi4.valid("path", "key", false),
+        escapeHtml: Joi5.boolean(),
+        label: Joi5.valid("path", "key", false),
         language: [
-          Joi4.string(),
-          Joi4.object().ref()
+          Joi5.string(),
+          Joi5.object().ref()
         ],
-        render: Joi4.boolean(),
-        stack: Joi4.boolean(),
+        render: Joi5.boolean(),
+        stack: Joi5.boolean(),
         wrap: {
           label: internals.wrap,
           array: internals.wrap,
           string: internals.wrap
         }
       },
-      externals: Joi4.boolean(),
-      messages: Joi4.object(),
-      noDefaults: Joi4.boolean(),
-      nonEnumerables: Joi4.boolean(),
-      presence: Joi4.valid("required", "optional", "forbidden"),
-      skipFunctions: Joi4.boolean(),
-      stripUnknown: Joi4.object({
-        arrays: Joi4.boolean(),
-        objects: Joi4.boolean()
+      externals: Joi5.boolean(),
+      messages: Joi5.object(),
+      noDefaults: Joi5.boolean(),
+      nonEnumerables: Joi5.boolean(),
+      presence: Joi5.valid("required", "optional", "forbidden"),
+      skipFunctions: Joi5.boolean(),
+      stripUnknown: Joi5.object({
+        arrays: Joi5.boolean(),
+        objects: Joi5.boolean()
       }).or("arrays", "objects").allow(true, false),
-      warnings: Joi4.boolean()
+      warnings: Joi5.boolean()
     }).strict();
     internals.nameRx = /^[a-zA-Z0-9]\w*$/;
-    internals.rule = Joi4.object({
-      alias: Joi4.array().items(Joi4.string().pattern(internals.nameRx)).single(),
-      args: Joi4.array().items(
-        Joi4.string(),
-        Joi4.object({
-          name: Joi4.string().pattern(internals.nameRx).required(),
-          ref: Joi4.boolean(),
-          assert: Joi4.alternatives([
-            Joi4.function(),
-            Joi4.object().schema()
-          ]).conditional("ref", { is: true, then: Joi4.required() }),
-          normalize: Joi4.function(),
-          message: Joi4.string().when("assert", { is: Joi4.function(), then: Joi4.required() })
+    internals.rule = Joi5.object({
+      alias: Joi5.array().items(Joi5.string().pattern(internals.nameRx)).single(),
+      args: Joi5.array().items(
+        Joi5.string(),
+        Joi5.object({
+          name: Joi5.string().pattern(internals.nameRx).required(),
+          ref: Joi5.boolean(),
+          assert: Joi5.alternatives([
+            Joi5.function(),
+            Joi5.object().schema()
+          ]).conditional("ref", { is: true, then: Joi5.required() }),
+          normalize: Joi5.function(),
+          message: Joi5.string().when("assert", { is: Joi5.function(), then: Joi5.required() })
         })
       ),
-      convert: Joi4.boolean(),
-      manifest: Joi4.boolean(),
-      method: Joi4.function().allow(false),
-      multi: Joi4.boolean(),
-      validate: Joi4.function()
+      convert: Joi5.boolean(),
+      manifest: Joi5.boolean(),
+      method: Joi5.function().allow(false),
+      multi: Joi5.boolean(),
+      validate: Joi5.function()
     });
-    exports.extension = Joi4.object({
-      type: Joi4.alternatives([
-        Joi4.string(),
-        Joi4.object().regex()
+    exports.extension = Joi5.object({
+      type: Joi5.alternatives([
+        Joi5.string(),
+        Joi5.object().regex()
       ]).required(),
-      args: Joi4.function(),
-      cast: Joi4.object().pattern(internals.nameRx, Joi4.object({
-        from: Joi4.function().maxArity(1).required(),
-        to: Joi4.function().minArity(1).maxArity(2).required()
+      args: Joi5.function(),
+      cast: Joi5.object().pattern(internals.nameRx, Joi5.object({
+        from: Joi5.function().maxArity(1).required(),
+        to: Joi5.function().minArity(1).maxArity(2).required()
       })),
-      base: Joi4.object().schema().when("type", { is: Joi4.object().regex(), then: Joi4.forbidden() }),
+      base: Joi5.object().schema().when("type", { is: Joi5.object().regex(), then: Joi5.forbidden() }),
       coerce: [
-        Joi4.function().maxArity(3),
-        Joi4.object({ method: Joi4.function().maxArity(3).required(), from: Joi4.array().items(Joi4.string()).single() })
+        Joi5.function().maxArity(3),
+        Joi5.object({ method: Joi5.function().maxArity(3).required(), from: Joi5.array().items(Joi5.string()).single() })
       ],
-      flags: Joi4.object().pattern(internals.nameRx, Joi4.object({
-        setter: Joi4.string(),
-        default: Joi4.any()
+      flags: Joi5.object().pattern(internals.nameRx, Joi5.object({
+        setter: Joi5.string(),
+        default: Joi5.any()
       })),
       manifest: {
-        build: Joi4.function().arity(2)
+        build: Joi5.function().arity(2)
       },
-      messages: [Joi4.object(), Joi4.string()],
-      modifiers: Joi4.object().pattern(internals.nameRx, Joi4.function().minArity(1).maxArity(2)),
-      overrides: Joi4.object().pattern(internals.nameRx, Joi4.function()),
-      prepare: Joi4.function().maxArity(3),
-      rebuild: Joi4.function().arity(1),
-      rules: Joi4.object().pattern(internals.nameRx, internals.rule),
-      terms: Joi4.object().pattern(internals.nameRx, Joi4.object({
-        init: Joi4.array().allow(null).required(),
-        manifest: Joi4.object().pattern(/.+/, [
-          Joi4.valid("schema", "single"),
-          Joi4.object({
-            mapped: Joi4.object({
-              from: Joi4.string().required(),
-              to: Joi4.string().required()
+      messages: [Joi5.object(), Joi5.string()],
+      modifiers: Joi5.object().pattern(internals.nameRx, Joi5.function().minArity(1).maxArity(2)),
+      overrides: Joi5.object().pattern(internals.nameRx, Joi5.function()),
+      prepare: Joi5.function().maxArity(3),
+      rebuild: Joi5.function().arity(1),
+      rules: Joi5.object().pattern(internals.nameRx, internals.rule),
+      terms: Joi5.object().pattern(internals.nameRx, Joi5.object({
+        init: Joi5.array().allow(null).required(),
+        manifest: Joi5.object().pattern(/.+/, [
+          Joi5.valid("schema", "single"),
+          Joi5.object({
+            mapped: Joi5.object({
+              from: Joi5.string().required(),
+              to: Joi5.string().required()
             }).required()
           })
         ])
       })),
-      validate: Joi4.function().maxArity(3)
+      validate: Joi5.function().maxArity(3)
     }).strict();
-    exports.extensions = Joi4.array().items(Joi4.object(), Joi4.function().arity(1)).strict();
+    exports.extensions = Joi5.array().items(Joi5.object(), Joi5.function().arity(1)).strict();
     internals.desc = {
-      buffer: Joi4.object({
-        buffer: Joi4.string()
+      buffer: Joi5.object({
+        buffer: Joi5.string()
       }),
-      func: Joi4.object({
-        function: Joi4.function().required(),
+      func: Joi5.object({
+        function: Joi5.function().required(),
         options: {
           literal: true
         }
       }),
-      override: Joi4.object({
+      override: Joi5.object({
         override: true
       }),
-      ref: Joi4.object({
-        ref: Joi4.object({
-          type: Joi4.valid("value", "global", "local"),
-          path: Joi4.array().required(),
-          separator: Joi4.string().length(1).allow(false),
-          ancestor: Joi4.number().min(0).integer().allow("root"),
-          map: Joi4.array().items(Joi4.array().length(2)).min(1),
-          adjust: Joi4.function(),
-          iterables: Joi4.boolean(),
-          in: Joi4.boolean(),
-          render: Joi4.boolean()
+      ref: Joi5.object({
+        ref: Joi5.object({
+          type: Joi5.valid("value", "global", "local"),
+          path: Joi5.array().required(),
+          separator: Joi5.string().length(1).allow(false),
+          ancestor: Joi5.number().min(0).integer().allow("root"),
+          map: Joi5.array().items(Joi5.array().length(2)).min(1),
+          adjust: Joi5.function(),
+          iterables: Joi5.boolean(),
+          in: Joi5.boolean(),
+          render: Joi5.boolean()
         }).required()
       }),
-      regex: Joi4.object({
-        regex: Joi4.string().min(3)
+      regex: Joi5.object({
+        regex: Joi5.string().min(3)
       }),
-      special: Joi4.object({
-        special: Joi4.valid("deep").required()
+      special: Joi5.object({
+        special: Joi5.valid("deep").required()
       }),
-      template: Joi4.object({
-        template: Joi4.string().required(),
-        options: Joi4.object()
+      template: Joi5.object({
+        template: Joi5.string().required(),
+        options: Joi5.object()
       }),
-      value: Joi4.object({
-        value: Joi4.alternatives([Joi4.object(), Joi4.array()]).required()
+      value: Joi5.object({
+        value: Joi5.alternatives([Joi5.object(), Joi5.array()]).required()
       })
     };
-    internals.desc.entity = Joi4.alternatives([
-      Joi4.array().items(Joi4.link("...")),
-      Joi4.boolean(),
-      Joi4.function(),
-      Joi4.number(),
-      Joi4.string(),
+    internals.desc.entity = Joi5.alternatives([
+      Joi5.array().items(Joi5.link("...")),
+      Joi5.boolean(),
+      Joi5.function(),
+      Joi5.number(),
+      Joi5.string(),
       internals.desc.buffer,
       internals.desc.func,
       internals.desc.ref,
@@ -63715,15 +63715,15 @@ var require_schemas = __commonJS({
       internals.desc.special,
       internals.desc.template,
       internals.desc.value,
-      Joi4.link("/")
+      Joi5.link("/")
     ]);
-    internals.desc.values = Joi4.array().items(
+    internals.desc.values = Joi5.array().items(
       null,
-      Joi4.boolean(),
-      Joi4.function(),
-      Joi4.number().allow(Infinity, -Infinity),
-      Joi4.string().allow(""),
-      Joi4.symbol(),
+      Joi5.boolean(),
+      Joi5.function(),
+      Joi5.number().allow(Infinity, -Infinity),
+      Joi5.string().allow(""),
+      Joi5.symbol(),
       internals.desc.buffer,
       internals.desc.func,
       internals.desc.override,
@@ -63732,39 +63732,39 @@ var require_schemas = __commonJS({
       internals.desc.template,
       internals.desc.value
     );
-    internals.desc.messages = Joi4.object().pattern(/.+/, [
-      Joi4.string(),
+    internals.desc.messages = Joi5.object().pattern(/.+/, [
+      Joi5.string(),
       internals.desc.template,
-      Joi4.object().pattern(/.+/, [Joi4.string(), internals.desc.template])
+      Joi5.object().pattern(/.+/, [Joi5.string(), internals.desc.template])
     ]);
-    exports.description = Joi4.object({
-      type: Joi4.string().required(),
-      flags: Joi4.object({
-        cast: Joi4.string(),
-        default: Joi4.any(),
-        description: Joi4.string(),
-        empty: Joi4.link("/"),
+    exports.description = Joi5.object({
+      type: Joi5.string().required(),
+      flags: Joi5.object({
+        cast: Joi5.string(),
+        default: Joi5.any(),
+        description: Joi5.string(),
+        empty: Joi5.link("/"),
         failover: internals.desc.entity,
-        id: Joi4.string(),
-        label: Joi4.string(),
+        id: Joi5.string(),
+        label: Joi5.string(),
         only: true,
         presence: ["optional", "required", "forbidden"],
         result: ["raw", "strip"],
-        strip: Joi4.boolean(),
-        unit: Joi4.string()
+        strip: Joi5.boolean(),
+        unit: Joi5.string()
       }).unknown(),
       preferences: {
-        allowUnknown: Joi4.boolean(),
-        abortEarly: Joi4.boolean(),
-        artifacts: Joi4.boolean(),
-        cache: Joi4.boolean(),
-        convert: Joi4.boolean(),
+        allowUnknown: Joi5.boolean(),
+        abortEarly: Joi5.boolean(),
+        artifacts: Joi5.boolean(),
+        cache: Joi5.boolean(),
+        convert: Joi5.boolean(),
         dateFormat: ["date", "iso", "string", "time", "utc"],
         errors: {
-          escapeHtml: Joi4.boolean(),
+          escapeHtml: Joi5.boolean(),
           label: ["path", "key"],
           language: [
-            Joi4.string(),
+            Joi5.string(),
             internals.desc.ref
           ],
           wrap: {
@@ -63772,34 +63772,34 @@ var require_schemas = __commonJS({
             array: internals.wrap
           }
         },
-        externals: Joi4.boolean(),
+        externals: Joi5.boolean(),
         messages: internals.desc.messages,
-        noDefaults: Joi4.boolean(),
-        nonEnumerables: Joi4.boolean(),
+        noDefaults: Joi5.boolean(),
+        nonEnumerables: Joi5.boolean(),
         presence: ["required", "optional", "forbidden"],
-        skipFunctions: Joi4.boolean(),
-        stripUnknown: Joi4.object({
-          arrays: Joi4.boolean(),
-          objects: Joi4.boolean()
+        skipFunctions: Joi5.boolean(),
+        stripUnknown: Joi5.object({
+          arrays: Joi5.boolean(),
+          objects: Joi5.boolean()
         }).or("arrays", "objects").allow(true, false),
-        warnings: Joi4.boolean()
+        warnings: Joi5.boolean()
       },
       allow: internals.desc.values,
       invalid: internals.desc.values,
-      rules: Joi4.array().min(1).items({
-        name: Joi4.string().required(),
-        args: Joi4.object().min(1),
-        keep: Joi4.boolean(),
+      rules: Joi5.array().min(1).items({
+        name: Joi5.string().required(),
+        args: Joi5.object().min(1),
+        keep: Joi5.boolean(),
         message: [
-          Joi4.string(),
+          Joi5.string(),
           internals.desc.messages
         ],
-        warn: Joi4.boolean()
+        warn: Joi5.boolean()
       }),
       // Terms
-      keys: Joi4.object().pattern(/.*/, Joi4.link("/")),
+      keys: Joi5.object().pattern(/.*/, Joi5.link("/")),
       link: internals.desc.ref
-    }).pattern(/^[a-z]\w*$/, Joi4.any());
+    }).pattern(/^[a-z]\w*$/, Joi5.any());
   }
 });
 
@@ -65484,10 +65484,10 @@ var require_compile2 = __commonJS({
     var Common = require_common5();
     var Ref = require_ref();
     var internals = {};
-    exports.schema = function(Joi4, config, options = {}) {
+    exports.schema = function(Joi5, config, options = {}) {
       Common.assertOptions(options, ["appendPath", "override"]);
       try {
-        return internals.schema(Joi4, config, options);
+        return internals.schema(Joi5, config, options);
       } catch (err) {
         if (options.appendPath && err.path !== void 0) {
           err.message = `${err.message} (${err.path})`;
@@ -65495,7 +65495,7 @@ var require_compile2 = __commonJS({
         throw err;
       }
     };
-    internals.schema = function(Joi4, config, options) {
+    internals.schema = function(Joi5, config, options) {
       Assert(config !== void 0, "Invalid undefined schema");
       if (Array.isArray(config)) {
         Assert(config.length, "Invalid empty array schema");
@@ -65505,19 +65505,19 @@ var require_compile2 = __commonJS({
       }
       const valid = (base, ...values) => {
         if (options.override !== false) {
-          return base.valid(Joi4.override, ...values);
+          return base.valid(Joi5.override, ...values);
         }
         return base.valid(...values);
       };
       if (internals.simple(config)) {
-        return valid(Joi4, config);
+        return valid(Joi5, config);
       }
       if (typeof config === "function") {
-        return Joi4.custom(config);
+        return Joi5.custom(config);
       }
       Assert(typeof config === "object", "Invalid schema content:", typeof config);
       if (Common.isResolvable(config)) {
-        return valid(Joi4, config);
+        return valid(Joi5, config);
       }
       if (Common.isSchema(config)) {
         return config;
@@ -65525,19 +65525,19 @@ var require_compile2 = __commonJS({
       if (Array.isArray(config)) {
         for (const item of config) {
           if (!internals.simple(item)) {
-            return Joi4.alternatives().try(...config);
+            return Joi5.alternatives().try(...config);
           }
         }
-        return valid(Joi4, ...config);
+        return valid(Joi5, ...config);
       }
       if (config instanceof RegExp) {
-        return Joi4.string().regex(config);
+        return Joi5.string().regex(config);
       }
       if (config instanceof Date) {
-        return valid(Joi4.date(), config);
+        return valid(Joi5.date(), config);
       }
       Assert(Object.getPrototypeOf(config) === Object.getPrototypeOf({}), "Schema can only contain plain objects");
-      return Joi4.object().keys(config);
+      return Joi5.object().keys(config);
     };
     exports.ref = function(id, options) {
       return Ref.isRef(id) ? id : Ref.create(id, options);
@@ -75575,6 +75575,7 @@ var UserEntity = class {
 var TYPES = {
   IUserSaveUC: Symbol.for("IUserSaveUC"),
   IUserUpdateUC: Symbol.for("IUserUpdateUC"),
+  IUserViewUC: Symbol.for("IUserViewUC"),
   LambdaHandler: Symbol.for("LambdaHandler"),
   DatabaseAdapter: Symbol.for("DatabaseAdapter"),
   MongoConnectionService: Symbol.for("MongoConnectionService")
@@ -75689,7 +75690,7 @@ LambdaHandler = __decorateClass([
 ], LambdaHandler);
 
 // src/infrastructure/config/index.ts
-var import_inversify6 = __toESM(require_inversify());
+var import_inversify7 = __toESM(require_inversify());
 
 // src/infrastructure/adapter/database/mongodb/mongo-service.ts
 var import_inversify3 = __toESM(require_inversify());
@@ -75782,18 +75783,46 @@ UserUpdateUC = __decorateClass([
   __decorateParam(0, (0, import_inversify5.inject)(TYPES.DatabaseAdapter))
 ], UserUpdateUC);
 
+// src/application/use_case/user-view-uc.ts
+var import_inversify6 = __toESM(require_inversify());
+var UserViewUC = class {
+  constructor(databaseAdapter) {
+    this.databaseAdapter = databaseAdapter;
+  }
+  async execute(id) {
+    await this.databaseAdapter.setConfig(user_scheme_default, "User");
+    return await this.databaseAdapter.findOne(id);
+  }
+};
+UserViewUC = __decorateClass([
+  (0, import_inversify6.injectable)(),
+  __decorateParam(0, (0, import_inversify6.inject)(TYPES.DatabaseAdapter))
+], UserViewUC);
+
 // src/infrastructure/config/index.ts
-var container = new import_inversify6.Container();
+var container = new import_inversify7.Container();
 container.bind(TYPES.MongoConnectionService).to(MongoConnectionService).inSingletonScope();
 container.bind(TYPES.DatabaseAdapter).to(MongoService).inSingletonScope();
 container.bind(TYPES.IUserSaveUC).to(UserSaveUC).inTransientScope();
 container.bind(TYPES.IUserUpdateUC).to(UserUpdateUC).inTransientScope();
+container.bind(TYPES.IUserViewUC).to(UserViewUC).inTransientScope();
 container.bind(TYPES.LambdaHandler).to(LambdaHandler).inSingletonScope();
 
 // src/infrastructure/config/inject.ts
 var Inject = class {
   static getClass(classRequire) {
     return container.get(classRequire);
+  }
+};
+
+// src/presentation/errors/http-errors/not-found-error.ts
+var NotFoundError = class extends HttpError2 {
+  constructor(code = 4, message = "Recurso n\xE3o encontrado", error, data) {
+    super(code, message, 404 /* NOT_FOUND */, data, error);
+    this.code = code;
+    this.message = message;
+    this.error = error;
+    this.data = data;
   }
 };
 
@@ -76054,11 +76083,38 @@ var UserUpdatePutValidator = class {
   }
 };
 
+// src/presentation/validators/user-view-get-validator.ts
+var import_joi4 = __toESM(require_lib10());
+var UserViewGetValidator = class {
+  constructor(id) {
+    this.validate({ id });
+    this.id = id;
+  }
+  validate(data) {
+    const validators = {
+      id: JoiValidateHelper.uuid().required()
+    };
+    const errors = JoiValidateHelper.validate(import_joi4.default.object(validators), data);
+    if (errors.errorMessage) {
+      throw new BadRequestError(
+        1,
+        "Um ou mais campos inv\xE1lidos",
+        errors.errorMessage,
+        errors.errorMessage
+      );
+    }
+  }
+  isValid() {
+    return this.id;
+  }
+};
+
 // src/presentation/controllers/user-controller.ts
 var UserController = class {
   constructor() {
     this.userSaveUC = Inject.getClass(TYPES.IUserSaveUC);
     this.userUpdateUC = Inject.getClass(TYPES.IUserUpdateUC);
+    this.userViewUC = Inject.getClass(TYPES.IUserViewUC);
   }
   async save(input) {
     const data = new UserSavePostValidator(input).isValid();
@@ -76067,6 +76123,14 @@ var UserController = class {
   async update(input) {
     const data = new UserUpdatePutValidator(input).isValid();
     return this.userUpdateUC.execute(data);
+  }
+  async view(id) {
+    const data = new UserViewGetValidator(id).isValid();
+    const user = this.userViewUC.execute(data);
+    if (!user) {
+      throw new NotFoundError();
+    }
+    return user;
   }
 };
 
