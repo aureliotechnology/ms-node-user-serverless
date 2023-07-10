@@ -31,6 +31,7 @@
     "joi-translation-pt-br": "^0.0.6",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.3.1",
+    "pg": "^8.11.1",
     "reflect-metadata": "^0.1.13",
     "serverless-mysql": "^1.5.4",
     "tsyringe": "^4.7.0",

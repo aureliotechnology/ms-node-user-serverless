@@ -1,6 +1,5 @@
 
 import { DatabaseAdapter } from '@adapter/database/database-interface';
-import UserMongoSchema from '@adapter/database/mongodb/scheme/user-scheme';
 import IUserUpdatePutUC from '@application/interfaces/user-update-put-interface';
 import { IUserUpdateUC } from '@application/interfaces/user-update-uc-interface';
 import { UserEntity } from '@domain/entities/user-entity';
@@ -25,7 +24,7 @@ export class UserUpdateUC implements IUserUpdateUC {
       input.address,
       input.status
     );
-    await this.databaseAdapter.setConfig(UserMongoSchema, 'User');
+    await this.databaseAdapter.setConfig('public', 'User');
     return await this.databaseAdapter.update<UserEntity>(input.id,user);
   }
 }

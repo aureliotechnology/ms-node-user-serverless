@@ -1,4 +1,5 @@
 import { IUserDeleteUC } from "@application/interfaces/user-delete-uc-interface";
+import { IUserListUC } from "@application/interfaces/user-list-uc-interface";
 import { IUserSaveUC } from "@application/interfaces/user-save-uc-interface";
 import { IUserUpdateUC } from "@application/interfaces/user-update-uc-interface";
 import { IUserViewUC } from "@application/interfaces/user-view-uc-interface";
@@ -16,11 +17,13 @@ export default class UserController {
   private readonly userUpdateUC:IUserUpdateUC ;
   private readonly userViewUC:IUserViewUC ;
   private readonly userDeleteUC:IUserDeleteUC ;
+  private readonly userListUC:IUserListUC
   constructor() {
-    this.userSaveUC = Inject.getClass<IUserSaveUC>(TYPES.IUserSaveUC);
-    this.userUpdateUC = Inject.getClass<IUserUpdateUC>(TYPES.IUserUpdateUC);
-    this.userViewUC = Inject.getClass<IUserViewUC>(TYPES.IUserViewUC);
-    this.userDeleteUC = Inject.getClass<IUserDeleteUC>(TYPES.IUserDeleteUC);
+    this.userSaveUC = Inject.getClassNamed<IUserSaveUC>(TYPES.IUserUC, 'save');
+    this.userUpdateUC = Inject.getClassNamed<IUserUpdateUC>(TYPES.IUserUC, 'update');
+    this.userViewUC = Inject.getClassNamed<IUserViewUC>(TYPES.IUserUC, 'view');
+    this.userDeleteUC = Inject.getClassNamed<IUserDeleteUC>(TYPES.IUserUC, 'delete');
+    this.userListUC = Inject.getClassNamed<IUserListUC>(TYPES.IUserUC, 'list');
   }
 
   async save(input: any): Promise<UserEntity> {
@@ -33,6 +36,10 @@ export default class UserController {
     const data = new UserUpdatePutValidator(input).isValid();
     
     return this.userUpdateUC.execute(data);
+  }
+  
+  async list(): Promise<UserEntity[]> {
+    return this.userListUC.execute();
   }
 
   async view(id: string): Promise<UserEntity> {

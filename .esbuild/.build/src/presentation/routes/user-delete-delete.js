@@ -4,6 +4,9 @@ var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
 var __getOwnPropNames = Object.getOwnPropertyNames;
 var __getProtoOf = Object.getPrototypeOf;
 var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __esm = (fn, res) => function __init() {
+  return fn && (res = (0, fn[__getOwnPropNames(fn)[0]])(fn = 0)), res;
+};
 var __commonJS = (cb, mod) => function __require() {
   return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
 };
@@ -38,6 +41,4400 @@ var __decorateClass = (decorators, target, key, kind) => {
   return result;
 };
 var __decorateParam = (index, decorator) => (target, key) => decorator(target, key, index);
+
+// node_modules/inversify/lib/constants/metadata_keys.js
+var require_metadata_keys = __commonJS({
+  "node_modules/inversify/lib/constants/metadata_keys.js"(exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.NON_CUSTOM_TAG_KEYS = exports.PRE_DESTROY = exports.POST_CONSTRUCT = exports.DESIGN_PARAM_TYPES = exports.PARAM_TYPES = exports.TAGGED_PROP = exports.TAGGED = exports.MULTI_INJECT_TAG = exports.INJECT_TAG = exports.OPTIONAL_TAG = exports.UNMANAGED_TAG = exports.NAME_TAG = exports.NAMED_TAG = void 0;
+    exports.NAMED_TAG = "named";
+    exports.NAME_TAG = "name";
+    exports.UNMANAGED_TAG = "unmanaged";
+    exports.OPTIONAL_TAG = "optional";
+    exports.INJECT_TAG = "inject";
+    exports.MULTI_INJECT_TAG = "multi_inject";
+    exports.TAGGED = "inversify:tagged";
+    exports.TAGGED_PROP = "inversify:tagged_props";
+    exports.PARAM_TYPES = "inversify:paramtypes";
+    exports.DESIGN_PARAM_TYPES = "design:paramtypes";
+    exports.POST_CONSTRUCT = "post_construct";
+    exports.PRE_DESTROY = "pre_destroy";
+    function getNonCustomTagKeys() {
+      return [
+        exports.INJECT_TAG,
+        exports.MULTI_INJECT_TAG,
+        exports.NAME_TAG,
+        exports.UNMANAGED_TAG,
+        exports.NAMED_TAG,
+        exports.OPTIONAL_TAG
+      ];
+    }
+    exports.NON_CUSTOM_TAG_KEYS = getNonCustomTagKeys();
+  }
+});
+
+// node_modules/inversify/lib/constants/literal_types.js
+var require_literal_types = __commonJS({
+  "node_modules/inversify/lib/constants/literal_types.js"(exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.TargetTypeEnum = exports.BindingTypeEnum = exports.BindingScopeEnum = void 0;
+    var BindingScopeEnum = {
+      Request: "Request",
+      Singleton: "Singleton",
+      Transient: "Transient"
+    };
+    exports.BindingScopeEnum = BindingScopeEnum;
+    var BindingTypeEnum = {
+      ConstantValue: "ConstantValue",
+      Constructor: "Constructor",
+      DynamicValue: "DynamicValue",
+      Factory: "Factory",
+      Function: "Function",
+      Instance: "Instance",
+      Invalid: "Invalid",
+      Provider: "Provider"
+    };
+    exports.BindingTypeEnum = BindingTypeEnum;
+    var TargetTypeEnum = {
+      ClassProperty: "ClassProperty",
+      ConstructorArgument: "ConstructorArgument",
+      Variable: "Variable"
+    };
+    exports.TargetTypeEnum = TargetTypeEnum;
+  }
+});
+
+// node_modules/inversify/lib/utils/id.js
+var require_id = __commonJS({
+  "node_modules/inversify/lib/utils/id.js"(exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.id = void 0;
+    var idCounter = 0;
+    function id() {
+      return idCounter++;
+    }
+    exports.id = id;
+  }
+});
+
+// node_modules/inversify/lib/bindings/binding.js
+var require_binding = __commonJS({
+  "node_modules/inversify/lib/bindings/binding.js"(exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.Binding = void 0;
+    var literal_types_1 = require_literal_types();
+    var id_1 = require_id();
+    var Binding = function() {
+      function Binding2(serviceIdentifier, scope) {
+        this.id = (0, id_1.id)();
+        this.activated = false;
+        this.serviceIdentifier = serviceIdentifier;
+        this.scope = scope;
+        this.type = literal_types_1.BindingTypeEnum.Invalid;
+        this.constraint = function(request) {
+          return true;
+        };
+        this.implementationType = null;
+        this.cache = null;
+        this.factory = null;
+        this.provider = null;
+        this.onActivation = null;
+        this.onDeactivation = null;
+        this.dynamicValue = null;
+      }
+      Binding2.prototype.clone = function() {
+        var clone = new Binding2(this.serviceIdentifier, this.scope);
+        clone.activated = clone.scope === literal_types_1.BindingScopeEnum.Singleton ? this.activated : false;
+        clone.implementationType = this.implementationType;
+        clone.dynamicValue = this.dynamicValue;
+        clone.scope = this.scope;
+        clone.type = this.type;
+        clone.factory = this.factory;
+        clone.provider = this.provider;
+        clone.constraint = this.constraint;
+        clone.onActivation = this.onActivation;
+        clone.onDeactivation = this.onDeactivation;
+        clone.cache = this.cache;
+        return clone;
+      };
+      return Binding2;
+    }();
+    exports.Binding = Binding;
+  }
+});
+
+// node_modules/inversify/lib/constants/error_msgs.js
+var require_error_msgs = __commonJS({
+  "node_modules/inversify/lib/constants/error_msgs.js"(exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.STACK_OVERFLOW = exports.CIRCULAR_DEPENDENCY_IN_FACTORY = exports.ON_DEACTIVATION_ERROR = exports.PRE_DESTROY_ERROR = exports.POST_CONSTRUCT_ERROR = exports.ASYNC_UNBIND_REQUIRED = exports.MULTIPLE_POST_CONSTRUCT_METHODS = exports.MULTIPLE_PRE_DESTROY_METHODS = exports.CONTAINER_OPTIONS_INVALID_SKIP_BASE_CHECK = exports.CONTAINER_OPTIONS_INVALID_AUTO_BIND_INJECTABLE = exports.CONTAINER_OPTIONS_INVALID_DEFAULT_SCOPE = exports.CONTAINER_OPTIONS_MUST_BE_AN_OBJECT = exports.ARGUMENTS_LENGTH_MISMATCH = exports.INVALID_DECORATOR_OPERATION = exports.INVALID_TO_SELF_VALUE = exports.LAZY_IN_SYNC = exports.INVALID_FUNCTION_BINDING = exports.INVALID_MIDDLEWARE_RETURN = exports.NO_MORE_SNAPSHOTS_AVAILABLE = exports.INVALID_BINDING_TYPE = exports.NOT_IMPLEMENTED = exports.CIRCULAR_DEPENDENCY = exports.UNDEFINED_INJECT_ANNOTATION = exports.MISSING_INJECT_ANNOTATION = exports.MISSING_INJECTABLE_ANNOTATION = exports.NOT_REGISTERED = exports.CANNOT_UNBIND = exports.AMBIGUOUS_MATCH = exports.KEY_NOT_FOUND = exports.NULL_ARGUMENT = exports.DUPLICATED_METADATA = exports.DUPLICATED_INJECTABLE_DECORATOR = void 0;
+    exports.DUPLICATED_INJECTABLE_DECORATOR = "Cannot apply @injectable decorator multiple times.";
+    exports.DUPLICATED_METADATA = "Metadata key was used more than once in a parameter:";
+    exports.NULL_ARGUMENT = "NULL argument";
+    exports.KEY_NOT_FOUND = "Key Not Found";
+    exports.AMBIGUOUS_MATCH = "Ambiguous match found for serviceIdentifier:";
+    exports.CANNOT_UNBIND = "Could not unbind serviceIdentifier:";
+    exports.NOT_REGISTERED = "No matching bindings found for serviceIdentifier:";
+    exports.MISSING_INJECTABLE_ANNOTATION = "Missing required @injectable annotation in:";
+    exports.MISSING_INJECT_ANNOTATION = "Missing required @inject or @multiInject annotation in:";
+    var UNDEFINED_INJECT_ANNOTATION = function(name) {
+      return "@inject called with undefined this could mean that the class " + name + " has a circular dependency problem. You can use a LazyServiceIdentifer to  overcome this limitation.";
+    };
+    exports.UNDEFINED_INJECT_ANNOTATION = UNDEFINED_INJECT_ANNOTATION;
+    exports.CIRCULAR_DEPENDENCY = "Circular dependency found:";
+    exports.NOT_IMPLEMENTED = "Sorry, this feature is not fully implemented yet.";
+    exports.INVALID_BINDING_TYPE = "Invalid binding type:";
+    exports.NO_MORE_SNAPSHOTS_AVAILABLE = "No snapshot available to restore.";
+    exports.INVALID_MIDDLEWARE_RETURN = "Invalid return type in middleware. Middleware must return!";
+    exports.INVALID_FUNCTION_BINDING = "Value provided to function binding must be a function!";
+    var LAZY_IN_SYNC = function(key) {
+      return "You are attempting to construct '" + key + "' in a synchronous way\n but it has asynchronous dependencies.";
+    };
+    exports.LAZY_IN_SYNC = LAZY_IN_SYNC;
+    exports.INVALID_TO_SELF_VALUE = "The toSelf function can only be applied when a constructor is used as service identifier";
+    exports.INVALID_DECORATOR_OPERATION = "The @inject @multiInject @tagged and @named decorators must be applied to the parameters of a class constructor or a class property.";
+    var ARGUMENTS_LENGTH_MISMATCH = function() {
+      var values = [];
+      for (var _i = 0; _i < arguments.length; _i++) {
+        values[_i] = arguments[_i];
+      }
+      return "The number of constructor arguments in the derived class " + (values[0] + " must be >= than the number of constructor arguments of its base class.");
+    };
+    exports.ARGUMENTS_LENGTH_MISMATCH = ARGUMENTS_LENGTH_MISMATCH;
+    exports.CONTAINER_OPTIONS_MUST_BE_AN_OBJECT = "Invalid Container constructor argument. Container options must be an object.";
+    exports.CONTAINER_OPTIONS_INVALID_DEFAULT_SCOPE = "Invalid Container option. Default scope must be a string ('singleton' or 'transient').";
+    exports.CONTAINER_OPTIONS_INVALID_AUTO_BIND_INJECTABLE = "Invalid Container option. Auto bind injectable must be a boolean";
+    exports.CONTAINER_OPTIONS_INVALID_SKIP_BASE_CHECK = "Invalid Container option. Skip base check must be a boolean";
+    exports.MULTIPLE_PRE_DESTROY_METHODS = "Cannot apply @preDestroy decorator multiple times in the same class";
+    exports.MULTIPLE_POST_CONSTRUCT_METHODS = "Cannot apply @postConstruct decorator multiple times in the same class";
+    exports.ASYNC_UNBIND_REQUIRED = "Attempting to unbind dependency with asynchronous destruction (@preDestroy or onDeactivation)";
+    var POST_CONSTRUCT_ERROR = function(clazz, errorMessage) {
+      return "@postConstruct error in class " + clazz + ": " + errorMessage;
+    };
+    exports.POST_CONSTRUCT_ERROR = POST_CONSTRUCT_ERROR;
+    var PRE_DESTROY_ERROR = function(clazz, errorMessage) {
+      return "@preDestroy error in class " + clazz + ": " + errorMessage;
+    };
+    exports.PRE_DESTROY_ERROR = PRE_DESTROY_ERROR;
+    var ON_DEACTIVATION_ERROR = function(clazz, errorMessage) {
+      return "onDeactivation() error in class " + clazz + ": " + errorMessage;
+    };
+    exports.ON_DEACTIVATION_ERROR = ON_DEACTIVATION_ERROR;
+    var CIRCULAR_DEPENDENCY_IN_FACTORY = function(factoryType, serviceIdentifier) {
+      return "It looks like there is a circular dependency in one of the '" + factoryType + "' bindings. Please investigate bindings with" + ("service identifier '" + serviceIdentifier + "'.");
+    };
+    exports.CIRCULAR_DEPENDENCY_IN_FACTORY = CIRCULAR_DEPENDENCY_IN_FACTORY;
+    exports.STACK_OVERFLOW = "Maximum call stack size exceeded";
+  }
+});
+
+// node_modules/inversify/lib/planning/metadata_reader.js
+var require_metadata_reader = __commonJS({
+  "node_modules/inversify/lib/planning/metadata_reader.js"(exports) {
+    "use strict";
+    var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
+      if (k2 === void 0)
+        k2 = k;
+      Object.defineProperty(o, k2, { enumerable: true, get: function() {
+        return m[k];
+      } });
+    } : function(o, m, k, k2) {
+      if (k2 === void 0)
+        k2 = k;
+      o[k2] = m[k];
+    });
+    var __setModuleDefault = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
+      Object.defineProperty(o, "default", { enumerable: true, value: v });
+    } : function(o, v) {
+      o["default"] = v;
+    });
+    var __importStar = exports && exports.__importStar || function(mod) {
+      if (mod && mod.__esModule)
+        return mod;
+      var result = {};
+      if (mod != null) {
+        for (var k in mod)
+          if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
+            __createBinding(result, mod, k);
+      }
+      __setModuleDefault(result, mod);
+      return result;
+    };
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.MetadataReader = void 0;
+    var METADATA_KEY = __importStar(require_metadata_keys());
+    var MetadataReader = function() {
+      function MetadataReader2() {
+      }
+      MetadataReader2.prototype.getConstructorMetadata = function(constructorFunc) {
+        var compilerGeneratedMetadata = Reflect.getMetadata(METADATA_KEY.PARAM_TYPES, constructorFunc);
+        var userGeneratedMetadata = Reflect.getMetadata(METADATA_KEY.TAGGED, constructorFunc);
+        return {
+          compilerGeneratedMetadata,
+          userGeneratedMetadata: userGeneratedMetadata || {}
+        };
+      };
+      MetadataReader2.prototype.getPropertiesMetadata = function(constructorFunc) {
+        var userGeneratedMetadata = Reflect.getMetadata(METADATA_KEY.TAGGED_PROP, constructorFunc) || [];
+        return userGeneratedMetadata;
+      };
+      return MetadataReader2;
+    }();
+    exports.MetadataReader = MetadataReader;
+  }
+});
+
+// node_modules/inversify/lib/bindings/binding_count.js
+var require_binding_count = __commonJS({
+  "node_modules/inversify/lib/bindings/binding_count.js"(exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.BindingCount = void 0;
+    var BindingCount = {
+      MultipleBindingsAvailable: 2,
+      NoBindingsAvailable: 0,
+      OnlyOneBindingAvailable: 1
+    };
+    exports.BindingCount = BindingCount;
+  }
+});
+
+// node_modules/inversify/lib/utils/exceptions.js
+var require_exceptions = __commonJS({
+  "node_modules/inversify/lib/utils/exceptions.js"(exports) {
+    "use strict";
+    var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
+      if (k2 === void 0)
+        k2 = k;
+      Object.defineProperty(o, k2, { enumerable: true, get: function() {
+        return m[k];
+      } });
+    } : function(o, m, k, k2) {
+      if (k2 === void 0)
+        k2 = k;
+      o[k2] = m[k];
+    });
+    var __setModuleDefault = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
+      Object.defineProperty(o, "default", { enumerable: true, value: v });
+    } : function(o, v) {
+      o["default"] = v;
+    });
+    var __importStar = exports && exports.__importStar || function(mod) {
+      if (mod && mod.__esModule)
+        return mod;
+      var result = {};
+      if (mod != null) {
+        for (var k in mod)
+          if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
+            __createBinding(result, mod, k);
+      }
+      __setModuleDefault(result, mod);
+      return result;
+    };
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.tryAndThrowErrorIfStackOverflow = exports.isStackOverflowExeption = void 0;
+    var ERROR_MSGS = __importStar(require_error_msgs());
+    function isStackOverflowExeption(error) {
+      return error instanceof RangeError || error.message === ERROR_MSGS.STACK_OVERFLOW;
+    }
+    exports.isStackOverflowExeption = isStackOverflowExeption;
+    var tryAndThrowErrorIfStackOverflow = function(fn, errorCallback) {
+      try {
+        return fn();
+      } catch (error) {
+        if (isStackOverflowExeption(error)) {
+          error = errorCallback();
+        }
+        throw error;
+      }
+    };
+    exports.tryAndThrowErrorIfStackOverflow = tryAndThrowErrorIfStackOverflow;
+  }
+});
+
+// node_modules/inversify/lib/utils/serialization.js
+var require_serialization = __commonJS({
+  "node_modules/inversify/lib/utils/serialization.js"(exports) {
+    "use strict";
+    var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
+      if (k2 === void 0)
+        k2 = k;
+      Object.defineProperty(o, k2, { enumerable: true, get: function() {
+        return m[k];
+      } });
+    } : function(o, m, k, k2) {
+      if (k2 === void 0)
+        k2 = k;
+      o[k2] = m[k];
+    });
+    var __setModuleDefault = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
+      Object.defineProperty(o, "default", { enumerable: true, value: v });
+    } : function(o, v) {
+      o["default"] = v;
+    });
+    var __importStar = exports && exports.__importStar || function(mod) {
+      if (mod && mod.__esModule)
+        return mod;
+      var result = {};
+      if (mod != null) {
+        for (var k in mod)
+          if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
+            __createBinding(result, mod, k);
+      }
+      __setModuleDefault(result, mod);
+      return result;
+    };
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.getSymbolDescription = exports.circularDependencyToException = exports.listMetadataForTarget = exports.listRegisteredBindingsForServiceIdentifier = exports.getServiceIdentifierAsString = exports.getFunctionName = void 0;
+    var ERROR_MSGS = __importStar(require_error_msgs());
+    function getServiceIdentifierAsString(serviceIdentifier) {
+      if (typeof serviceIdentifier === "function") {
+        var _serviceIdentifier = serviceIdentifier;
+        return _serviceIdentifier.name;
+      } else if (typeof serviceIdentifier === "symbol") {
+        return serviceIdentifier.toString();
+      } else {
+        var _serviceIdentifier = serviceIdentifier;
+        return _serviceIdentifier;
+      }
+    }
+    exports.getServiceIdentifierAsString = getServiceIdentifierAsString;
+    function listRegisteredBindingsForServiceIdentifier(container2, serviceIdentifier, getBindings) {
+      var registeredBindingsList = "";
+      var registeredBindings = getBindings(container2, serviceIdentifier);
+      if (registeredBindings.length !== 0) {
+        registeredBindingsList = "\nRegistered bindings:";
+        registeredBindings.forEach(function(binding) {
+          var name = "Object";
+          if (binding.implementationType !== null) {
+            name = getFunctionName(binding.implementationType);
+          }
+          registeredBindingsList = registeredBindingsList + "\n " + name;
+          if (binding.constraint.metaData) {
+            registeredBindingsList = registeredBindingsList + " - " + binding.constraint.metaData;
+          }
+        });
+      }
+      return registeredBindingsList;
+    }
+    exports.listRegisteredBindingsForServiceIdentifier = listRegisteredBindingsForServiceIdentifier;
+    function alreadyDependencyChain(request, serviceIdentifier) {
+      if (request.parentRequest === null) {
+        return false;
+      } else if (request.parentRequest.serviceIdentifier === serviceIdentifier) {
+        return true;
+      } else {
+        return alreadyDependencyChain(request.parentRequest, serviceIdentifier);
+      }
+    }
+    function dependencyChainToString(request) {
+      function _createStringArr(req, result) {
+        if (result === void 0) {
+          result = [];
+        }
+        var serviceIdentifier = getServiceIdentifierAsString(req.serviceIdentifier);
+        result.push(serviceIdentifier);
+        if (req.parentRequest !== null) {
+          return _createStringArr(req.parentRequest, result);
+        }
+        return result;
+      }
+      var stringArr = _createStringArr(request);
+      return stringArr.reverse().join(" --> ");
+    }
+    function circularDependencyToException(request) {
+      request.childRequests.forEach(function(childRequest) {
+        if (alreadyDependencyChain(childRequest, childRequest.serviceIdentifier)) {
+          var services = dependencyChainToString(childRequest);
+          throw new Error(ERROR_MSGS.CIRCULAR_DEPENDENCY + " " + services);
+        } else {
+          circularDependencyToException(childRequest);
+        }
+      });
+    }
+    exports.circularDependencyToException = circularDependencyToException;
+    function listMetadataForTarget(serviceIdentifierString, target) {
+      if (target.isTagged() || target.isNamed()) {
+        var m_1 = "";
+        var namedTag = target.getNamedTag();
+        var otherTags = target.getCustomTags();
+        if (namedTag !== null) {
+          m_1 += namedTag.toString() + "\n";
+        }
+        if (otherTags !== null) {
+          otherTags.forEach(function(tag) {
+            m_1 += tag.toString() + "\n";
+          });
+        }
+        return " " + serviceIdentifierString + "\n " + serviceIdentifierString + " - " + m_1;
+      } else {
+        return " " + serviceIdentifierString;
+      }
+    }
+    exports.listMetadataForTarget = listMetadataForTarget;
+    function getFunctionName(func) {
+      if (func.name) {
+        return func.name;
+      } else {
+        var name_1 = func.toString();
+        var match = name_1.match(/^function\s*([^\s(]+)/);
+        return match ? match[1] : "Anonymous function: " + name_1;
+      }
+    }
+    exports.getFunctionName = getFunctionName;
+    function getSymbolDescription(symbol) {
+      return symbol.toString().slice(7, -1);
+    }
+    exports.getSymbolDescription = getSymbolDescription;
+  }
+});
+
+// node_modules/inversify/lib/planning/context.js
+var require_context = __commonJS({
+  "node_modules/inversify/lib/planning/context.js"(exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.Context = void 0;
+    var id_1 = require_id();
+    var Context = function() {
+      function Context2(container2) {
+        this.id = (0, id_1.id)();
+        this.container = container2;
+      }
+      Context2.prototype.addPlan = function(plan) {
+        this.plan = plan;
+      };
+      Context2.prototype.setCurrentRequest = function(currentRequest) {
+        this.currentRequest = currentRequest;
+      };
+      return Context2;
+    }();
+    exports.Context = Context;
+  }
+});
+
+// node_modules/inversify/lib/planning/metadata.js
+var require_metadata = __commonJS({
+  "node_modules/inversify/lib/planning/metadata.js"(exports) {
+    "use strict";
+    var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
+      if (k2 === void 0)
+        k2 = k;
+      Object.defineProperty(o, k2, { enumerable: true, get: function() {
+        return m[k];
+      } });
+    } : function(o, m, k, k2) {
+      if (k2 === void 0)
+        k2 = k;
+      o[k2] = m[k];
+    });
+    var __setModuleDefault = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
+      Object.defineProperty(o, "default", { enumerable: true, value: v });
+    } : function(o, v) {
+      o["default"] = v;
+    });
+    var __importStar = exports && exports.__importStar || function(mod) {
+      if (mod && mod.__esModule)
+        return mod;
+      var result = {};
+      if (mod != null) {
+        for (var k in mod)
+          if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
+            __createBinding(result, mod, k);
+      }
+      __setModuleDefault(result, mod);
+      return result;
+    };
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.Metadata = void 0;
+    var METADATA_KEY = __importStar(require_metadata_keys());
+    var Metadata = function() {
+      function Metadata2(key, value) {
+        this.key = key;
+        this.value = value;
+      }
+      Metadata2.prototype.toString = function() {
+        if (this.key === METADATA_KEY.NAMED_TAG) {
+          return "named: " + String(this.value).toString() + " ";
+        } else {
+          return "tagged: { key:" + this.key.toString() + ", value: " + String(this.value) + " }";
+        }
+      };
+      return Metadata2;
+    }();
+    exports.Metadata = Metadata;
+  }
+});
+
+// node_modules/inversify/lib/planning/plan.js
+var require_plan = __commonJS({
+  "node_modules/inversify/lib/planning/plan.js"(exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.Plan = void 0;
+    var Plan = function() {
+      function Plan2(parentContext, rootRequest) {
+        this.parentContext = parentContext;
+        this.rootRequest = rootRequest;
+      }
+      return Plan2;
+    }();
+    exports.Plan = Plan;
+  }
+});
+
+// node_modules/inversify/lib/annotation/lazy_service_identifier.js
+var require_lazy_service_identifier = __commonJS({
+  "node_modules/inversify/lib/annotation/lazy_service_identifier.js"(exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.LazyServiceIdentifer = void 0;
+    var LazyServiceIdentifer = function() {
+      function LazyServiceIdentifer2(cb) {
+        this._cb = cb;
+      }
+      LazyServiceIdentifer2.prototype.unwrap = function() {
+        return this._cb();
+      };
+      return LazyServiceIdentifer2;
+    }();
+    exports.LazyServiceIdentifer = LazyServiceIdentifer;
+  }
+});
+
+// node_modules/inversify/lib/planning/queryable_string.js
+var require_queryable_string = __commonJS({
+  "node_modules/inversify/lib/planning/queryable_string.js"(exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.QueryableString = void 0;
+    var QueryableString = function() {
+      function QueryableString2(str) {
+        this.str = str;
+      }
+      QueryableString2.prototype.startsWith = function(searchString) {
+        return this.str.indexOf(searchString) === 0;
+      };
+      QueryableString2.prototype.endsWith = function(searchString) {
+        var reverseString = "";
+        var reverseSearchString = searchString.split("").reverse().join("");
+        reverseString = this.str.split("").reverse().join("");
+        return this.startsWith.call({ str: reverseString }, reverseSearchString);
+      };
+      QueryableString2.prototype.contains = function(searchString) {
+        return this.str.indexOf(searchString) !== -1;
+      };
+      QueryableString2.prototype.equals = function(compareString) {
+        return this.str === compareString;
+      };
+      QueryableString2.prototype.value = function() {
+        return this.str;
+      };
+      return QueryableString2;
+    }();
+    exports.QueryableString = QueryableString;
+  }
+});
+
+// node_modules/inversify/lib/planning/target.js
+var require_target = __commonJS({
+  "node_modules/inversify/lib/planning/target.js"(exports) {
+    "use strict";
+    var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
+      if (k2 === void 0)
+        k2 = k;
+      Object.defineProperty(o, k2, { enumerable: true, get: function() {
+        return m[k];
+      } });
+    } : function(o, m, k, k2) {
+      if (k2 === void 0)
+        k2 = k;
+      o[k2] = m[k];
+    });
+    var __setModuleDefault = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
+      Object.defineProperty(o, "default", { enumerable: true, value: v });
+    } : function(o, v) {
+      o["default"] = v;
+    });
+    var __importStar = exports && exports.__importStar || function(mod) {
+      if (mod && mod.__esModule)
+        return mod;
+      var result = {};
+      if (mod != null) {
+        for (var k in mod)
+          if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
+            __createBinding(result, mod, k);
+      }
+      __setModuleDefault(result, mod);
+      return result;
+    };
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.Target = void 0;
+    var METADATA_KEY = __importStar(require_metadata_keys());
+    var id_1 = require_id();
+    var serialization_1 = require_serialization();
+    var metadata_1 = require_metadata();
+    var queryable_string_1 = require_queryable_string();
+    var Target = function() {
+      function Target2(type, identifier, serviceIdentifier, namedOrTagged) {
+        this.id = (0, id_1.id)();
+        this.type = type;
+        this.serviceIdentifier = serviceIdentifier;
+        var queryableName = typeof identifier === "symbol" ? (0, serialization_1.getSymbolDescription)(identifier) : identifier;
+        this.name = new queryable_string_1.QueryableString(queryableName || "");
+        this.identifier = identifier;
+        this.metadata = new Array();
+        var metadataItem = null;
+        if (typeof namedOrTagged === "string") {
+          metadataItem = new metadata_1.Metadata(METADATA_KEY.NAMED_TAG, namedOrTagged);
+        } else if (namedOrTagged instanceof metadata_1.Metadata) {
+          metadataItem = namedOrTagged;
+        }
+        if (metadataItem !== null) {
+          this.metadata.push(metadataItem);
+        }
+      }
+      Target2.prototype.hasTag = function(key) {
+        for (var _i = 0, _a = this.metadata; _i < _a.length; _i++) {
+          var m = _a[_i];
+          if (m.key === key) {
+            return true;
+          }
+        }
+        return false;
+      };
+      Target2.prototype.isArray = function() {
+        return this.hasTag(METADATA_KEY.MULTI_INJECT_TAG);
+      };
+      Target2.prototype.matchesArray = function(name) {
+        return this.matchesTag(METADATA_KEY.MULTI_INJECT_TAG)(name);
+      };
+      Target2.prototype.isNamed = function() {
+        return this.hasTag(METADATA_KEY.NAMED_TAG);
+      };
+      Target2.prototype.isTagged = function() {
+        return this.metadata.some(function(metadata) {
+          return METADATA_KEY.NON_CUSTOM_TAG_KEYS.every(function(key) {
+            return metadata.key !== key;
+          });
+        });
+      };
+      Target2.prototype.isOptional = function() {
+        return this.matchesTag(METADATA_KEY.OPTIONAL_TAG)(true);
+      };
+      Target2.prototype.getNamedTag = function() {
+        if (this.isNamed()) {
+          return this.metadata.filter(function(m) {
+            return m.key === METADATA_KEY.NAMED_TAG;
+          })[0];
+        }
+        return null;
+      };
+      Target2.prototype.getCustomTags = function() {
+        if (this.isTagged()) {
+          return this.metadata.filter(function(metadata) {
+            return METADATA_KEY.NON_CUSTOM_TAG_KEYS.every(function(key) {
+              return metadata.key !== key;
+            });
+          });
+        } else {
+          return null;
+        }
+      };
+      Target2.prototype.matchesNamedTag = function(name) {
+        return this.matchesTag(METADATA_KEY.NAMED_TAG)(name);
+      };
+      Target2.prototype.matchesTag = function(key) {
+        var _this = this;
+        return function(value) {
+          for (var _i = 0, _a = _this.metadata; _i < _a.length; _i++) {
+            var m = _a[_i];
+            if (m.key === key && m.value === value) {
+              return true;
+            }
+          }
+          return false;
+        };
+      };
+      return Target2;
+    }();
+    exports.Target = Target;
+  }
+});
+
+// node_modules/inversify/lib/planning/reflection_utils.js
+var require_reflection_utils = __commonJS({
+  "node_modules/inversify/lib/planning/reflection_utils.js"(exports) {
+    "use strict";
+    var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
+      if (k2 === void 0)
+        k2 = k;
+      Object.defineProperty(o, k2, { enumerable: true, get: function() {
+        return m[k];
+      } });
+    } : function(o, m, k, k2) {
+      if (k2 === void 0)
+        k2 = k;
+      o[k2] = m[k];
+    });
+    var __setModuleDefault = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
+      Object.defineProperty(o, "default", { enumerable: true, value: v });
+    } : function(o, v) {
+      o["default"] = v;
+    });
+    var __importStar = exports && exports.__importStar || function(mod) {
+      if (mod && mod.__esModule)
+        return mod;
+      var result = {};
+      if (mod != null) {
+        for (var k in mod)
+          if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
+            __createBinding(result, mod, k);
+      }
+      __setModuleDefault(result, mod);
+      return result;
+    };
+    var __spreadArray = exports && exports.__spreadArray || function(to, from, pack) {
+      if (pack || arguments.length === 2)
+        for (var i = 0, l = from.length, ar; i < l; i++) {
+          if (ar || !(i in from)) {
+            if (!ar)
+              ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+          }
+        }
+      return to.concat(ar || Array.prototype.slice.call(from));
+    };
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.getFunctionName = exports.getBaseClassDependencyCount = exports.getDependencies = void 0;
+    var lazy_service_identifier_1 = require_lazy_service_identifier();
+    var ERROR_MSGS = __importStar(require_error_msgs());
+    var literal_types_1 = require_literal_types();
+    var METADATA_KEY = __importStar(require_metadata_keys());
+    var serialization_1 = require_serialization();
+    Object.defineProperty(exports, "getFunctionName", { enumerable: true, get: function() {
+      return serialization_1.getFunctionName;
+    } });
+    var target_1 = require_target();
+    function getDependencies(metadataReader, func) {
+      var constructorName = (0, serialization_1.getFunctionName)(func);
+      return getTargets(metadataReader, constructorName, func, false);
+    }
+    exports.getDependencies = getDependencies;
+    function getTargets(metadataReader, constructorName, func, isBaseClass) {
+      var metadata = metadataReader.getConstructorMetadata(func);
+      var serviceIdentifiers = metadata.compilerGeneratedMetadata;
+      if (serviceIdentifiers === void 0) {
+        var msg = ERROR_MSGS.MISSING_INJECTABLE_ANNOTATION + " " + constructorName + ".";
+        throw new Error(msg);
+      }
+      var constructorArgsMetadata = metadata.userGeneratedMetadata;
+      var keys = Object.keys(constructorArgsMetadata);
+      var hasUserDeclaredUnknownInjections = func.length === 0 && keys.length > 0;
+      var hasOptionalParameters = keys.length > func.length;
+      var iterations = hasUserDeclaredUnknownInjections || hasOptionalParameters ? keys.length : func.length;
+      var constructorTargets = getConstructorArgsAsTargets(isBaseClass, constructorName, serviceIdentifiers, constructorArgsMetadata, iterations);
+      var propertyTargets = getClassPropsAsTargets(metadataReader, func, constructorName);
+      var targets = __spreadArray(__spreadArray([], constructorTargets, true), propertyTargets, true);
+      return targets;
+    }
+    function getConstructorArgsAsTarget(index, isBaseClass, constructorName, serviceIdentifiers, constructorArgsMetadata) {
+      var targetMetadata = constructorArgsMetadata[index.toString()] || [];
+      var metadata = formatTargetMetadata(targetMetadata);
+      var isManaged = metadata.unmanaged !== true;
+      var serviceIdentifier = serviceIdentifiers[index];
+      var injectIdentifier = metadata.inject || metadata.multiInject;
+      serviceIdentifier = injectIdentifier ? injectIdentifier : serviceIdentifier;
+      if (serviceIdentifier instanceof lazy_service_identifier_1.LazyServiceIdentifer) {
+        serviceIdentifier = serviceIdentifier.unwrap();
+      }
+      if (isManaged) {
+        var isObject = serviceIdentifier === Object;
+        var isFunction = serviceIdentifier === Function;
+        var isUndefined = serviceIdentifier === void 0;
+        var isUnknownType = isObject || isFunction || isUndefined;
+        if (!isBaseClass && isUnknownType) {
+          var msg = ERROR_MSGS.MISSING_INJECT_ANNOTATION + " argument " + index + " in class " + constructorName + ".";
+          throw new Error(msg);
+        }
+        var target = new target_1.Target(literal_types_1.TargetTypeEnum.ConstructorArgument, metadata.targetName, serviceIdentifier);
+        target.metadata = targetMetadata;
+        return target;
+      }
+      return null;
+    }
+    function getConstructorArgsAsTargets(isBaseClass, constructorName, serviceIdentifiers, constructorArgsMetadata, iterations) {
+      var targets = [];
+      for (var i = 0; i < iterations; i++) {
+        var index = i;
+        var target = getConstructorArgsAsTarget(index, isBaseClass, constructorName, serviceIdentifiers, constructorArgsMetadata);
+        if (target !== null) {
+          targets.push(target);
+        }
+      }
+      return targets;
+    }
+    function _getServiceIdentifierForProperty(inject6, multiInject, propertyName, className) {
+      var serviceIdentifier = inject6 || multiInject;
+      if (serviceIdentifier === void 0) {
+        var msg = ERROR_MSGS.MISSING_INJECTABLE_ANNOTATION + " for property " + String(propertyName) + " in class " + className + ".";
+        throw new Error(msg);
+      }
+      return serviceIdentifier;
+    }
+    function getClassPropsAsTargets(metadataReader, constructorFunc, constructorName) {
+      var classPropsMetadata = metadataReader.getPropertiesMetadata(constructorFunc);
+      var targets = [];
+      var symbolKeys = Object.getOwnPropertySymbols(classPropsMetadata);
+      var stringKeys = Object.keys(classPropsMetadata);
+      var keys = stringKeys.concat(symbolKeys);
+      for (var _i = 0, keys_1 = keys; _i < keys_1.length; _i++) {
+        var key = keys_1[_i];
+        var targetMetadata = classPropsMetadata[key];
+        var metadata = formatTargetMetadata(targetMetadata);
+        var identifier = metadata.targetName || key;
+        var serviceIdentifier = _getServiceIdentifierForProperty(metadata.inject, metadata.multiInject, key, constructorName);
+        var target = new target_1.Target(literal_types_1.TargetTypeEnum.ClassProperty, identifier, serviceIdentifier);
+        target.metadata = targetMetadata;
+        targets.push(target);
+      }
+      var baseConstructor = Object.getPrototypeOf(constructorFunc.prototype).constructor;
+      if (baseConstructor !== Object) {
+        var baseTargets = getClassPropsAsTargets(metadataReader, baseConstructor, constructorName);
+        targets = __spreadArray(__spreadArray([], targets, true), baseTargets, true);
+      }
+      return targets;
+    }
+    function getBaseClassDependencyCount(metadataReader, func) {
+      var baseConstructor = Object.getPrototypeOf(func.prototype).constructor;
+      if (baseConstructor !== Object) {
+        var baseConstructorName = (0, serialization_1.getFunctionName)(baseConstructor);
+        var targets = getTargets(metadataReader, baseConstructorName, baseConstructor, true);
+        var metadata = targets.map(function(t) {
+          return t.metadata.filter(function(m) {
+            return m.key === METADATA_KEY.UNMANAGED_TAG;
+          });
+        });
+        var unmanagedCount = [].concat.apply([], metadata).length;
+        var dependencyCount = targets.length - unmanagedCount;
+        if (dependencyCount > 0) {
+          return dependencyCount;
+        } else {
+          return getBaseClassDependencyCount(metadataReader, baseConstructor);
+        }
+      } else {
+        return 0;
+      }
+    }
+    exports.getBaseClassDependencyCount = getBaseClassDependencyCount;
+    function formatTargetMetadata(targetMetadata) {
+      var targetMetadataMap = {};
+      targetMetadata.forEach(function(m) {
+        targetMetadataMap[m.key.toString()] = m.value;
+      });
+      return {
+        inject: targetMetadataMap[METADATA_KEY.INJECT_TAG],
+        multiInject: targetMetadataMap[METADATA_KEY.MULTI_INJECT_TAG],
+        targetName: targetMetadataMap[METADATA_KEY.NAME_TAG],
+        unmanaged: targetMetadataMap[METADATA_KEY.UNMANAGED_TAG]
+      };
+    }
+  }
+});
+
+// node_modules/inversify/lib/planning/request.js
+var require_request = __commonJS({
+  "node_modules/inversify/lib/planning/request.js"(exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.Request = void 0;
+    var id_1 = require_id();
+    var Request = function() {
+      function Request2(serviceIdentifier, parentContext, parentRequest, bindings, target) {
+        this.id = (0, id_1.id)();
+        this.serviceIdentifier = serviceIdentifier;
+        this.parentContext = parentContext;
+        this.parentRequest = parentRequest;
+        this.target = target;
+        this.childRequests = [];
+        this.bindings = Array.isArray(bindings) ? bindings : [bindings];
+        this.requestScope = parentRequest === null ? /* @__PURE__ */ new Map() : null;
+      }
+      Request2.prototype.addChildRequest = function(serviceIdentifier, bindings, target) {
+        var child = new Request2(serviceIdentifier, this.parentContext, this, bindings, target);
+        this.childRequests.push(child);
+        return child;
+      };
+      return Request2;
+    }();
+    exports.Request = Request;
+  }
+});
+
+// node_modules/inversify/lib/planning/planner.js
+var require_planner = __commonJS({
+  "node_modules/inversify/lib/planning/planner.js"(exports) {
+    "use strict";
+    var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
+      if (k2 === void 0)
+        k2 = k;
+      Object.defineProperty(o, k2, { enumerable: true, get: function() {
+        return m[k];
+      } });
+    } : function(o, m, k, k2) {
+      if (k2 === void 0)
+        k2 = k;
+      o[k2] = m[k];
+    });
+    var __setModuleDefault = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
+      Object.defineProperty(o, "default", { enumerable: true, value: v });
+    } : function(o, v) {
+      o["default"] = v;
+    });
+    var __importStar = exports && exports.__importStar || function(mod) {
+      if (mod && mod.__esModule)
+        return mod;
+      var result = {};
+      if (mod != null) {
+        for (var k in mod)
+          if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
+            __createBinding(result, mod, k);
+      }
+      __setModuleDefault(result, mod);
+      return result;
+    };
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.getBindingDictionary = exports.createMockRequest = exports.plan = void 0;
+    var binding_count_1 = require_binding_count();
+    var ERROR_MSGS = __importStar(require_error_msgs());
+    var literal_types_1 = require_literal_types();
+    var METADATA_KEY = __importStar(require_metadata_keys());
+    var exceptions_1 = require_exceptions();
+    var serialization_1 = require_serialization();
+    var context_1 = require_context();
+    var metadata_1 = require_metadata();
+    var plan_1 = require_plan();
+    var reflection_utils_1 = require_reflection_utils();
+    var request_1 = require_request();
+    var target_1 = require_target();
+    function getBindingDictionary(cntnr) {
+      return cntnr._bindingDictionary;
+    }
+    exports.getBindingDictionary = getBindingDictionary;
+    function _createTarget(isMultiInject, targetType, serviceIdentifier, name, key, value) {
+      var metadataKey = isMultiInject ? METADATA_KEY.MULTI_INJECT_TAG : METADATA_KEY.INJECT_TAG;
+      var injectMetadata = new metadata_1.Metadata(metadataKey, serviceIdentifier);
+      var target = new target_1.Target(targetType, name, serviceIdentifier, injectMetadata);
+      if (key !== void 0) {
+        var tagMetadata = new metadata_1.Metadata(key, value);
+        target.metadata.push(tagMetadata);
+      }
+      return target;
+    }
+    function _getActiveBindings(metadataReader, avoidConstraints, context, parentRequest, target) {
+      var bindings = getBindings(context.container, target.serviceIdentifier);
+      var activeBindings = [];
+      if (bindings.length === binding_count_1.BindingCount.NoBindingsAvailable && context.container.options.autoBindInjectable && typeof target.serviceIdentifier === "function" && metadataReader.getConstructorMetadata(target.serviceIdentifier).compilerGeneratedMetadata) {
+        context.container.bind(target.serviceIdentifier).toSelf();
+        bindings = getBindings(context.container, target.serviceIdentifier);
+      }
+      if (!avoidConstraints) {
+        activeBindings = bindings.filter(function(binding) {
+          var request = new request_1.Request(binding.serviceIdentifier, context, parentRequest, binding, target);
+          return binding.constraint(request);
+        });
+      } else {
+        activeBindings = bindings;
+      }
+      _validateActiveBindingCount(target.serviceIdentifier, activeBindings, target, context.container);
+      return activeBindings;
+    }
+    function _validateActiveBindingCount(serviceIdentifier, bindings, target, container2) {
+      switch (bindings.length) {
+        case binding_count_1.BindingCount.NoBindingsAvailable:
+          if (target.isOptional()) {
+            return bindings;
+          } else {
+            var serviceIdentifierString = (0, serialization_1.getServiceIdentifierAsString)(serviceIdentifier);
+            var msg = ERROR_MSGS.NOT_REGISTERED;
+            msg += (0, serialization_1.listMetadataForTarget)(serviceIdentifierString, target);
+            msg += (0, serialization_1.listRegisteredBindingsForServiceIdentifier)(container2, serviceIdentifierString, getBindings);
+            throw new Error(msg);
+          }
+        case binding_count_1.BindingCount.OnlyOneBindingAvailable:
+          return bindings;
+        case binding_count_1.BindingCount.MultipleBindingsAvailable:
+        default:
+          if (!target.isArray()) {
+            var serviceIdentifierString = (0, serialization_1.getServiceIdentifierAsString)(serviceIdentifier);
+            var msg = ERROR_MSGS.AMBIGUOUS_MATCH + " " + serviceIdentifierString;
+            msg += (0, serialization_1.listRegisteredBindingsForServiceIdentifier)(container2, serviceIdentifierString, getBindings);
+            throw new Error(msg);
+          } else {
+            return bindings;
+          }
+      }
+    }
+    function _createSubRequests(metadataReader, avoidConstraints, serviceIdentifier, context, parentRequest, target) {
+      var activeBindings;
+      var childRequest;
+      if (parentRequest === null) {
+        activeBindings = _getActiveBindings(metadataReader, avoidConstraints, context, null, target);
+        childRequest = new request_1.Request(serviceIdentifier, context, null, activeBindings, target);
+        var thePlan = new plan_1.Plan(context, childRequest);
+        context.addPlan(thePlan);
+      } else {
+        activeBindings = _getActiveBindings(metadataReader, avoidConstraints, context, parentRequest, target);
+        childRequest = parentRequest.addChildRequest(target.serviceIdentifier, activeBindings, target);
+      }
+      activeBindings.forEach(function(binding) {
+        var subChildRequest = null;
+        if (target.isArray()) {
+          subChildRequest = childRequest.addChildRequest(binding.serviceIdentifier, binding, target);
+        } else {
+          if (binding.cache) {
+            return;
+          }
+          subChildRequest = childRequest;
+        }
+        if (binding.type === literal_types_1.BindingTypeEnum.Instance && binding.implementationType !== null) {
+          var dependencies = (0, reflection_utils_1.getDependencies)(metadataReader, binding.implementationType);
+          if (!context.container.options.skipBaseClassChecks) {
+            var baseClassDependencyCount = (0, reflection_utils_1.getBaseClassDependencyCount)(metadataReader, binding.implementationType);
+            if (dependencies.length < baseClassDependencyCount) {
+              var error = ERROR_MSGS.ARGUMENTS_LENGTH_MISMATCH((0, reflection_utils_1.getFunctionName)(binding.implementationType));
+              throw new Error(error);
+            }
+          }
+          dependencies.forEach(function(dependency) {
+            _createSubRequests(metadataReader, false, dependency.serviceIdentifier, context, subChildRequest, dependency);
+          });
+        }
+      });
+    }
+    function getBindings(container2, serviceIdentifier) {
+      var bindings = [];
+      var bindingDictionary = getBindingDictionary(container2);
+      if (bindingDictionary.hasKey(serviceIdentifier)) {
+        bindings = bindingDictionary.get(serviceIdentifier);
+      } else if (container2.parent !== null) {
+        bindings = getBindings(container2.parent, serviceIdentifier);
+      }
+      return bindings;
+    }
+    function plan(metadataReader, container2, isMultiInject, targetType, serviceIdentifier, key, value, avoidConstraints) {
+      if (avoidConstraints === void 0) {
+        avoidConstraints = false;
+      }
+      var context = new context_1.Context(container2);
+      var target = _createTarget(isMultiInject, targetType, serviceIdentifier, "", key, value);
+      try {
+        _createSubRequests(metadataReader, avoidConstraints, serviceIdentifier, context, null, target);
+        return context;
+      } catch (error) {
+        if ((0, exceptions_1.isStackOverflowExeption)(error)) {
+          (0, serialization_1.circularDependencyToException)(context.plan.rootRequest);
+        }
+        throw error;
+      }
+    }
+    exports.plan = plan;
+    function createMockRequest(container2, serviceIdentifier, key, value) {
+      var target = new target_1.Target(literal_types_1.TargetTypeEnum.Variable, "", serviceIdentifier, new metadata_1.Metadata(key, value));
+      var context = new context_1.Context(container2);
+      var request = new request_1.Request(serviceIdentifier, context, null, [], target);
+      return request;
+    }
+    exports.createMockRequest = createMockRequest;
+  }
+});
+
+// node_modules/inversify/lib/utils/async.js
+var require_async = __commonJS({
+  "node_modules/inversify/lib/utils/async.js"(exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.isPromiseOrContainsPromise = exports.isPromise = void 0;
+    function isPromise(object) {
+      var isObjectOrFunction = typeof object === "object" && object !== null || typeof object === "function";
+      return isObjectOrFunction && typeof object.then === "function";
+    }
+    exports.isPromise = isPromise;
+    function isPromiseOrContainsPromise(object) {
+      if (isPromise(object)) {
+        return true;
+      }
+      return Array.isArray(object) && object.some(isPromise);
+    }
+    exports.isPromiseOrContainsPromise = isPromiseOrContainsPromise;
+  }
+});
+
+// node_modules/inversify/lib/scope/scope.js
+var require_scope = __commonJS({
+  "node_modules/inversify/lib/scope/scope.js"(exports) {
+    "use strict";
+    var __awaiter = exports && exports.__awaiter || function(thisArg, _arguments, P, generator) {
+      function adopt(value) {
+        return value instanceof P ? value : new P(function(resolve) {
+          resolve(value);
+        });
+      }
+      return new (P || (P = Promise))(function(resolve, reject) {
+        function fulfilled(value) {
+          try {
+            step(generator.next(value));
+          } catch (e) {
+            reject(e);
+          }
+        }
+        function rejected(value) {
+          try {
+            step(generator["throw"](value));
+          } catch (e) {
+            reject(e);
+          }
+        }
+        function step(result) {
+          result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+        }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+      });
+    };
+    var __generator = exports && exports.__generator || function(thisArg, body) {
+      var _ = { label: 0, sent: function() {
+        if (t[0] & 1)
+          throw t[1];
+        return t[1];
+      }, trys: [], ops: [] }, f, y, t, g;
+      return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() {
+        return this;
+      }), g;
+      function verb(n) {
+        return function(v) {
+          return step([n, v]);
+        };
+      }
+      function step(op) {
+        if (f)
+          throw new TypeError("Generator is already executing.");
+        while (_)
+          try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done)
+              return t;
+            if (y = 0, t)
+              op = [op[0] & 2, t.value];
+            switch (op[0]) {
+              case 0:
+              case 1:
+                t = op;
+                break;
+              case 4:
+                _.label++;
+                return { value: op[1], done: false };
+              case 5:
+                _.label++;
+                y = op[1];
+                op = [0];
+                continue;
+              case 7:
+                op = _.ops.pop();
+                _.trys.pop();
+                continue;
+              default:
+                if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+                  _ = 0;
+                  continue;
+                }
+                if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+                  _.label = op[1];
+                  break;
+                }
+                if (op[0] === 6 && _.label < t[1]) {
+                  _.label = t[1];
+                  t = op;
+                  break;
+                }
+                if (t && _.label < t[2]) {
+                  _.label = t[2];
+                  _.ops.push(op);
+                  break;
+                }
+                if (t[2])
+                  _.ops.pop();
+                _.trys.pop();
+                continue;
+            }
+            op = body.call(thisArg, _);
+          } catch (e) {
+            op = [6, e];
+            y = 0;
+          } finally {
+            f = t = 0;
+          }
+        if (op[0] & 5)
+          throw op[1];
+        return { value: op[0] ? op[1] : void 0, done: true };
+      }
+    };
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.saveToScope = exports.tryGetFromScope = void 0;
+    var inversify_1 = require_inversify();
+    var async_1 = require_async();
+    var tryGetFromScope = function(requestScope, binding) {
+      if (binding.scope === inversify_1.BindingScopeEnum.Singleton && binding.activated) {
+        return binding.cache;
+      }
+      if (binding.scope === inversify_1.BindingScopeEnum.Request && requestScope.has(binding.id)) {
+        return requestScope.get(binding.id);
+      }
+      return null;
+    };
+    exports.tryGetFromScope = tryGetFromScope;
+    var saveToScope = function(requestScope, binding, result) {
+      if (binding.scope === inversify_1.BindingScopeEnum.Singleton) {
+        _saveToSingletonScope(binding, result);
+      }
+      if (binding.scope === inversify_1.BindingScopeEnum.Request) {
+        _saveToRequestScope(requestScope, binding, result);
+      }
+    };
+    exports.saveToScope = saveToScope;
+    var _saveToRequestScope = function(requestScope, binding, result) {
+      if (!requestScope.has(binding.id)) {
+        requestScope.set(binding.id, result);
+      }
+    };
+    var _saveToSingletonScope = function(binding, result) {
+      binding.cache = result;
+      binding.activated = true;
+      if ((0, async_1.isPromise)(result)) {
+        void _saveAsyncResultToSingletonScope(binding, result);
+      }
+    };
+    var _saveAsyncResultToSingletonScope = function(binding, asyncResult) {
+      return __awaiter(void 0, void 0, void 0, function() {
+        var result, ex_1;
+        return __generator(this, function(_a) {
+          switch (_a.label) {
+            case 0:
+              _a.trys.push([0, 2, , 3]);
+              return [4, asyncResult];
+            case 1:
+              result = _a.sent();
+              binding.cache = result;
+              return [3, 3];
+            case 2:
+              ex_1 = _a.sent();
+              binding.cache = null;
+              binding.activated = false;
+              throw ex_1;
+            case 3:
+              return [2];
+          }
+        });
+      });
+    };
+  }
+});
+
+// node_modules/inversify/lib/utils/factory_type.js
+var require_factory_type = __commonJS({
+  "node_modules/inversify/lib/utils/factory_type.js"(exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.FactoryType = void 0;
+    var FactoryType;
+    (function(FactoryType2) {
+      FactoryType2["DynamicValue"] = "toDynamicValue";
+      FactoryType2["Factory"] = "toFactory";
+      FactoryType2["Provider"] = "toProvider";
+    })(FactoryType = exports.FactoryType || (exports.FactoryType = {}));
+  }
+});
+
+// node_modules/inversify/lib/utils/binding_utils.js
+var require_binding_utils = __commonJS({
+  "node_modules/inversify/lib/utils/binding_utils.js"(exports) {
+    "use strict";
+    var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
+      if (k2 === void 0)
+        k2 = k;
+      Object.defineProperty(o, k2, { enumerable: true, get: function() {
+        return m[k];
+      } });
+    } : function(o, m, k, k2) {
+      if (k2 === void 0)
+        k2 = k;
+      o[k2] = m[k];
+    });
+    var __setModuleDefault = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
+      Object.defineProperty(o, "default", { enumerable: true, value: v });
+    } : function(o, v) {
+      o["default"] = v;
+    });
+    var __importStar = exports && exports.__importStar || function(mod) {
+      if (mod && mod.__esModule)
+        return mod;
+      var result = {};
+      if (mod != null) {
+        for (var k in mod)
+          if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
+            __createBinding(result, mod, k);
+      }
+      __setModuleDefault(result, mod);
+      return result;
+    };
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.getFactoryDetails = exports.ensureFullyBound = exports.multiBindToService = void 0;
+    var inversify_1 = require_inversify();
+    var ERROR_MSGS = __importStar(require_error_msgs());
+    var literal_types_1 = require_literal_types();
+    var factory_type_1 = require_factory_type();
+    var multiBindToService = function(container2) {
+      return function(service) {
+        return function() {
+          var types = [];
+          for (var _i = 0; _i < arguments.length; _i++) {
+            types[_i] = arguments[_i];
+          }
+          return types.forEach(function(t) {
+            return container2.bind(t).toService(service);
+          });
+        };
+      };
+    };
+    exports.multiBindToService = multiBindToService;
+    var ensureFullyBound = function(binding) {
+      var boundValue = null;
+      switch (binding.type) {
+        case literal_types_1.BindingTypeEnum.ConstantValue:
+        case literal_types_1.BindingTypeEnum.Function:
+          boundValue = binding.cache;
+          break;
+        case literal_types_1.BindingTypeEnum.Constructor:
+        case literal_types_1.BindingTypeEnum.Instance:
+          boundValue = binding.implementationType;
+          break;
+        case literal_types_1.BindingTypeEnum.DynamicValue:
+          boundValue = binding.dynamicValue;
+          break;
+        case literal_types_1.BindingTypeEnum.Provider:
+          boundValue = binding.provider;
+          break;
+        case literal_types_1.BindingTypeEnum.Factory:
+          boundValue = binding.factory;
+          break;
+      }
+      if (boundValue === null) {
+        var serviceIdentifierAsString = (0, inversify_1.getServiceIdentifierAsString)(binding.serviceIdentifier);
+        throw new Error(ERROR_MSGS.INVALID_BINDING_TYPE + " " + serviceIdentifierAsString);
+      }
+    };
+    exports.ensureFullyBound = ensureFullyBound;
+    var getFactoryDetails = function(binding) {
+      switch (binding.type) {
+        case literal_types_1.BindingTypeEnum.Factory:
+          return { factory: binding.factory, factoryType: factory_type_1.FactoryType.Factory };
+        case literal_types_1.BindingTypeEnum.Provider:
+          return { factory: binding.provider, factoryType: factory_type_1.FactoryType.Provider };
+        case literal_types_1.BindingTypeEnum.DynamicValue:
+          return { factory: binding.dynamicValue, factoryType: factory_type_1.FactoryType.DynamicValue };
+        default:
+          throw new Error("Unexpected factory type " + binding.type);
+      }
+    };
+    exports.getFactoryDetails = getFactoryDetails;
+  }
+});
+
+// node_modules/inversify/lib/resolution/instantiation.js
+var require_instantiation = __commonJS({
+  "node_modules/inversify/lib/resolution/instantiation.js"(exports) {
+    "use strict";
+    var __assign = exports && exports.__assign || function() {
+      __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+          s = arguments[i];
+          for (var p in s)
+            if (Object.prototype.hasOwnProperty.call(s, p))
+              t[p] = s[p];
+        }
+        return t;
+      };
+      return __assign.apply(this, arguments);
+    };
+    var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
+      if (k2 === void 0)
+        k2 = k;
+      Object.defineProperty(o, k2, { enumerable: true, get: function() {
+        return m[k];
+      } });
+    } : function(o, m, k, k2) {
+      if (k2 === void 0)
+        k2 = k;
+      o[k2] = m[k];
+    });
+    var __setModuleDefault = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
+      Object.defineProperty(o, "default", { enumerable: true, value: v });
+    } : function(o, v) {
+      o["default"] = v;
+    });
+    var __importStar = exports && exports.__importStar || function(mod) {
+      if (mod && mod.__esModule)
+        return mod;
+      var result = {};
+      if (mod != null) {
+        for (var k in mod)
+          if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
+            __createBinding(result, mod, k);
+      }
+      __setModuleDefault(result, mod);
+      return result;
+    };
+    var __awaiter = exports && exports.__awaiter || function(thisArg, _arguments, P, generator) {
+      function adopt(value) {
+        return value instanceof P ? value : new P(function(resolve) {
+          resolve(value);
+        });
+      }
+      return new (P || (P = Promise))(function(resolve, reject) {
+        function fulfilled(value) {
+          try {
+            step(generator.next(value));
+          } catch (e) {
+            reject(e);
+          }
+        }
+        function rejected(value) {
+          try {
+            step(generator["throw"](value));
+          } catch (e) {
+            reject(e);
+          }
+        }
+        function step(result) {
+          result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+        }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+      });
+    };
+    var __generator = exports && exports.__generator || function(thisArg, body) {
+      var _ = { label: 0, sent: function() {
+        if (t[0] & 1)
+          throw t[1];
+        return t[1];
+      }, trys: [], ops: [] }, f, y, t, g;
+      return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() {
+        return this;
+      }), g;
+      function verb(n) {
+        return function(v) {
+          return step([n, v]);
+        };
+      }
+      function step(op) {
+        if (f)
+          throw new TypeError("Generator is already executing.");
+        while (_)
+          try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done)
+              return t;
+            if (y = 0, t)
+              op = [op[0] & 2, t.value];
+            switch (op[0]) {
+              case 0:
+              case 1:
+                t = op;
+                break;
+              case 4:
+                _.label++;
+                return { value: op[1], done: false };
+              case 5:
+                _.label++;
+                y = op[1];
+                op = [0];
+                continue;
+              case 7:
+                op = _.ops.pop();
+                _.trys.pop();
+                continue;
+              default:
+                if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+                  _ = 0;
+                  continue;
+                }
+                if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+                  _.label = op[1];
+                  break;
+                }
+                if (op[0] === 6 && _.label < t[1]) {
+                  _.label = t[1];
+                  t = op;
+                  break;
+                }
+                if (t && _.label < t[2]) {
+                  _.label = t[2];
+                  _.ops.push(op);
+                  break;
+                }
+                if (t[2])
+                  _.ops.pop();
+                _.trys.pop();
+                continue;
+            }
+            op = body.call(thisArg, _);
+          } catch (e) {
+            op = [6, e];
+            y = 0;
+          } finally {
+            f = t = 0;
+          }
+        if (op[0] & 5)
+          throw op[1];
+        return { value: op[0] ? op[1] : void 0, done: true };
+      }
+    };
+    var __spreadArray = exports && exports.__spreadArray || function(to, from, pack) {
+      if (pack || arguments.length === 2)
+        for (var i = 0, l = from.length, ar; i < l; i++) {
+          if (ar || !(i in from)) {
+            if (!ar)
+              ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+          }
+        }
+      return to.concat(ar || Array.prototype.slice.call(from));
+    };
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.resolveInstance = void 0;
+    var error_msgs_1 = require_error_msgs();
+    var literal_types_1 = require_literal_types();
+    var METADATA_KEY = __importStar(require_metadata_keys());
+    var async_1 = require_async();
+    function _resolveRequests(childRequests, resolveRequest) {
+      return childRequests.reduce(function(resolvedRequests, childRequest) {
+        var injection = resolveRequest(childRequest);
+        var targetType = childRequest.target.type;
+        if (targetType === literal_types_1.TargetTypeEnum.ConstructorArgument) {
+          resolvedRequests.constructorInjections.push(injection);
+        } else {
+          resolvedRequests.propertyRequests.push(childRequest);
+          resolvedRequests.propertyInjections.push(injection);
+        }
+        if (!resolvedRequests.isAsync) {
+          resolvedRequests.isAsync = (0, async_1.isPromiseOrContainsPromise)(injection);
+        }
+        return resolvedRequests;
+      }, { constructorInjections: [], propertyInjections: [], propertyRequests: [], isAsync: false });
+    }
+    function _createInstance(constr, childRequests, resolveRequest) {
+      var result;
+      if (childRequests.length > 0) {
+        var resolved = _resolveRequests(childRequests, resolveRequest);
+        var createInstanceWithInjectionsArg = __assign(__assign({}, resolved), { constr });
+        if (resolved.isAsync) {
+          result = createInstanceWithInjectionsAsync(createInstanceWithInjectionsArg);
+        } else {
+          result = createInstanceWithInjections(createInstanceWithInjectionsArg);
+        }
+      } else {
+        result = new constr();
+      }
+      return result;
+    }
+    function createInstanceWithInjections(args) {
+      var _a;
+      var instance = new ((_a = args.constr).bind.apply(_a, __spreadArray([void 0], args.constructorInjections, false)))();
+      args.propertyRequests.forEach(function(r, index) {
+        var property = r.target.identifier;
+        var injection = args.propertyInjections[index];
+        instance[property] = injection;
+      });
+      return instance;
+    }
+    function createInstanceWithInjectionsAsync(args) {
+      return __awaiter(this, void 0, void 0, function() {
+        var constructorInjections, propertyInjections;
+        return __generator(this, function(_a) {
+          switch (_a.label) {
+            case 0:
+              return [4, possiblyWaitInjections(args.constructorInjections)];
+            case 1:
+              constructorInjections = _a.sent();
+              return [4, possiblyWaitInjections(args.propertyInjections)];
+            case 2:
+              propertyInjections = _a.sent();
+              return [2, createInstanceWithInjections(__assign(__assign({}, args), { constructorInjections, propertyInjections }))];
+          }
+        });
+      });
+    }
+    function possiblyWaitInjections(possiblePromiseinjections) {
+      return __awaiter(this, void 0, void 0, function() {
+        var injections, _i, possiblePromiseinjections_1, injection;
+        return __generator(this, function(_a) {
+          injections = [];
+          for (_i = 0, possiblePromiseinjections_1 = possiblePromiseinjections; _i < possiblePromiseinjections_1.length; _i++) {
+            injection = possiblePromiseinjections_1[_i];
+            if (Array.isArray(injection)) {
+              injections.push(Promise.all(injection));
+            } else {
+              injections.push(injection);
+            }
+          }
+          return [2, Promise.all(injections)];
+        });
+      });
+    }
+    function _getInstanceAfterPostConstruct(constr, result) {
+      var postConstructResult = _postConstruct(constr, result);
+      if ((0, async_1.isPromise)(postConstructResult)) {
+        return postConstructResult.then(function() {
+          return result;
+        });
+      } else {
+        return result;
+      }
+    }
+    function _postConstruct(constr, instance) {
+      var _a, _b;
+      if (Reflect.hasMetadata(METADATA_KEY.POST_CONSTRUCT, constr)) {
+        var data = Reflect.getMetadata(METADATA_KEY.POST_CONSTRUCT, constr);
+        try {
+          return (_b = (_a = instance)[data.value]) === null || _b === void 0 ? void 0 : _b.call(_a);
+        } catch (e) {
+          throw new Error((0, error_msgs_1.POST_CONSTRUCT_ERROR)(constr.name, e.message));
+        }
+      }
+    }
+    function _validateInstanceResolution(binding, constr) {
+      if (binding.scope !== literal_types_1.BindingScopeEnum.Singleton) {
+        _throwIfHandlingDeactivation(binding, constr);
+      }
+    }
+    function _throwIfHandlingDeactivation(binding, constr) {
+      var scopeErrorMessage = "Class cannot be instantiated in " + (binding.scope === literal_types_1.BindingScopeEnum.Request ? "request" : "transient") + " scope.";
+      if (typeof binding.onDeactivation === "function") {
+        throw new Error((0, error_msgs_1.ON_DEACTIVATION_ERROR)(constr.name, scopeErrorMessage));
+      }
+      if (Reflect.hasMetadata(METADATA_KEY.PRE_DESTROY, constr)) {
+        throw new Error((0, error_msgs_1.PRE_DESTROY_ERROR)(constr.name, scopeErrorMessage));
+      }
+    }
+    function resolveInstance(binding, constr, childRequests, resolveRequest) {
+      _validateInstanceResolution(binding, constr);
+      var result = _createInstance(constr, childRequests, resolveRequest);
+      if ((0, async_1.isPromise)(result)) {
+        return result.then(function(resolvedResult) {
+          return _getInstanceAfterPostConstruct(constr, resolvedResult);
+        });
+      } else {
+        return _getInstanceAfterPostConstruct(constr, result);
+      }
+    }
+    exports.resolveInstance = resolveInstance;
+  }
+});
+
+// node_modules/inversify/lib/resolution/resolver.js
+var require_resolver = __commonJS({
+  "node_modules/inversify/lib/resolution/resolver.js"(exports) {
+    "use strict";
+    var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
+      if (k2 === void 0)
+        k2 = k;
+      Object.defineProperty(o, k2, { enumerable: true, get: function() {
+        return m[k];
+      } });
+    } : function(o, m, k, k2) {
+      if (k2 === void 0)
+        k2 = k;
+      o[k2] = m[k];
+    });
+    var __setModuleDefault = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
+      Object.defineProperty(o, "default", { enumerable: true, value: v });
+    } : function(o, v) {
+      o["default"] = v;
+    });
+    var __importStar = exports && exports.__importStar || function(mod) {
+      if (mod && mod.__esModule)
+        return mod;
+      var result = {};
+      if (mod != null) {
+        for (var k in mod)
+          if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
+            __createBinding(result, mod, k);
+      }
+      __setModuleDefault(result, mod);
+      return result;
+    };
+    var __awaiter = exports && exports.__awaiter || function(thisArg, _arguments, P, generator) {
+      function adopt(value) {
+        return value instanceof P ? value : new P(function(resolve2) {
+          resolve2(value);
+        });
+      }
+      return new (P || (P = Promise))(function(resolve2, reject) {
+        function fulfilled(value) {
+          try {
+            step(generator.next(value));
+          } catch (e) {
+            reject(e);
+          }
+        }
+        function rejected(value) {
+          try {
+            step(generator["throw"](value));
+          } catch (e) {
+            reject(e);
+          }
+        }
+        function step(result) {
+          result.done ? resolve2(result.value) : adopt(result.value).then(fulfilled, rejected);
+        }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+      });
+    };
+    var __generator = exports && exports.__generator || function(thisArg, body) {
+      var _ = { label: 0, sent: function() {
+        if (t[0] & 1)
+          throw t[1];
+        return t[1];
+      }, trys: [], ops: [] }, f, y, t, g;
+      return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() {
+        return this;
+      }), g;
+      function verb(n) {
+        return function(v) {
+          return step([n, v]);
+        };
+      }
+      function step(op) {
+        if (f)
+          throw new TypeError("Generator is already executing.");
+        while (_)
+          try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done)
+              return t;
+            if (y = 0, t)
+              op = [op[0] & 2, t.value];
+            switch (op[0]) {
+              case 0:
+              case 1:
+                t = op;
+                break;
+              case 4:
+                _.label++;
+                return { value: op[1], done: false };
+              case 5:
+                _.label++;
+                y = op[1];
+                op = [0];
+                continue;
+              case 7:
+                op = _.ops.pop();
+                _.trys.pop();
+                continue;
+              default:
+                if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+                  _ = 0;
+                  continue;
+                }
+                if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+                  _.label = op[1];
+                  break;
+                }
+                if (op[0] === 6 && _.label < t[1]) {
+                  _.label = t[1];
+                  t = op;
+                  break;
+                }
+                if (t && _.label < t[2]) {
+                  _.label = t[2];
+                  _.ops.push(op);
+                  break;
+                }
+                if (t[2])
+                  _.ops.pop();
+                _.trys.pop();
+                continue;
+            }
+            op = body.call(thisArg, _);
+          } catch (e) {
+            op = [6, e];
+            y = 0;
+          } finally {
+            f = t = 0;
+          }
+        if (op[0] & 5)
+          throw op[1];
+        return { value: op[0] ? op[1] : void 0, done: true };
+      }
+    };
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.resolve = void 0;
+    var ERROR_MSGS = __importStar(require_error_msgs());
+    var literal_types_1 = require_literal_types();
+    var planner_1 = require_planner();
+    var scope_1 = require_scope();
+    var async_1 = require_async();
+    var binding_utils_1 = require_binding_utils();
+    var exceptions_1 = require_exceptions();
+    var instantiation_1 = require_instantiation();
+    var _resolveRequest = function(requestScope) {
+      return function(request) {
+        request.parentContext.setCurrentRequest(request);
+        var bindings = request.bindings;
+        var childRequests = request.childRequests;
+        var targetIsAnArray = request.target && request.target.isArray();
+        var targetParentIsNotAnArray = !request.parentRequest || !request.parentRequest.target || !request.target || !request.parentRequest.target.matchesArray(request.target.serviceIdentifier);
+        if (targetIsAnArray && targetParentIsNotAnArray) {
+          return childRequests.map(function(childRequest) {
+            var _f = _resolveRequest(requestScope);
+            return _f(childRequest);
+          });
+        } else {
+          if (request.target.isOptional() && bindings.length === 0) {
+            return void 0;
+          }
+          var binding = bindings[0];
+          return _resolveBinding(requestScope, request, binding);
+        }
+      };
+    };
+    var _resolveFactoryFromBinding = function(binding, context) {
+      var factoryDetails = (0, binding_utils_1.getFactoryDetails)(binding);
+      return (0, exceptions_1.tryAndThrowErrorIfStackOverflow)(function() {
+        return factoryDetails.factory.bind(binding)(context);
+      }, function() {
+        return new Error(ERROR_MSGS.CIRCULAR_DEPENDENCY_IN_FACTORY(factoryDetails.factoryType, context.currentRequest.serviceIdentifier.toString()));
+      });
+    };
+    var _getResolvedFromBinding = function(requestScope, request, binding) {
+      var result;
+      var childRequests = request.childRequests;
+      (0, binding_utils_1.ensureFullyBound)(binding);
+      switch (binding.type) {
+        case literal_types_1.BindingTypeEnum.ConstantValue:
+        case literal_types_1.BindingTypeEnum.Function:
+          result = binding.cache;
+          break;
+        case literal_types_1.BindingTypeEnum.Constructor:
+          result = binding.implementationType;
+          break;
+        case literal_types_1.BindingTypeEnum.Instance:
+          result = (0, instantiation_1.resolveInstance)(binding, binding.implementationType, childRequests, _resolveRequest(requestScope));
+          break;
+        default:
+          result = _resolveFactoryFromBinding(binding, request.parentContext);
+      }
+      return result;
+    };
+    var _resolveInScope = function(requestScope, binding, resolveFromBinding) {
+      var result = (0, scope_1.tryGetFromScope)(requestScope, binding);
+      if (result !== null) {
+        return result;
+      }
+      result = resolveFromBinding();
+      (0, scope_1.saveToScope)(requestScope, binding, result);
+      return result;
+    };
+    var _resolveBinding = function(requestScope, request, binding) {
+      return _resolveInScope(requestScope, binding, function() {
+        var result = _getResolvedFromBinding(requestScope, request, binding);
+        if ((0, async_1.isPromise)(result)) {
+          result = result.then(function(resolved) {
+            return _onActivation(request, binding, resolved);
+          });
+        } else {
+          result = _onActivation(request, binding, result);
+        }
+        return result;
+      });
+    };
+    function _onActivation(request, binding, resolved) {
+      var result = _bindingActivation(request.parentContext, binding, resolved);
+      var containersIterator = _getContainersIterator(request.parentContext.container);
+      var container2;
+      var containersIteratorResult = containersIterator.next();
+      do {
+        container2 = containersIteratorResult.value;
+        var context_1 = request.parentContext;
+        var serviceIdentifier = request.serviceIdentifier;
+        var activationsIterator = _getContainerActivationsForService(container2, serviceIdentifier);
+        if ((0, async_1.isPromise)(result)) {
+          result = _activateContainerAsync(activationsIterator, context_1, result);
+        } else {
+          result = _activateContainer(activationsIterator, context_1, result);
+        }
+        containersIteratorResult = containersIterator.next();
+      } while (containersIteratorResult.done !== true && !(0, planner_1.getBindingDictionary)(container2).hasKey(request.serviceIdentifier));
+      return result;
+    }
+    var _bindingActivation = function(context, binding, previousResult) {
+      var result;
+      if (typeof binding.onActivation === "function") {
+        result = binding.onActivation(context, previousResult);
+      } else {
+        result = previousResult;
+      }
+      return result;
+    };
+    var _activateContainer = function(activationsIterator, context, result) {
+      var activation = activationsIterator.next();
+      while (!activation.done) {
+        result = activation.value(context, result);
+        if ((0, async_1.isPromise)(result)) {
+          return _activateContainerAsync(activationsIterator, context, result);
+        }
+        activation = activationsIterator.next();
+      }
+      return result;
+    };
+    var _activateContainerAsync = function(activationsIterator, context, resultPromise) {
+      return __awaiter(void 0, void 0, void 0, function() {
+        var result, activation;
+        return __generator(this, function(_a) {
+          switch (_a.label) {
+            case 0:
+              return [4, resultPromise];
+            case 1:
+              result = _a.sent();
+              activation = activationsIterator.next();
+              _a.label = 2;
+            case 2:
+              if (!!activation.done)
+                return [3, 4];
+              return [4, activation.value(context, result)];
+            case 3:
+              result = _a.sent();
+              activation = activationsIterator.next();
+              return [3, 2];
+            case 4:
+              return [2, result];
+          }
+        });
+      });
+    };
+    var _getContainerActivationsForService = function(container2, serviceIdentifier) {
+      var activations = container2._activations;
+      return activations.hasKey(serviceIdentifier) ? activations.get(serviceIdentifier).values() : [].values();
+    };
+    var _getContainersIterator = function(container2) {
+      var containersStack = [container2];
+      var parent = container2.parent;
+      while (parent !== null) {
+        containersStack.push(parent);
+        parent = parent.parent;
+      }
+      var getNextContainer = function() {
+        var nextContainer = containersStack.pop();
+        if (nextContainer !== void 0) {
+          return { done: false, value: nextContainer };
+        } else {
+          return { done: true, value: void 0 };
+        }
+      };
+      var containersIterator = {
+        next: getNextContainer
+      };
+      return containersIterator;
+    };
+    function resolve(context) {
+      var _f = _resolveRequest(context.plan.rootRequest.requestScope);
+      return _f(context.plan.rootRequest);
+    }
+    exports.resolve = resolve;
+  }
+});
+
+// node_modules/inversify/lib/syntax/constraint_helpers.js
+var require_constraint_helpers = __commonJS({
+  "node_modules/inversify/lib/syntax/constraint_helpers.js"(exports) {
+    "use strict";
+    var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
+      if (k2 === void 0)
+        k2 = k;
+      Object.defineProperty(o, k2, { enumerable: true, get: function() {
+        return m[k];
+      } });
+    } : function(o, m, k, k2) {
+      if (k2 === void 0)
+        k2 = k;
+      o[k2] = m[k];
+    });
+    var __setModuleDefault = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
+      Object.defineProperty(o, "default", { enumerable: true, value: v });
+    } : function(o, v) {
+      o["default"] = v;
+    });
+    var __importStar = exports && exports.__importStar || function(mod) {
+      if (mod && mod.__esModule)
+        return mod;
+      var result = {};
+      if (mod != null) {
+        for (var k in mod)
+          if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
+            __createBinding(result, mod, k);
+      }
+      __setModuleDefault(result, mod);
+      return result;
+    };
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.typeConstraint = exports.namedConstraint = exports.taggedConstraint = exports.traverseAncerstors = void 0;
+    var METADATA_KEY = __importStar(require_metadata_keys());
+    var metadata_1 = require_metadata();
+    var traverseAncerstors = function(request, constraint) {
+      var parent = request.parentRequest;
+      if (parent !== null) {
+        return constraint(parent) ? true : traverseAncerstors(parent, constraint);
+      } else {
+        return false;
+      }
+    };
+    exports.traverseAncerstors = traverseAncerstors;
+    var taggedConstraint = function(key) {
+      return function(value) {
+        var constraint = function(request) {
+          return request !== null && request.target !== null && request.target.matchesTag(key)(value);
+        };
+        constraint.metaData = new metadata_1.Metadata(key, value);
+        return constraint;
+      };
+    };
+    exports.taggedConstraint = taggedConstraint;
+    var namedConstraint = taggedConstraint(METADATA_KEY.NAMED_TAG);
+    exports.namedConstraint = namedConstraint;
+    var typeConstraint = function(type) {
+      return function(request) {
+        var binding = null;
+        if (request !== null) {
+          binding = request.bindings[0];
+          if (typeof type === "string") {
+            var serviceIdentifier = binding.serviceIdentifier;
+            return serviceIdentifier === type;
+          } else {
+            var constructor = request.bindings[0].implementationType;
+            return type === constructor;
+          }
+        }
+        return false;
+      };
+    };
+    exports.typeConstraint = typeConstraint;
+  }
+});
+
+// node_modules/inversify/lib/syntax/binding_when_syntax.js
+var require_binding_when_syntax = __commonJS({
+  "node_modules/inversify/lib/syntax/binding_when_syntax.js"(exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.BindingWhenSyntax = void 0;
+    var binding_on_syntax_1 = require_binding_on_syntax();
+    var constraint_helpers_1 = require_constraint_helpers();
+    var BindingWhenSyntax = function() {
+      function BindingWhenSyntax2(binding) {
+        this._binding = binding;
+      }
+      BindingWhenSyntax2.prototype.when = function(constraint) {
+        this._binding.constraint = constraint;
+        return new binding_on_syntax_1.BindingOnSyntax(this._binding);
+      };
+      BindingWhenSyntax2.prototype.whenTargetNamed = function(name) {
+        this._binding.constraint = (0, constraint_helpers_1.namedConstraint)(name);
+        return new binding_on_syntax_1.BindingOnSyntax(this._binding);
+      };
+      BindingWhenSyntax2.prototype.whenTargetIsDefault = function() {
+        this._binding.constraint = function(request) {
+          if (request === null) {
+            return false;
+          }
+          var targetIsDefault = request.target !== null && !request.target.isNamed() && !request.target.isTagged();
+          return targetIsDefault;
+        };
+        return new binding_on_syntax_1.BindingOnSyntax(this._binding);
+      };
+      BindingWhenSyntax2.prototype.whenTargetTagged = function(tag, value) {
+        this._binding.constraint = (0, constraint_helpers_1.taggedConstraint)(tag)(value);
+        return new binding_on_syntax_1.BindingOnSyntax(this._binding);
+      };
+      BindingWhenSyntax2.prototype.whenInjectedInto = function(parent) {
+        this._binding.constraint = function(request) {
+          return request !== null && (0, constraint_helpers_1.typeConstraint)(parent)(request.parentRequest);
+        };
+        return new binding_on_syntax_1.BindingOnSyntax(this._binding);
+      };
+      BindingWhenSyntax2.prototype.whenParentNamed = function(name) {
+        this._binding.constraint = function(request) {
+          return request !== null && (0, constraint_helpers_1.namedConstraint)(name)(request.parentRequest);
+        };
+        return new binding_on_syntax_1.BindingOnSyntax(this._binding);
+      };
+      BindingWhenSyntax2.prototype.whenParentTagged = function(tag, value) {
+        this._binding.constraint = function(request) {
+          return request !== null && (0, constraint_helpers_1.taggedConstraint)(tag)(value)(request.parentRequest);
+        };
+        return new binding_on_syntax_1.BindingOnSyntax(this._binding);
+      };
+      BindingWhenSyntax2.prototype.whenAnyAncestorIs = function(ancestor) {
+        this._binding.constraint = function(request) {
+          return request !== null && (0, constraint_helpers_1.traverseAncerstors)(request, (0, constraint_helpers_1.typeConstraint)(ancestor));
+        };
+        return new binding_on_syntax_1.BindingOnSyntax(this._binding);
+      };
+      BindingWhenSyntax2.prototype.whenNoAncestorIs = function(ancestor) {
+        this._binding.constraint = function(request) {
+          return request !== null && !(0, constraint_helpers_1.traverseAncerstors)(request, (0, constraint_helpers_1.typeConstraint)(ancestor));
+        };
+        return new binding_on_syntax_1.BindingOnSyntax(this._binding);
+      };
+      BindingWhenSyntax2.prototype.whenAnyAncestorNamed = function(name) {
+        this._binding.constraint = function(request) {
+          return request !== null && (0, constraint_helpers_1.traverseAncerstors)(request, (0, constraint_helpers_1.namedConstraint)(name));
+        };
+        return new binding_on_syntax_1.BindingOnSyntax(this._binding);
+      };
+      BindingWhenSyntax2.prototype.whenNoAncestorNamed = function(name) {
+        this._binding.constraint = function(request) {
+          return request !== null && !(0, constraint_helpers_1.traverseAncerstors)(request, (0, constraint_helpers_1.namedConstraint)(name));
+        };
+        return new binding_on_syntax_1.BindingOnSyntax(this._binding);
+      };
+      BindingWhenSyntax2.prototype.whenAnyAncestorTagged = function(tag, value) {
+        this._binding.constraint = function(request) {
+          return request !== null && (0, constraint_helpers_1.traverseAncerstors)(request, (0, constraint_helpers_1.taggedConstraint)(tag)(value));
+        };
+        return new binding_on_syntax_1.BindingOnSyntax(this._binding);
+      };
+      BindingWhenSyntax2.prototype.whenNoAncestorTagged = function(tag, value) {
+        this._binding.constraint = function(request) {
+          return request !== null && !(0, constraint_helpers_1.traverseAncerstors)(request, (0, constraint_helpers_1.taggedConstraint)(tag)(value));
+        };
+        return new binding_on_syntax_1.BindingOnSyntax(this._binding);
+      };
+      BindingWhenSyntax2.prototype.whenAnyAncestorMatches = function(constraint) {
+        this._binding.constraint = function(request) {
+          return request !== null && (0, constraint_helpers_1.traverseAncerstors)(request, constraint);
+        };
+        return new binding_on_syntax_1.BindingOnSyntax(this._binding);
+      };
+      BindingWhenSyntax2.prototype.whenNoAncestorMatches = function(constraint) {
+        this._binding.constraint = function(request) {
+          return request !== null && !(0, constraint_helpers_1.traverseAncerstors)(request, constraint);
+        };
+        return new binding_on_syntax_1.BindingOnSyntax(this._binding);
+      };
+      return BindingWhenSyntax2;
+    }();
+    exports.BindingWhenSyntax = BindingWhenSyntax;
+  }
+});
+
+// node_modules/inversify/lib/syntax/binding_on_syntax.js
+var require_binding_on_syntax = __commonJS({
+  "node_modules/inversify/lib/syntax/binding_on_syntax.js"(exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.BindingOnSyntax = void 0;
+    var binding_when_syntax_1 = require_binding_when_syntax();
+    var BindingOnSyntax = function() {
+      function BindingOnSyntax2(binding) {
+        this._binding = binding;
+      }
+      BindingOnSyntax2.prototype.onActivation = function(handler) {
+        this._binding.onActivation = handler;
+        return new binding_when_syntax_1.BindingWhenSyntax(this._binding);
+      };
+      BindingOnSyntax2.prototype.onDeactivation = function(handler) {
+        this._binding.onDeactivation = handler;
+        return new binding_when_syntax_1.BindingWhenSyntax(this._binding);
+      };
+      return BindingOnSyntax2;
+    }();
+    exports.BindingOnSyntax = BindingOnSyntax;
+  }
+});
+
+// node_modules/inversify/lib/syntax/binding_when_on_syntax.js
+var require_binding_when_on_syntax = __commonJS({
+  "node_modules/inversify/lib/syntax/binding_when_on_syntax.js"(exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.BindingWhenOnSyntax = void 0;
+    var binding_on_syntax_1 = require_binding_on_syntax();
+    var binding_when_syntax_1 = require_binding_when_syntax();
+    var BindingWhenOnSyntax = function() {
+      function BindingWhenOnSyntax2(binding) {
+        this._binding = binding;
+        this._bindingWhenSyntax = new binding_when_syntax_1.BindingWhenSyntax(this._binding);
+        this._bindingOnSyntax = new binding_on_syntax_1.BindingOnSyntax(this._binding);
+      }
+      BindingWhenOnSyntax2.prototype.when = function(constraint) {
+        return this._bindingWhenSyntax.when(constraint);
+      };
+      BindingWhenOnSyntax2.prototype.whenTargetNamed = function(name) {
+        return this._bindingWhenSyntax.whenTargetNamed(name);
+      };
+      BindingWhenOnSyntax2.prototype.whenTargetIsDefault = function() {
+        return this._bindingWhenSyntax.whenTargetIsDefault();
+      };
+      BindingWhenOnSyntax2.prototype.whenTargetTagged = function(tag, value) {
+        return this._bindingWhenSyntax.whenTargetTagged(tag, value);
+      };
+      BindingWhenOnSyntax2.prototype.whenInjectedInto = function(parent) {
+        return this._bindingWhenSyntax.whenInjectedInto(parent);
+      };
+      BindingWhenOnSyntax2.prototype.whenParentNamed = function(name) {
+        return this._bindingWhenSyntax.whenParentNamed(name);
+      };
+      BindingWhenOnSyntax2.prototype.whenParentTagged = function(tag, value) {
+        return this._bindingWhenSyntax.whenParentTagged(tag, value);
+      };
+      BindingWhenOnSyntax2.prototype.whenAnyAncestorIs = function(ancestor) {
+        return this._bindingWhenSyntax.whenAnyAncestorIs(ancestor);
+      };
+      BindingWhenOnSyntax2.prototype.whenNoAncestorIs = function(ancestor) {
+        return this._bindingWhenSyntax.whenNoAncestorIs(ancestor);
+      };
+      BindingWhenOnSyntax2.prototype.whenAnyAncestorNamed = function(name) {
+        return this._bindingWhenSyntax.whenAnyAncestorNamed(name);
+      };
+      BindingWhenOnSyntax2.prototype.whenAnyAncestorTagged = function(tag, value) {
+        return this._bindingWhenSyntax.whenAnyAncestorTagged(tag, value);
+      };
+      BindingWhenOnSyntax2.prototype.whenNoAncestorNamed = function(name) {
+        return this._bindingWhenSyntax.whenNoAncestorNamed(name);
+      };
+      BindingWhenOnSyntax2.prototype.whenNoAncestorTagged = function(tag, value) {
+        return this._bindingWhenSyntax.whenNoAncestorTagged(tag, value);
+      };
+      BindingWhenOnSyntax2.prototype.whenAnyAncestorMatches = function(constraint) {
+        return this._bindingWhenSyntax.whenAnyAncestorMatches(constraint);
+      };
+      BindingWhenOnSyntax2.prototype.whenNoAncestorMatches = function(constraint) {
+        return this._bindingWhenSyntax.whenNoAncestorMatches(constraint);
+      };
+      BindingWhenOnSyntax2.prototype.onActivation = function(handler) {
+        return this._bindingOnSyntax.onActivation(handler);
+      };
+      BindingWhenOnSyntax2.prototype.onDeactivation = function(handler) {
+        return this._bindingOnSyntax.onDeactivation(handler);
+      };
+      return BindingWhenOnSyntax2;
+    }();
+    exports.BindingWhenOnSyntax = BindingWhenOnSyntax;
+  }
+});
+
+// node_modules/inversify/lib/syntax/binding_in_syntax.js
+var require_binding_in_syntax = __commonJS({
+  "node_modules/inversify/lib/syntax/binding_in_syntax.js"(exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.BindingInSyntax = void 0;
+    var literal_types_1 = require_literal_types();
+    var binding_when_on_syntax_1 = require_binding_when_on_syntax();
+    var BindingInSyntax = function() {
+      function BindingInSyntax2(binding) {
+        this._binding = binding;
+      }
+      BindingInSyntax2.prototype.inRequestScope = function() {
+        this._binding.scope = literal_types_1.BindingScopeEnum.Request;
+        return new binding_when_on_syntax_1.BindingWhenOnSyntax(this._binding);
+      };
+      BindingInSyntax2.prototype.inSingletonScope = function() {
+        this._binding.scope = literal_types_1.BindingScopeEnum.Singleton;
+        return new binding_when_on_syntax_1.BindingWhenOnSyntax(this._binding);
+      };
+      BindingInSyntax2.prototype.inTransientScope = function() {
+        this._binding.scope = literal_types_1.BindingScopeEnum.Transient;
+        return new binding_when_on_syntax_1.BindingWhenOnSyntax(this._binding);
+      };
+      return BindingInSyntax2;
+    }();
+    exports.BindingInSyntax = BindingInSyntax;
+  }
+});
+
+// node_modules/inversify/lib/syntax/binding_in_when_on_syntax.js
+var require_binding_in_when_on_syntax = __commonJS({
+  "node_modules/inversify/lib/syntax/binding_in_when_on_syntax.js"(exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.BindingInWhenOnSyntax = void 0;
+    var binding_in_syntax_1 = require_binding_in_syntax();
+    var binding_on_syntax_1 = require_binding_on_syntax();
+    var binding_when_syntax_1 = require_binding_when_syntax();
+    var BindingInWhenOnSyntax = function() {
+      function BindingInWhenOnSyntax2(binding) {
+        this._binding = binding;
+        this._bindingWhenSyntax = new binding_when_syntax_1.BindingWhenSyntax(this._binding);
+        this._bindingOnSyntax = new binding_on_syntax_1.BindingOnSyntax(this._binding);
+        this._bindingInSyntax = new binding_in_syntax_1.BindingInSyntax(binding);
+      }
+      BindingInWhenOnSyntax2.prototype.inRequestScope = function() {
+        return this._bindingInSyntax.inRequestScope();
+      };
+      BindingInWhenOnSyntax2.prototype.inSingletonScope = function() {
+        return this._bindingInSyntax.inSingletonScope();
+      };
+      BindingInWhenOnSyntax2.prototype.inTransientScope = function() {
+        return this._bindingInSyntax.inTransientScope();
+      };
+      BindingInWhenOnSyntax2.prototype.when = function(constraint) {
+        return this._bindingWhenSyntax.when(constraint);
+      };
+      BindingInWhenOnSyntax2.prototype.whenTargetNamed = function(name) {
+        return this._bindingWhenSyntax.whenTargetNamed(name);
+      };
+      BindingInWhenOnSyntax2.prototype.whenTargetIsDefault = function() {
+        return this._bindingWhenSyntax.whenTargetIsDefault();
+      };
+      BindingInWhenOnSyntax2.prototype.whenTargetTagged = function(tag, value) {
+        return this._bindingWhenSyntax.whenTargetTagged(tag, value);
+      };
+      BindingInWhenOnSyntax2.prototype.whenInjectedInto = function(parent) {
+        return this._bindingWhenSyntax.whenInjectedInto(parent);
+      };
+      BindingInWhenOnSyntax2.prototype.whenParentNamed = function(name) {
+        return this._bindingWhenSyntax.whenParentNamed(name);
+      };
+      BindingInWhenOnSyntax2.prototype.whenParentTagged = function(tag, value) {
+        return this._bindingWhenSyntax.whenParentTagged(tag, value);
+      };
+      BindingInWhenOnSyntax2.prototype.whenAnyAncestorIs = function(ancestor) {
+        return this._bindingWhenSyntax.whenAnyAncestorIs(ancestor);
+      };
+      BindingInWhenOnSyntax2.prototype.whenNoAncestorIs = function(ancestor) {
+        return this._bindingWhenSyntax.whenNoAncestorIs(ancestor);
+      };
+      BindingInWhenOnSyntax2.prototype.whenAnyAncestorNamed = function(name) {
+        return this._bindingWhenSyntax.whenAnyAncestorNamed(name);
+      };
+      BindingInWhenOnSyntax2.prototype.whenAnyAncestorTagged = function(tag, value) {
+        return this._bindingWhenSyntax.whenAnyAncestorTagged(tag, value);
+      };
+      BindingInWhenOnSyntax2.prototype.whenNoAncestorNamed = function(name) {
+        return this._bindingWhenSyntax.whenNoAncestorNamed(name);
+      };
+      BindingInWhenOnSyntax2.prototype.whenNoAncestorTagged = function(tag, value) {
+        return this._bindingWhenSyntax.whenNoAncestorTagged(tag, value);
+      };
+      BindingInWhenOnSyntax2.prototype.whenAnyAncestorMatches = function(constraint) {
+        return this._bindingWhenSyntax.whenAnyAncestorMatches(constraint);
+      };
+      BindingInWhenOnSyntax2.prototype.whenNoAncestorMatches = function(constraint) {
+        return this._bindingWhenSyntax.whenNoAncestorMatches(constraint);
+      };
+      BindingInWhenOnSyntax2.prototype.onActivation = function(handler) {
+        return this._bindingOnSyntax.onActivation(handler);
+      };
+      BindingInWhenOnSyntax2.prototype.onDeactivation = function(handler) {
+        return this._bindingOnSyntax.onDeactivation(handler);
+      };
+      return BindingInWhenOnSyntax2;
+    }();
+    exports.BindingInWhenOnSyntax = BindingInWhenOnSyntax;
+  }
+});
+
+// node_modules/inversify/lib/syntax/binding_to_syntax.js
+var require_binding_to_syntax = __commonJS({
+  "node_modules/inversify/lib/syntax/binding_to_syntax.js"(exports) {
+    "use strict";
+    var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
+      if (k2 === void 0)
+        k2 = k;
+      Object.defineProperty(o, k2, { enumerable: true, get: function() {
+        return m[k];
+      } });
+    } : function(o, m, k, k2) {
+      if (k2 === void 0)
+        k2 = k;
+      o[k2] = m[k];
+    });
+    var __setModuleDefault = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
+      Object.defineProperty(o, "default", { enumerable: true, value: v });
+    } : function(o, v) {
+      o["default"] = v;
+    });
+    var __importStar = exports && exports.__importStar || function(mod) {
+      if (mod && mod.__esModule)
+        return mod;
+      var result = {};
+      if (mod != null) {
+        for (var k in mod)
+          if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
+            __createBinding(result, mod, k);
+      }
+      __setModuleDefault(result, mod);
+      return result;
+    };
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.BindingToSyntax = void 0;
+    var ERROR_MSGS = __importStar(require_error_msgs());
+    var literal_types_1 = require_literal_types();
+    var binding_in_when_on_syntax_1 = require_binding_in_when_on_syntax();
+    var binding_when_on_syntax_1 = require_binding_when_on_syntax();
+    var BindingToSyntax = function() {
+      function BindingToSyntax2(binding) {
+        this._binding = binding;
+      }
+      BindingToSyntax2.prototype.to = function(constructor) {
+        this._binding.type = literal_types_1.BindingTypeEnum.Instance;
+        this._binding.implementationType = constructor;
+        return new binding_in_when_on_syntax_1.BindingInWhenOnSyntax(this._binding);
+      };
+      BindingToSyntax2.prototype.toSelf = function() {
+        if (typeof this._binding.serviceIdentifier !== "function") {
+          throw new Error("" + ERROR_MSGS.INVALID_TO_SELF_VALUE);
+        }
+        var self2 = this._binding.serviceIdentifier;
+        return this.to(self2);
+      };
+      BindingToSyntax2.prototype.toConstantValue = function(value) {
+        this._binding.type = literal_types_1.BindingTypeEnum.ConstantValue;
+        this._binding.cache = value;
+        this._binding.dynamicValue = null;
+        this._binding.implementationType = null;
+        this._binding.scope = literal_types_1.BindingScopeEnum.Singleton;
+        return new binding_when_on_syntax_1.BindingWhenOnSyntax(this._binding);
+      };
+      BindingToSyntax2.prototype.toDynamicValue = function(func) {
+        this._binding.type = literal_types_1.BindingTypeEnum.DynamicValue;
+        this._binding.cache = null;
+        this._binding.dynamicValue = func;
+        this._binding.implementationType = null;
+        return new binding_in_when_on_syntax_1.BindingInWhenOnSyntax(this._binding);
+      };
+      BindingToSyntax2.prototype.toConstructor = function(constructor) {
+        this._binding.type = literal_types_1.BindingTypeEnum.Constructor;
+        this._binding.implementationType = constructor;
+        this._binding.scope = literal_types_1.BindingScopeEnum.Singleton;
+        return new binding_when_on_syntax_1.BindingWhenOnSyntax(this._binding);
+      };
+      BindingToSyntax2.prototype.toFactory = function(factory) {
+        this._binding.type = literal_types_1.BindingTypeEnum.Factory;
+        this._binding.factory = factory;
+        this._binding.scope = literal_types_1.BindingScopeEnum.Singleton;
+        return new binding_when_on_syntax_1.BindingWhenOnSyntax(this._binding);
+      };
+      BindingToSyntax2.prototype.toFunction = function(func) {
+        if (typeof func !== "function") {
+          throw new Error(ERROR_MSGS.INVALID_FUNCTION_BINDING);
+        }
+        var bindingWhenOnSyntax = this.toConstantValue(func);
+        this._binding.type = literal_types_1.BindingTypeEnum.Function;
+        this._binding.scope = literal_types_1.BindingScopeEnum.Singleton;
+        return bindingWhenOnSyntax;
+      };
+      BindingToSyntax2.prototype.toAutoFactory = function(serviceIdentifier) {
+        this._binding.type = literal_types_1.BindingTypeEnum.Factory;
+        this._binding.factory = function(context) {
+          var autofactory = function() {
+            return context.container.get(serviceIdentifier);
+          };
+          return autofactory;
+        };
+        this._binding.scope = literal_types_1.BindingScopeEnum.Singleton;
+        return new binding_when_on_syntax_1.BindingWhenOnSyntax(this._binding);
+      };
+      BindingToSyntax2.prototype.toAutoNamedFactory = function(serviceIdentifier) {
+        this._binding.type = literal_types_1.BindingTypeEnum.Factory;
+        this._binding.factory = function(context) {
+          return function(named) {
+            return context.container.getNamed(serviceIdentifier, named);
+          };
+        };
+        return new binding_when_on_syntax_1.BindingWhenOnSyntax(this._binding);
+      };
+      BindingToSyntax2.prototype.toProvider = function(provider) {
+        this._binding.type = literal_types_1.BindingTypeEnum.Provider;
+        this._binding.provider = provider;
+        this._binding.scope = literal_types_1.BindingScopeEnum.Singleton;
+        return new binding_when_on_syntax_1.BindingWhenOnSyntax(this._binding);
+      };
+      BindingToSyntax2.prototype.toService = function(service) {
+        this.toDynamicValue(function(context) {
+          return context.container.get(service);
+        });
+      };
+      return BindingToSyntax2;
+    }();
+    exports.BindingToSyntax = BindingToSyntax;
+  }
+});
+
+// node_modules/inversify/lib/container/container_snapshot.js
+var require_container_snapshot = __commonJS({
+  "node_modules/inversify/lib/container/container_snapshot.js"(exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.ContainerSnapshot = void 0;
+    var ContainerSnapshot = function() {
+      function ContainerSnapshot2() {
+      }
+      ContainerSnapshot2.of = function(bindings, middleware, activations, deactivations, moduleActivationStore) {
+        var snapshot = new ContainerSnapshot2();
+        snapshot.bindings = bindings;
+        snapshot.middleware = middleware;
+        snapshot.deactivations = deactivations;
+        snapshot.activations = activations;
+        snapshot.moduleActivationStore = moduleActivationStore;
+        return snapshot;
+      };
+      return ContainerSnapshot2;
+    }();
+    exports.ContainerSnapshot = ContainerSnapshot;
+  }
+});
+
+// node_modules/inversify/lib/utils/clonable.js
+var require_clonable = __commonJS({
+  "node_modules/inversify/lib/utils/clonable.js"(exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.isClonable = void 0;
+    function isClonable(obj) {
+      return typeof obj === "object" && obj !== null && "clone" in obj && typeof obj.clone === "function";
+    }
+    exports.isClonable = isClonable;
+  }
+});
+
+// node_modules/inversify/lib/container/lookup.js
+var require_lookup = __commonJS({
+  "node_modules/inversify/lib/container/lookup.js"(exports) {
+    "use strict";
+    var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
+      if (k2 === void 0)
+        k2 = k;
+      Object.defineProperty(o, k2, { enumerable: true, get: function() {
+        return m[k];
+      } });
+    } : function(o, m, k, k2) {
+      if (k2 === void 0)
+        k2 = k;
+      o[k2] = m[k];
+    });
+    var __setModuleDefault = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
+      Object.defineProperty(o, "default", { enumerable: true, value: v });
+    } : function(o, v) {
+      o["default"] = v;
+    });
+    var __importStar = exports && exports.__importStar || function(mod) {
+      if (mod && mod.__esModule)
+        return mod;
+      var result = {};
+      if (mod != null) {
+        for (var k in mod)
+          if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
+            __createBinding(result, mod, k);
+      }
+      __setModuleDefault(result, mod);
+      return result;
+    };
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.Lookup = void 0;
+    var ERROR_MSGS = __importStar(require_error_msgs());
+    var clonable_1 = require_clonable();
+    var Lookup = function() {
+      function Lookup2() {
+        this._map = /* @__PURE__ */ new Map();
+      }
+      Lookup2.prototype.getMap = function() {
+        return this._map;
+      };
+      Lookup2.prototype.add = function(serviceIdentifier, value) {
+        if (serviceIdentifier === null || serviceIdentifier === void 0) {
+          throw new Error(ERROR_MSGS.NULL_ARGUMENT);
+        }
+        if (value === null || value === void 0) {
+          throw new Error(ERROR_MSGS.NULL_ARGUMENT);
+        }
+        var entry = this._map.get(serviceIdentifier);
+        if (entry !== void 0) {
+          entry.push(value);
+        } else {
+          this._map.set(serviceIdentifier, [value]);
+        }
+      };
+      Lookup2.prototype.get = function(serviceIdentifier) {
+        if (serviceIdentifier === null || serviceIdentifier === void 0) {
+          throw new Error(ERROR_MSGS.NULL_ARGUMENT);
+        }
+        var entry = this._map.get(serviceIdentifier);
+        if (entry !== void 0) {
+          return entry;
+        } else {
+          throw new Error(ERROR_MSGS.KEY_NOT_FOUND);
+        }
+      };
+      Lookup2.prototype.remove = function(serviceIdentifier) {
+        if (serviceIdentifier === null || serviceIdentifier === void 0) {
+          throw new Error(ERROR_MSGS.NULL_ARGUMENT);
+        }
+        if (!this._map.delete(serviceIdentifier)) {
+          throw new Error(ERROR_MSGS.KEY_NOT_FOUND);
+        }
+      };
+      Lookup2.prototype.removeIntersection = function(lookup) {
+        var _this = this;
+        this.traverse(function(serviceIdentifier, value) {
+          var lookupActivations = lookup.hasKey(serviceIdentifier) ? lookup.get(serviceIdentifier) : void 0;
+          if (lookupActivations !== void 0) {
+            var filteredValues = value.filter(function(lookupValue) {
+              return !lookupActivations.some(function(moduleActivation) {
+                return lookupValue === moduleActivation;
+              });
+            });
+            _this._setValue(serviceIdentifier, filteredValues);
+          }
+        });
+      };
+      Lookup2.prototype.removeByCondition = function(condition) {
+        var _this = this;
+        var removals = [];
+        this._map.forEach(function(entries, key) {
+          var updatedEntries = [];
+          for (var _i = 0, entries_1 = entries; _i < entries_1.length; _i++) {
+            var entry = entries_1[_i];
+            var remove = condition(entry);
+            if (remove) {
+              removals.push(entry);
+            } else {
+              updatedEntries.push(entry);
+            }
+          }
+          _this._setValue(key, updatedEntries);
+        });
+        return removals;
+      };
+      Lookup2.prototype.hasKey = function(serviceIdentifier) {
+        if (serviceIdentifier === null || serviceIdentifier === void 0) {
+          throw new Error(ERROR_MSGS.NULL_ARGUMENT);
+        }
+        return this._map.has(serviceIdentifier);
+      };
+      Lookup2.prototype.clone = function() {
+        var copy = new Lookup2();
+        this._map.forEach(function(value, key) {
+          value.forEach(function(b) {
+            return copy.add(key, (0, clonable_1.isClonable)(b) ? b.clone() : b);
+          });
+        });
+        return copy;
+      };
+      Lookup2.prototype.traverse = function(func) {
+        this._map.forEach(function(value, key) {
+          func(key, value);
+        });
+      };
+      Lookup2.prototype._setValue = function(serviceIdentifier, value) {
+        if (value.length > 0) {
+          this._map.set(serviceIdentifier, value);
+        } else {
+          this._map.delete(serviceIdentifier);
+        }
+      };
+      return Lookup2;
+    }();
+    exports.Lookup = Lookup;
+  }
+});
+
+// node_modules/inversify/lib/container/module_activation_store.js
+var require_module_activation_store = __commonJS({
+  "node_modules/inversify/lib/container/module_activation_store.js"(exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.ModuleActivationStore = void 0;
+    var lookup_1 = require_lookup();
+    var ModuleActivationStore = function() {
+      function ModuleActivationStore2() {
+        this._map = /* @__PURE__ */ new Map();
+      }
+      ModuleActivationStore2.prototype.remove = function(moduleId) {
+        if (this._map.has(moduleId)) {
+          var handlers = this._map.get(moduleId);
+          this._map.delete(moduleId);
+          return handlers;
+        }
+        return this._getEmptyHandlersStore();
+      };
+      ModuleActivationStore2.prototype.addDeactivation = function(moduleId, serviceIdentifier, onDeactivation) {
+        this._getModuleActivationHandlers(moduleId).onDeactivations.add(serviceIdentifier, onDeactivation);
+      };
+      ModuleActivationStore2.prototype.addActivation = function(moduleId, serviceIdentifier, onActivation) {
+        this._getModuleActivationHandlers(moduleId).onActivations.add(serviceIdentifier, onActivation);
+      };
+      ModuleActivationStore2.prototype.clone = function() {
+        var clone = new ModuleActivationStore2();
+        this._map.forEach(function(handlersStore, moduleId) {
+          clone._map.set(moduleId, {
+            onActivations: handlersStore.onActivations.clone(),
+            onDeactivations: handlersStore.onDeactivations.clone()
+          });
+        });
+        return clone;
+      };
+      ModuleActivationStore2.prototype._getModuleActivationHandlers = function(moduleId) {
+        var moduleActivationHandlers = this._map.get(moduleId);
+        if (moduleActivationHandlers === void 0) {
+          moduleActivationHandlers = this._getEmptyHandlersStore();
+          this._map.set(moduleId, moduleActivationHandlers);
+        }
+        return moduleActivationHandlers;
+      };
+      ModuleActivationStore2.prototype._getEmptyHandlersStore = function() {
+        var handlersStore = {
+          onActivations: new lookup_1.Lookup(),
+          onDeactivations: new lookup_1.Lookup()
+        };
+        return handlersStore;
+      };
+      return ModuleActivationStore2;
+    }();
+    exports.ModuleActivationStore = ModuleActivationStore;
+  }
+});
+
+// node_modules/inversify/lib/container/container.js
+var require_container = __commonJS({
+  "node_modules/inversify/lib/container/container.js"(exports) {
+    "use strict";
+    var __assign = exports && exports.__assign || function() {
+      __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+          s = arguments[i];
+          for (var p in s)
+            if (Object.prototype.hasOwnProperty.call(s, p))
+              t[p] = s[p];
+        }
+        return t;
+      };
+      return __assign.apply(this, arguments);
+    };
+    var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
+      if (k2 === void 0)
+        k2 = k;
+      Object.defineProperty(o, k2, { enumerable: true, get: function() {
+        return m[k];
+      } });
+    } : function(o, m, k, k2) {
+      if (k2 === void 0)
+        k2 = k;
+      o[k2] = m[k];
+    });
+    var __setModuleDefault = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
+      Object.defineProperty(o, "default", { enumerable: true, value: v });
+    } : function(o, v) {
+      o["default"] = v;
+    });
+    var __importStar = exports && exports.__importStar || function(mod) {
+      if (mod && mod.__esModule)
+        return mod;
+      var result = {};
+      if (mod != null) {
+        for (var k in mod)
+          if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
+            __createBinding(result, mod, k);
+      }
+      __setModuleDefault(result, mod);
+      return result;
+    };
+    var __awaiter = exports && exports.__awaiter || function(thisArg, _arguments, P, generator) {
+      function adopt(value) {
+        return value instanceof P ? value : new P(function(resolve) {
+          resolve(value);
+        });
+      }
+      return new (P || (P = Promise))(function(resolve, reject) {
+        function fulfilled(value) {
+          try {
+            step(generator.next(value));
+          } catch (e) {
+            reject(e);
+          }
+        }
+        function rejected(value) {
+          try {
+            step(generator["throw"](value));
+          } catch (e) {
+            reject(e);
+          }
+        }
+        function step(result) {
+          result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+        }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+      });
+    };
+    var __generator = exports && exports.__generator || function(thisArg, body) {
+      var _ = { label: 0, sent: function() {
+        if (t[0] & 1)
+          throw t[1];
+        return t[1];
+      }, trys: [], ops: [] }, f, y, t, g;
+      return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() {
+        return this;
+      }), g;
+      function verb(n) {
+        return function(v) {
+          return step([n, v]);
+        };
+      }
+      function step(op) {
+        if (f)
+          throw new TypeError("Generator is already executing.");
+        while (_)
+          try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done)
+              return t;
+            if (y = 0, t)
+              op = [op[0] & 2, t.value];
+            switch (op[0]) {
+              case 0:
+              case 1:
+                t = op;
+                break;
+              case 4:
+                _.label++;
+                return { value: op[1], done: false };
+              case 5:
+                _.label++;
+                y = op[1];
+                op = [0];
+                continue;
+              case 7:
+                op = _.ops.pop();
+                _.trys.pop();
+                continue;
+              default:
+                if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+                  _ = 0;
+                  continue;
+                }
+                if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+                  _.label = op[1];
+                  break;
+                }
+                if (op[0] === 6 && _.label < t[1]) {
+                  _.label = t[1];
+                  t = op;
+                  break;
+                }
+                if (t && _.label < t[2]) {
+                  _.label = t[2];
+                  _.ops.push(op);
+                  break;
+                }
+                if (t[2])
+                  _.ops.pop();
+                _.trys.pop();
+                continue;
+            }
+            op = body.call(thisArg, _);
+          } catch (e) {
+            op = [6, e];
+            y = 0;
+          } finally {
+            f = t = 0;
+          }
+        if (op[0] & 5)
+          throw op[1];
+        return { value: op[0] ? op[1] : void 0, done: true };
+      }
+    };
+    var __spreadArray = exports && exports.__spreadArray || function(to, from, pack) {
+      if (pack || arguments.length === 2)
+        for (var i = 0, l = from.length, ar; i < l; i++) {
+          if (ar || !(i in from)) {
+            if (!ar)
+              ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+          }
+        }
+      return to.concat(ar || Array.prototype.slice.call(from));
+    };
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.Container = void 0;
+    var binding_1 = require_binding();
+    var ERROR_MSGS = __importStar(require_error_msgs());
+    var literal_types_1 = require_literal_types();
+    var METADATA_KEY = __importStar(require_metadata_keys());
+    var metadata_reader_1 = require_metadata_reader();
+    var planner_1 = require_planner();
+    var resolver_1 = require_resolver();
+    var binding_to_syntax_1 = require_binding_to_syntax();
+    var async_1 = require_async();
+    var id_1 = require_id();
+    var serialization_1 = require_serialization();
+    var container_snapshot_1 = require_container_snapshot();
+    var lookup_1 = require_lookup();
+    var module_activation_store_1 = require_module_activation_store();
+    var Container2 = function() {
+      function Container3(containerOptions) {
+        var options = containerOptions || {};
+        if (typeof options !== "object") {
+          throw new Error("" + ERROR_MSGS.CONTAINER_OPTIONS_MUST_BE_AN_OBJECT);
+        }
+        if (options.defaultScope === void 0) {
+          options.defaultScope = literal_types_1.BindingScopeEnum.Transient;
+        } else if (options.defaultScope !== literal_types_1.BindingScopeEnum.Singleton && options.defaultScope !== literal_types_1.BindingScopeEnum.Transient && options.defaultScope !== literal_types_1.BindingScopeEnum.Request) {
+          throw new Error("" + ERROR_MSGS.CONTAINER_OPTIONS_INVALID_DEFAULT_SCOPE);
+        }
+        if (options.autoBindInjectable === void 0) {
+          options.autoBindInjectable = false;
+        } else if (typeof options.autoBindInjectable !== "boolean") {
+          throw new Error("" + ERROR_MSGS.CONTAINER_OPTIONS_INVALID_AUTO_BIND_INJECTABLE);
+        }
+        if (options.skipBaseClassChecks === void 0) {
+          options.skipBaseClassChecks = false;
+        } else if (typeof options.skipBaseClassChecks !== "boolean") {
+          throw new Error("" + ERROR_MSGS.CONTAINER_OPTIONS_INVALID_SKIP_BASE_CHECK);
+        }
+        this.options = {
+          autoBindInjectable: options.autoBindInjectable,
+          defaultScope: options.defaultScope,
+          skipBaseClassChecks: options.skipBaseClassChecks
+        };
+        this.id = (0, id_1.id)();
+        this._bindingDictionary = new lookup_1.Lookup();
+        this._snapshots = [];
+        this._middleware = null;
+        this._activations = new lookup_1.Lookup();
+        this._deactivations = new lookup_1.Lookup();
+        this.parent = null;
+        this._metadataReader = new metadata_reader_1.MetadataReader();
+        this._moduleActivationStore = new module_activation_store_1.ModuleActivationStore();
+      }
+      Container3.merge = function(container1, container2) {
+        var containers = [];
+        for (var _i = 2; _i < arguments.length; _i++) {
+          containers[_i - 2] = arguments[_i];
+        }
+        var container3 = new Container3();
+        var targetContainers = __spreadArray([container1, container2], containers, true).map(function(targetContainer) {
+          return (0, planner_1.getBindingDictionary)(targetContainer);
+        });
+        var bindingDictionary = (0, planner_1.getBindingDictionary)(container3);
+        function copyDictionary(origin, destination) {
+          origin.traverse(function(_key, value) {
+            value.forEach(function(binding) {
+              destination.add(binding.serviceIdentifier, binding.clone());
+            });
+          });
+        }
+        targetContainers.forEach(function(targetBindingDictionary) {
+          copyDictionary(targetBindingDictionary, bindingDictionary);
+        });
+        return container3;
+      };
+      Container3.prototype.load = function() {
+        var modules = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+          modules[_i] = arguments[_i];
+        }
+        var getHelpers = this._getContainerModuleHelpersFactory();
+        for (var _a = 0, modules_1 = modules; _a < modules_1.length; _a++) {
+          var currentModule = modules_1[_a];
+          var containerModuleHelpers = getHelpers(currentModule.id);
+          currentModule.registry(containerModuleHelpers.bindFunction, containerModuleHelpers.unbindFunction, containerModuleHelpers.isboundFunction, containerModuleHelpers.rebindFunction, containerModuleHelpers.unbindAsyncFunction, containerModuleHelpers.onActivationFunction, containerModuleHelpers.onDeactivationFunction);
+        }
+      };
+      Container3.prototype.loadAsync = function() {
+        var modules = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+          modules[_i] = arguments[_i];
+        }
+        return __awaiter(this, void 0, void 0, function() {
+          var getHelpers, _a, modules_2, currentModule, containerModuleHelpers;
+          return __generator(this, function(_b) {
+            switch (_b.label) {
+              case 0:
+                getHelpers = this._getContainerModuleHelpersFactory();
+                _a = 0, modules_2 = modules;
+                _b.label = 1;
+              case 1:
+                if (!(_a < modules_2.length))
+                  return [3, 4];
+                currentModule = modules_2[_a];
+                containerModuleHelpers = getHelpers(currentModule.id);
+                return [4, currentModule.registry(containerModuleHelpers.bindFunction, containerModuleHelpers.unbindFunction, containerModuleHelpers.isboundFunction, containerModuleHelpers.rebindFunction, containerModuleHelpers.unbindAsyncFunction, containerModuleHelpers.onActivationFunction, containerModuleHelpers.onDeactivationFunction)];
+              case 2:
+                _b.sent();
+                _b.label = 3;
+              case 3:
+                _a++;
+                return [3, 1];
+              case 4:
+                return [2];
+            }
+          });
+        });
+      };
+      Container3.prototype.unload = function() {
+        var _this = this;
+        var modules = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+          modules[_i] = arguments[_i];
+        }
+        modules.forEach(function(module3) {
+          var deactivations = _this._removeModuleBindings(module3.id);
+          _this._deactivateSingletons(deactivations);
+          _this._removeModuleHandlers(module3.id);
+        });
+      };
+      Container3.prototype.unloadAsync = function() {
+        var modules = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+          modules[_i] = arguments[_i];
+        }
+        return __awaiter(this, void 0, void 0, function() {
+          var _a, modules_3, module_1, deactivations;
+          return __generator(this, function(_b) {
+            switch (_b.label) {
+              case 0:
+                _a = 0, modules_3 = modules;
+                _b.label = 1;
+              case 1:
+                if (!(_a < modules_3.length))
+                  return [3, 4];
+                module_1 = modules_3[_a];
+                deactivations = this._removeModuleBindings(module_1.id);
+                return [4, this._deactivateSingletonsAsync(deactivations)];
+              case 2:
+                _b.sent();
+                this._removeModuleHandlers(module_1.id);
+                _b.label = 3;
+              case 3:
+                _a++;
+                return [3, 1];
+              case 4:
+                return [2];
+            }
+          });
+        });
+      };
+      Container3.prototype.bind = function(serviceIdentifier) {
+        var scope = this.options.defaultScope || literal_types_1.BindingScopeEnum.Transient;
+        var binding = new binding_1.Binding(serviceIdentifier, scope);
+        this._bindingDictionary.add(serviceIdentifier, binding);
+        return new binding_to_syntax_1.BindingToSyntax(binding);
+      };
+      Container3.prototype.rebind = function(serviceIdentifier) {
+        this.unbind(serviceIdentifier);
+        return this.bind(serviceIdentifier);
+      };
+      Container3.prototype.rebindAsync = function(serviceIdentifier) {
+        return __awaiter(this, void 0, void 0, function() {
+          return __generator(this, function(_a) {
+            switch (_a.label) {
+              case 0:
+                return [4, this.unbindAsync(serviceIdentifier)];
+              case 1:
+                _a.sent();
+                return [2, this.bind(serviceIdentifier)];
+            }
+          });
+        });
+      };
+      Container3.prototype.unbind = function(serviceIdentifier) {
+        if (this._bindingDictionary.hasKey(serviceIdentifier)) {
+          var bindings = this._bindingDictionary.get(serviceIdentifier);
+          this._deactivateSingletons(bindings);
+        }
+        this._removeServiceFromDictionary(serviceIdentifier);
+      };
+      Container3.prototype.unbindAsync = function(serviceIdentifier) {
+        return __awaiter(this, void 0, void 0, function() {
+          var bindings;
+          return __generator(this, function(_a) {
+            switch (_a.label) {
+              case 0:
+                if (!this._bindingDictionary.hasKey(serviceIdentifier))
+                  return [3, 2];
+                bindings = this._bindingDictionary.get(serviceIdentifier);
+                return [4, this._deactivateSingletonsAsync(bindings)];
+              case 1:
+                _a.sent();
+                _a.label = 2;
+              case 2:
+                this._removeServiceFromDictionary(serviceIdentifier);
+                return [2];
+            }
+          });
+        });
+      };
+      Container3.prototype.unbindAll = function() {
+        var _this = this;
+        this._bindingDictionary.traverse(function(_key, value) {
+          _this._deactivateSingletons(value);
+        });
+        this._bindingDictionary = new lookup_1.Lookup();
+      };
+      Container3.prototype.unbindAllAsync = function() {
+        return __awaiter(this, void 0, void 0, function() {
+          var promises;
+          var _this = this;
+          return __generator(this, function(_a) {
+            switch (_a.label) {
+              case 0:
+                promises = [];
+                this._bindingDictionary.traverse(function(_key, value) {
+                  promises.push(_this._deactivateSingletonsAsync(value));
+                });
+                return [4, Promise.all(promises)];
+              case 1:
+                _a.sent();
+                this._bindingDictionary = new lookup_1.Lookup();
+                return [2];
+            }
+          });
+        });
+      };
+      Container3.prototype.onActivation = function(serviceIdentifier, onActivation) {
+        this._activations.add(serviceIdentifier, onActivation);
+      };
+      Container3.prototype.onDeactivation = function(serviceIdentifier, onDeactivation) {
+        this._deactivations.add(serviceIdentifier, onDeactivation);
+      };
+      Container3.prototype.isBound = function(serviceIdentifier) {
+        var bound = this._bindingDictionary.hasKey(serviceIdentifier);
+        if (!bound && this.parent) {
+          bound = this.parent.isBound(serviceIdentifier);
+        }
+        return bound;
+      };
+      Container3.prototype.isCurrentBound = function(serviceIdentifier) {
+        return this._bindingDictionary.hasKey(serviceIdentifier);
+      };
+      Container3.prototype.isBoundNamed = function(serviceIdentifier, named) {
+        return this.isBoundTagged(serviceIdentifier, METADATA_KEY.NAMED_TAG, named);
+      };
+      Container3.prototype.isBoundTagged = function(serviceIdentifier, key, value) {
+        var bound = false;
+        if (this._bindingDictionary.hasKey(serviceIdentifier)) {
+          var bindings = this._bindingDictionary.get(serviceIdentifier);
+          var request_1 = (0, planner_1.createMockRequest)(this, serviceIdentifier, key, value);
+          bound = bindings.some(function(b) {
+            return b.constraint(request_1);
+          });
+        }
+        if (!bound && this.parent) {
+          bound = this.parent.isBoundTagged(serviceIdentifier, key, value);
+        }
+        return bound;
+      };
+      Container3.prototype.snapshot = function() {
+        this._snapshots.push(container_snapshot_1.ContainerSnapshot.of(this._bindingDictionary.clone(), this._middleware, this._activations.clone(), this._deactivations.clone(), this._moduleActivationStore.clone()));
+      };
+      Container3.prototype.restore = function() {
+        var snapshot = this._snapshots.pop();
+        if (snapshot === void 0) {
+          throw new Error(ERROR_MSGS.NO_MORE_SNAPSHOTS_AVAILABLE);
+        }
+        this._bindingDictionary = snapshot.bindings;
+        this._activations = snapshot.activations;
+        this._deactivations = snapshot.deactivations;
+        this._middleware = snapshot.middleware;
+        this._moduleActivationStore = snapshot.moduleActivationStore;
+      };
+      Container3.prototype.createChild = function(containerOptions) {
+        var child = new Container3(containerOptions || this.options);
+        child.parent = this;
+        return child;
+      };
+      Container3.prototype.applyMiddleware = function() {
+        var middlewares = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+          middlewares[_i] = arguments[_i];
+        }
+        var initial = this._middleware ? this._middleware : this._planAndResolve();
+        this._middleware = middlewares.reduce(function(prev, curr) {
+          return curr(prev);
+        }, initial);
+      };
+      Container3.prototype.applyCustomMetadataReader = function(metadataReader) {
+        this._metadataReader = metadataReader;
+      };
+      Container3.prototype.get = function(serviceIdentifier) {
+        var getArgs = this._getNotAllArgs(serviceIdentifier, false);
+        return this._getButThrowIfAsync(getArgs);
+      };
+      Container3.prototype.getAsync = function(serviceIdentifier) {
+        return __awaiter(this, void 0, void 0, function() {
+          var getArgs;
+          return __generator(this, function(_a) {
+            getArgs = this._getNotAllArgs(serviceIdentifier, false);
+            return [2, this._get(getArgs)];
+          });
+        });
+      };
+      Container3.prototype.getTagged = function(serviceIdentifier, key, value) {
+        var getArgs = this._getNotAllArgs(serviceIdentifier, false, key, value);
+        return this._getButThrowIfAsync(getArgs);
+      };
+      Container3.prototype.getTaggedAsync = function(serviceIdentifier, key, value) {
+        return __awaiter(this, void 0, void 0, function() {
+          var getArgs;
+          return __generator(this, function(_a) {
+            getArgs = this._getNotAllArgs(serviceIdentifier, false, key, value);
+            return [2, this._get(getArgs)];
+          });
+        });
+      };
+      Container3.prototype.getNamed = function(serviceIdentifier, named) {
+        return this.getTagged(serviceIdentifier, METADATA_KEY.NAMED_TAG, named);
+      };
+      Container3.prototype.getNamedAsync = function(serviceIdentifier, named) {
+        return this.getTaggedAsync(serviceIdentifier, METADATA_KEY.NAMED_TAG, named);
+      };
+      Container3.prototype.getAll = function(serviceIdentifier) {
+        var getArgs = this._getAllArgs(serviceIdentifier);
+        return this._getButThrowIfAsync(getArgs);
+      };
+      Container3.prototype.getAllAsync = function(serviceIdentifier) {
+        var getArgs = this._getAllArgs(serviceIdentifier);
+        return this._getAll(getArgs);
+      };
+      Container3.prototype.getAllTagged = function(serviceIdentifier, key, value) {
+        var getArgs = this._getNotAllArgs(serviceIdentifier, true, key, value);
+        return this._getButThrowIfAsync(getArgs);
+      };
+      Container3.prototype.getAllTaggedAsync = function(serviceIdentifier, key, value) {
+        var getArgs = this._getNotAllArgs(serviceIdentifier, true, key, value);
+        return this._getAll(getArgs);
+      };
+      Container3.prototype.getAllNamed = function(serviceIdentifier, named) {
+        return this.getAllTagged(serviceIdentifier, METADATA_KEY.NAMED_TAG, named);
+      };
+      Container3.prototype.getAllNamedAsync = function(serviceIdentifier, named) {
+        return this.getAllTaggedAsync(serviceIdentifier, METADATA_KEY.NAMED_TAG, named);
+      };
+      Container3.prototype.resolve = function(constructorFunction) {
+        var isBound = this.isBound(constructorFunction);
+        if (!isBound) {
+          this.bind(constructorFunction).toSelf();
+        }
+        var resolved = this.get(constructorFunction);
+        if (!isBound) {
+          this.unbind(constructorFunction);
+        }
+        return resolved;
+      };
+      Container3.prototype._preDestroy = function(constructor, instance) {
+        if (Reflect.hasMetadata(METADATA_KEY.PRE_DESTROY, constructor)) {
+          var data = Reflect.getMetadata(METADATA_KEY.PRE_DESTROY, constructor);
+          return instance[data.value]();
+        }
+      };
+      Container3.prototype._removeModuleHandlers = function(moduleId) {
+        var moduleActivationsHandlers = this._moduleActivationStore.remove(moduleId);
+        this._activations.removeIntersection(moduleActivationsHandlers.onActivations);
+        this._deactivations.removeIntersection(moduleActivationsHandlers.onDeactivations);
+      };
+      Container3.prototype._removeModuleBindings = function(moduleId) {
+        return this._bindingDictionary.removeByCondition(function(binding) {
+          return binding.moduleId === moduleId;
+        });
+      };
+      Container3.prototype._deactivate = function(binding, instance) {
+        var _this = this;
+        var constructor = Object.getPrototypeOf(instance).constructor;
+        try {
+          if (this._deactivations.hasKey(binding.serviceIdentifier)) {
+            var result = this._deactivateContainer(instance, this._deactivations.get(binding.serviceIdentifier).values());
+            if ((0, async_1.isPromise)(result)) {
+              return this._handleDeactivationError(result.then(function() {
+                return _this._propagateContainerDeactivationThenBindingAndPreDestroyAsync(binding, instance, constructor);
+              }), constructor);
+            }
+          }
+          var propagateDeactivationResult = this._propagateContainerDeactivationThenBindingAndPreDestroy(binding, instance, constructor);
+          if ((0, async_1.isPromise)(propagateDeactivationResult)) {
+            return this._handleDeactivationError(propagateDeactivationResult, constructor);
+          }
+        } catch (ex) {
+          throw new Error(ERROR_MSGS.ON_DEACTIVATION_ERROR(constructor.name, ex.message));
+        }
+      };
+      Container3.prototype._handleDeactivationError = function(asyncResult, constructor) {
+        return __awaiter(this, void 0, void 0, function() {
+          var ex_1;
+          return __generator(this, function(_a) {
+            switch (_a.label) {
+              case 0:
+                _a.trys.push([0, 2, , 3]);
+                return [4, asyncResult];
+              case 1:
+                _a.sent();
+                return [3, 3];
+              case 2:
+                ex_1 = _a.sent();
+                throw new Error(ERROR_MSGS.ON_DEACTIVATION_ERROR(constructor.name, ex_1.message));
+              case 3:
+                return [2];
+            }
+          });
+        });
+      };
+      Container3.prototype._deactivateContainer = function(instance, deactivationsIterator) {
+        var _this = this;
+        var deactivation = deactivationsIterator.next();
+        while (deactivation.value) {
+          var result = deactivation.value(instance);
+          if ((0, async_1.isPromise)(result)) {
+            return result.then(function() {
+              return _this._deactivateContainerAsync(instance, deactivationsIterator);
+            });
+          }
+          deactivation = deactivationsIterator.next();
+        }
+      };
+      Container3.prototype._deactivateContainerAsync = function(instance, deactivationsIterator) {
+        return __awaiter(this, void 0, void 0, function() {
+          var deactivation;
+          return __generator(this, function(_a) {
+            switch (_a.label) {
+              case 0:
+                deactivation = deactivationsIterator.next();
+                _a.label = 1;
+              case 1:
+                if (!deactivation.value)
+                  return [3, 3];
+                return [4, deactivation.value(instance)];
+              case 2:
+                _a.sent();
+                deactivation = deactivationsIterator.next();
+                return [3, 1];
+              case 3:
+                return [2];
+            }
+          });
+        });
+      };
+      Container3.prototype._getContainerModuleHelpersFactory = function() {
+        var _this = this;
+        var setModuleId = function(bindingToSyntax, moduleId) {
+          bindingToSyntax._binding.moduleId = moduleId;
+        };
+        var getBindFunction = function(moduleId) {
+          return function(serviceIdentifier) {
+            var bindingToSyntax = _this.bind(serviceIdentifier);
+            setModuleId(bindingToSyntax, moduleId);
+            return bindingToSyntax;
+          };
+        };
+        var getUnbindFunction = function() {
+          return function(serviceIdentifier) {
+            return _this.unbind(serviceIdentifier);
+          };
+        };
+        var getUnbindAsyncFunction = function() {
+          return function(serviceIdentifier) {
+            return _this.unbindAsync(serviceIdentifier);
+          };
+        };
+        var getIsboundFunction = function() {
+          return function(serviceIdentifier) {
+            return _this.isBound(serviceIdentifier);
+          };
+        };
+        var getRebindFunction = function(moduleId) {
+          return function(serviceIdentifier) {
+            var bindingToSyntax = _this.rebind(serviceIdentifier);
+            setModuleId(bindingToSyntax, moduleId);
+            return bindingToSyntax;
+          };
+        };
+        var getOnActivationFunction = function(moduleId) {
+          return function(serviceIdentifier, onActivation) {
+            _this._moduleActivationStore.addActivation(moduleId, serviceIdentifier, onActivation);
+            _this.onActivation(serviceIdentifier, onActivation);
+          };
+        };
+        var getOnDeactivationFunction = function(moduleId) {
+          return function(serviceIdentifier, onDeactivation) {
+            _this._moduleActivationStore.addDeactivation(moduleId, serviceIdentifier, onDeactivation);
+            _this.onDeactivation(serviceIdentifier, onDeactivation);
+          };
+        };
+        return function(mId) {
+          return {
+            bindFunction: getBindFunction(mId),
+            isboundFunction: getIsboundFunction(),
+            onActivationFunction: getOnActivationFunction(mId),
+            onDeactivationFunction: getOnDeactivationFunction(mId),
+            rebindFunction: getRebindFunction(mId),
+            unbindFunction: getUnbindFunction(),
+            unbindAsyncFunction: getUnbindAsyncFunction()
+          };
+        };
+      };
+      Container3.prototype._getAll = function(getArgs) {
+        return Promise.all(this._get(getArgs));
+      };
+      Container3.prototype._get = function(getArgs) {
+        var planAndResolveArgs = __assign(__assign({}, getArgs), { contextInterceptor: function(context) {
+          return context;
+        }, targetType: literal_types_1.TargetTypeEnum.Variable });
+        if (this._middleware) {
+          var middlewareResult = this._middleware(planAndResolveArgs);
+          if (middlewareResult === void 0 || middlewareResult === null) {
+            throw new Error(ERROR_MSGS.INVALID_MIDDLEWARE_RETURN);
+          }
+          return middlewareResult;
+        }
+        return this._planAndResolve()(planAndResolveArgs);
+      };
+      Container3.prototype._getButThrowIfAsync = function(getArgs) {
+        var result = this._get(getArgs);
+        if ((0, async_1.isPromiseOrContainsPromise)(result)) {
+          throw new Error(ERROR_MSGS.LAZY_IN_SYNC(getArgs.serviceIdentifier));
+        }
+        return result;
+      };
+      Container3.prototype._getAllArgs = function(serviceIdentifier) {
+        var getAllArgs = {
+          avoidConstraints: true,
+          isMultiInject: true,
+          serviceIdentifier
+        };
+        return getAllArgs;
+      };
+      Container3.prototype._getNotAllArgs = function(serviceIdentifier, isMultiInject, key, value) {
+        var getNotAllArgs = {
+          avoidConstraints: false,
+          isMultiInject,
+          serviceIdentifier,
+          key,
+          value
+        };
+        return getNotAllArgs;
+      };
+      Container3.prototype._planAndResolve = function() {
+        var _this = this;
+        return function(args) {
+          var context = (0, planner_1.plan)(_this._metadataReader, _this, args.isMultiInject, args.targetType, args.serviceIdentifier, args.key, args.value, args.avoidConstraints);
+          context = args.contextInterceptor(context);
+          var result = (0, resolver_1.resolve)(context);
+          return result;
+        };
+      };
+      Container3.prototype._deactivateIfSingleton = function(binding) {
+        var _this = this;
+        if (!binding.activated) {
+          return;
+        }
+        if ((0, async_1.isPromise)(binding.cache)) {
+          return binding.cache.then(function(resolved) {
+            return _this._deactivate(binding, resolved);
+          });
+        }
+        return this._deactivate(binding, binding.cache);
+      };
+      Container3.prototype._deactivateSingletons = function(bindings) {
+        for (var _i = 0, bindings_1 = bindings; _i < bindings_1.length; _i++) {
+          var binding = bindings_1[_i];
+          var result = this._deactivateIfSingleton(binding);
+          if ((0, async_1.isPromise)(result)) {
+            throw new Error(ERROR_MSGS.ASYNC_UNBIND_REQUIRED);
+          }
+        }
+      };
+      Container3.prototype._deactivateSingletonsAsync = function(bindings) {
+        return __awaiter(this, void 0, void 0, function() {
+          var _this = this;
+          return __generator(this, function(_a) {
+            switch (_a.label) {
+              case 0:
+                return [4, Promise.all(bindings.map(function(b) {
+                  return _this._deactivateIfSingleton(b);
+                }))];
+              case 1:
+                _a.sent();
+                return [2];
+            }
+          });
+        });
+      };
+      Container3.prototype._propagateContainerDeactivationThenBindingAndPreDestroy = function(binding, instance, constructor) {
+        if (this.parent) {
+          return this._deactivate.bind(this.parent)(binding, instance);
+        } else {
+          return this._bindingDeactivationAndPreDestroy(binding, instance, constructor);
+        }
+      };
+      Container3.prototype._propagateContainerDeactivationThenBindingAndPreDestroyAsync = function(binding, instance, constructor) {
+        return __awaiter(this, void 0, void 0, function() {
+          return __generator(this, function(_a) {
+            switch (_a.label) {
+              case 0:
+                if (!this.parent)
+                  return [3, 2];
+                return [4, this._deactivate.bind(this.parent)(binding, instance)];
+              case 1:
+                _a.sent();
+                return [3, 4];
+              case 2:
+                return [4, this._bindingDeactivationAndPreDestroyAsync(binding, instance, constructor)];
+              case 3:
+                _a.sent();
+                _a.label = 4;
+              case 4:
+                return [2];
+            }
+          });
+        });
+      };
+      Container3.prototype._removeServiceFromDictionary = function(serviceIdentifier) {
+        try {
+          this._bindingDictionary.remove(serviceIdentifier);
+        } catch (e) {
+          throw new Error(ERROR_MSGS.CANNOT_UNBIND + " " + (0, serialization_1.getServiceIdentifierAsString)(serviceIdentifier));
+        }
+      };
+      Container3.prototype._bindingDeactivationAndPreDestroy = function(binding, instance, constructor) {
+        var _this = this;
+        if (typeof binding.onDeactivation === "function") {
+          var result = binding.onDeactivation(instance);
+          if ((0, async_1.isPromise)(result)) {
+            return result.then(function() {
+              return _this._preDestroy(constructor, instance);
+            });
+          }
+        }
+        return this._preDestroy(constructor, instance);
+      };
+      Container3.prototype._bindingDeactivationAndPreDestroyAsync = function(binding, instance, constructor) {
+        return __awaiter(this, void 0, void 0, function() {
+          return __generator(this, function(_a) {
+            switch (_a.label) {
+              case 0:
+                if (!(typeof binding.onDeactivation === "function"))
+                  return [3, 2];
+                return [4, binding.onDeactivation(instance)];
+              case 1:
+                _a.sent();
+                _a.label = 2;
+              case 2:
+                return [4, this._preDestroy(constructor, instance)];
+              case 3:
+                _a.sent();
+                return [2];
+            }
+          });
+        });
+      };
+      return Container3;
+    }();
+    exports.Container = Container2;
+  }
+});
+
+// node_modules/inversify/lib/container/container_module.js
+var require_container_module = __commonJS({
+  "node_modules/inversify/lib/container/container_module.js"(exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.AsyncContainerModule = exports.ContainerModule = void 0;
+    var id_1 = require_id();
+    var ContainerModule = function() {
+      function ContainerModule2(registry) {
+        this.id = (0, id_1.id)();
+        this.registry = registry;
+      }
+      return ContainerModule2;
+    }();
+    exports.ContainerModule = ContainerModule;
+    var AsyncContainerModule = function() {
+      function AsyncContainerModule2(registry) {
+        this.id = (0, id_1.id)();
+        this.registry = registry;
+      }
+      return AsyncContainerModule2;
+    }();
+    exports.AsyncContainerModule = AsyncContainerModule;
+  }
+});
+
+// node_modules/inversify/lib/utils/js.js
+var require_js = __commonJS({
+  "node_modules/inversify/lib/utils/js.js"(exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.getFirstArrayDuplicate = void 0;
+    function getFirstArrayDuplicate(array) {
+      var seenValues = /* @__PURE__ */ new Set();
+      for (var _i = 0, array_1 = array; _i < array_1.length; _i++) {
+        var entry = array_1[_i];
+        if (seenValues.has(entry)) {
+          return entry;
+        } else {
+          seenValues.add(entry);
+        }
+      }
+      return void 0;
+    }
+    exports.getFirstArrayDuplicate = getFirstArrayDuplicate;
+  }
+});
+
+// node_modules/inversify/lib/annotation/decorator_utils.js
+var require_decorator_utils = __commonJS({
+  "node_modules/inversify/lib/annotation/decorator_utils.js"(exports) {
+    "use strict";
+    var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
+      if (k2 === void 0)
+        k2 = k;
+      Object.defineProperty(o, k2, { enumerable: true, get: function() {
+        return m[k];
+      } });
+    } : function(o, m, k, k2) {
+      if (k2 === void 0)
+        k2 = k;
+      o[k2] = m[k];
+    });
+    var __setModuleDefault = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
+      Object.defineProperty(o, "default", { enumerable: true, value: v });
+    } : function(o, v) {
+      o["default"] = v;
+    });
+    var __importStar = exports && exports.__importStar || function(mod) {
+      if (mod && mod.__esModule)
+        return mod;
+      var result = {};
+      if (mod != null) {
+        for (var k in mod)
+          if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
+            __createBinding(result, mod, k);
+      }
+      __setModuleDefault(result, mod);
+      return result;
+    };
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.createTaggedDecorator = exports.tagProperty = exports.tagParameter = exports.decorate = void 0;
+    var ERROR_MSGS = __importStar(require_error_msgs());
+    var METADATA_KEY = __importStar(require_metadata_keys());
+    var js_1 = require_js();
+    function targetIsConstructorFunction(target) {
+      return target.prototype !== void 0;
+    }
+    function _throwIfMethodParameter(parameterName) {
+      if (parameterName !== void 0) {
+        throw new Error(ERROR_MSGS.INVALID_DECORATOR_OPERATION);
+      }
+    }
+    function tagParameter(annotationTarget, parameterName, parameterIndex, metadata) {
+      _throwIfMethodParameter(parameterName);
+      _tagParameterOrProperty(METADATA_KEY.TAGGED, annotationTarget, parameterIndex.toString(), metadata);
+    }
+    exports.tagParameter = tagParameter;
+    function tagProperty(annotationTarget, propertyName, metadata) {
+      if (targetIsConstructorFunction(annotationTarget)) {
+        throw new Error(ERROR_MSGS.INVALID_DECORATOR_OPERATION);
+      }
+      _tagParameterOrProperty(METADATA_KEY.TAGGED_PROP, annotationTarget.constructor, propertyName, metadata);
+    }
+    exports.tagProperty = tagProperty;
+    function _ensureNoMetadataKeyDuplicates(metadata) {
+      var metadatas = [];
+      if (Array.isArray(metadata)) {
+        metadatas = metadata;
+        var duplicate = (0, js_1.getFirstArrayDuplicate)(metadatas.map(function(md) {
+          return md.key;
+        }));
+        if (duplicate !== void 0) {
+          throw new Error(ERROR_MSGS.DUPLICATED_METADATA + " " + duplicate.toString());
+        }
+      } else {
+        metadatas = [metadata];
+      }
+      return metadatas;
+    }
+    function _tagParameterOrProperty(metadataKey, annotationTarget, key, metadata) {
+      var metadatas = _ensureNoMetadataKeyDuplicates(metadata);
+      var paramsOrPropertiesMetadata = {};
+      if (Reflect.hasOwnMetadata(metadataKey, annotationTarget)) {
+        paramsOrPropertiesMetadata = Reflect.getMetadata(metadataKey, annotationTarget);
+      }
+      var paramOrPropertyMetadata = paramsOrPropertiesMetadata[key];
+      if (paramOrPropertyMetadata === void 0) {
+        paramOrPropertyMetadata = [];
+      } else {
+        var _loop_1 = function(m2) {
+          if (metadatas.some(function(md) {
+            return md.key === m2.key;
+          })) {
+            throw new Error(ERROR_MSGS.DUPLICATED_METADATA + " " + m2.key.toString());
+          }
+        };
+        for (var _i = 0, paramOrPropertyMetadata_1 = paramOrPropertyMetadata; _i < paramOrPropertyMetadata_1.length; _i++) {
+          var m = paramOrPropertyMetadata_1[_i];
+          _loop_1(m);
+        }
+      }
+      paramOrPropertyMetadata.push.apply(paramOrPropertyMetadata, metadatas);
+      paramsOrPropertiesMetadata[key] = paramOrPropertyMetadata;
+      Reflect.defineMetadata(metadataKey, paramsOrPropertiesMetadata, annotationTarget);
+    }
+    function createTaggedDecorator(metadata) {
+      return function(target, targetKey, indexOrPropertyDescriptor) {
+        if (typeof indexOrPropertyDescriptor === "number") {
+          tagParameter(target, targetKey, indexOrPropertyDescriptor, metadata);
+        } else {
+          tagProperty(target, targetKey, metadata);
+        }
+      };
+    }
+    exports.createTaggedDecorator = createTaggedDecorator;
+    function _decorate(decorators, target) {
+      Reflect.decorate(decorators, target);
+    }
+    function _param(paramIndex, decorator) {
+      return function(target, key) {
+        decorator(target, key, paramIndex);
+      };
+    }
+    function decorate(decorator, target, parameterIndexOrProperty) {
+      if (typeof parameterIndexOrProperty === "number") {
+        _decorate([_param(parameterIndexOrProperty, decorator)], target);
+      } else if (typeof parameterIndexOrProperty === "string") {
+        Reflect.decorate([decorator], target, parameterIndexOrProperty);
+      } else {
+        _decorate([decorator], target);
+      }
+    }
+    exports.decorate = decorate;
+  }
+});
+
+// node_modules/inversify/lib/annotation/injectable.js
+var require_injectable = __commonJS({
+  "node_modules/inversify/lib/annotation/injectable.js"(exports) {
+    "use strict";
+    var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
+      if (k2 === void 0)
+        k2 = k;
+      Object.defineProperty(o, k2, { enumerable: true, get: function() {
+        return m[k];
+      } });
+    } : function(o, m, k, k2) {
+      if (k2 === void 0)
+        k2 = k;
+      o[k2] = m[k];
+    });
+    var __setModuleDefault = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
+      Object.defineProperty(o, "default", { enumerable: true, value: v });
+    } : function(o, v) {
+      o["default"] = v;
+    });
+    var __importStar = exports && exports.__importStar || function(mod) {
+      if (mod && mod.__esModule)
+        return mod;
+      var result = {};
+      if (mod != null) {
+        for (var k in mod)
+          if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
+            __createBinding(result, mod, k);
+      }
+      __setModuleDefault(result, mod);
+      return result;
+    };
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.injectable = void 0;
+    var ERRORS_MSGS = __importStar(require_error_msgs());
+    var METADATA_KEY = __importStar(require_metadata_keys());
+    function injectable9() {
+      return function(target) {
+        if (Reflect.hasOwnMetadata(METADATA_KEY.PARAM_TYPES, target)) {
+          throw new Error(ERRORS_MSGS.DUPLICATED_INJECTABLE_DECORATOR);
+        }
+        var types = Reflect.getMetadata(METADATA_KEY.DESIGN_PARAM_TYPES, target) || [];
+        Reflect.defineMetadata(METADATA_KEY.PARAM_TYPES, types, target);
+        return target;
+      };
+    }
+    exports.injectable = injectable9;
+  }
+});
+
+// node_modules/inversify/lib/annotation/tagged.js
+var require_tagged = __commonJS({
+  "node_modules/inversify/lib/annotation/tagged.js"(exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.tagged = void 0;
+    var metadata_1 = require_metadata();
+    var decorator_utils_1 = require_decorator_utils();
+    function tagged(metadataKey, metadataValue) {
+      return (0, decorator_utils_1.createTaggedDecorator)(new metadata_1.Metadata(metadataKey, metadataValue));
+    }
+    exports.tagged = tagged;
+  }
+});
+
+// node_modules/inversify/lib/annotation/named.js
+var require_named = __commonJS({
+  "node_modules/inversify/lib/annotation/named.js"(exports) {
+    "use strict";
+    var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
+      if (k2 === void 0)
+        k2 = k;
+      Object.defineProperty(o, k2, { enumerable: true, get: function() {
+        return m[k];
+      } });
+    } : function(o, m, k, k2) {
+      if (k2 === void 0)
+        k2 = k;
+      o[k2] = m[k];
+    });
+    var __setModuleDefault = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
+      Object.defineProperty(o, "default", { enumerable: true, value: v });
+    } : function(o, v) {
+      o["default"] = v;
+    });
+    var __importStar = exports && exports.__importStar || function(mod) {
+      if (mod && mod.__esModule)
+        return mod;
+      var result = {};
+      if (mod != null) {
+        for (var k in mod)
+          if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
+            __createBinding(result, mod, k);
+      }
+      __setModuleDefault(result, mod);
+      return result;
+    };
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.named = void 0;
+    var METADATA_KEY = __importStar(require_metadata_keys());
+    var metadata_1 = require_metadata();
+    var decorator_utils_1 = require_decorator_utils();
+    function named(name) {
+      return (0, decorator_utils_1.createTaggedDecorator)(new metadata_1.Metadata(METADATA_KEY.NAMED_TAG, name));
+    }
+    exports.named = named;
+  }
+});
+
+// node_modules/inversify/lib/annotation/inject_base.js
+var require_inject_base = __commonJS({
+  "node_modules/inversify/lib/annotation/inject_base.js"(exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.injectBase = void 0;
+    var error_msgs_1 = require_error_msgs();
+    var metadata_1 = require_metadata();
+    var decorator_utils_1 = require_decorator_utils();
+    function injectBase(metadataKey) {
+      return function(serviceIdentifier) {
+        return function(target, targetKey, indexOrPropertyDescriptor) {
+          if (serviceIdentifier === void 0) {
+            var className = typeof target === "function" ? target.name : target.constructor.name;
+            throw new Error((0, error_msgs_1.UNDEFINED_INJECT_ANNOTATION)(className));
+          }
+          return (0, decorator_utils_1.createTaggedDecorator)(new metadata_1.Metadata(metadataKey, serviceIdentifier))(target, targetKey, indexOrPropertyDescriptor);
+        };
+      };
+    }
+    exports.injectBase = injectBase;
+  }
+});
+
+// node_modules/inversify/lib/annotation/inject.js
+var require_inject = __commonJS({
+  "node_modules/inversify/lib/annotation/inject.js"(exports) {
+    "use strict";
+    var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
+      if (k2 === void 0)
+        k2 = k;
+      Object.defineProperty(o, k2, { enumerable: true, get: function() {
+        return m[k];
+      } });
+    } : function(o, m, k, k2) {
+      if (k2 === void 0)
+        k2 = k;
+      o[k2] = m[k];
+    });
+    var __setModuleDefault = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
+      Object.defineProperty(o, "default", { enumerable: true, value: v });
+    } : function(o, v) {
+      o["default"] = v;
+    });
+    var __importStar = exports && exports.__importStar || function(mod) {
+      if (mod && mod.__esModule)
+        return mod;
+      var result = {};
+      if (mod != null) {
+        for (var k in mod)
+          if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
+            __createBinding(result, mod, k);
+      }
+      __setModuleDefault(result, mod);
+      return result;
+    };
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.inject = void 0;
+    var METADATA_KEY = __importStar(require_metadata_keys());
+    var inject_base_1 = require_inject_base();
+    var inject6 = (0, inject_base_1.injectBase)(METADATA_KEY.INJECT_TAG);
+    exports.inject = inject6;
+  }
+});
+
+// node_modules/inversify/lib/annotation/optional.js
+var require_optional = __commonJS({
+  "node_modules/inversify/lib/annotation/optional.js"(exports) {
+    "use strict";
+    var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
+      if (k2 === void 0)
+        k2 = k;
+      Object.defineProperty(o, k2, { enumerable: true, get: function() {
+        return m[k];
+      } });
+    } : function(o, m, k, k2) {
+      if (k2 === void 0)
+        k2 = k;
+      o[k2] = m[k];
+    });
+    var __setModuleDefault = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
+      Object.defineProperty(o, "default", { enumerable: true, value: v });
+    } : function(o, v) {
+      o["default"] = v;
+    });
+    var __importStar = exports && exports.__importStar || function(mod) {
+      if (mod && mod.__esModule)
+        return mod;
+      var result = {};
+      if (mod != null) {
+        for (var k in mod)
+          if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
+            __createBinding(result, mod, k);
+      }
+      __setModuleDefault(result, mod);
+      return result;
+    };
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.optional = void 0;
+    var METADATA_KEY = __importStar(require_metadata_keys());
+    var metadata_1 = require_metadata();
+    var decorator_utils_1 = require_decorator_utils();
+    function optional() {
+      return (0, decorator_utils_1.createTaggedDecorator)(new metadata_1.Metadata(METADATA_KEY.OPTIONAL_TAG, true));
+    }
+    exports.optional = optional;
+  }
+});
+
+// node_modules/inversify/lib/annotation/unmanaged.js
+var require_unmanaged = __commonJS({
+  "node_modules/inversify/lib/annotation/unmanaged.js"(exports) {
+    "use strict";
+    var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
+      if (k2 === void 0)
+        k2 = k;
+      Object.defineProperty(o, k2, { enumerable: true, get: function() {
+        return m[k];
+      } });
+    } : function(o, m, k, k2) {
+      if (k2 === void 0)
+        k2 = k;
+      o[k2] = m[k];
+    });
+    var __setModuleDefault = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
+      Object.defineProperty(o, "default", { enumerable: true, value: v });
+    } : function(o, v) {
+      o["default"] = v;
+    });
+    var __importStar = exports && exports.__importStar || function(mod) {
+      if (mod && mod.__esModule)
+        return mod;
+      var result = {};
+      if (mod != null) {
+        for (var k in mod)
+          if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
+            __createBinding(result, mod, k);
+      }
+      __setModuleDefault(result, mod);
+      return result;
+    };
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.unmanaged = void 0;
+    var METADATA_KEY = __importStar(require_metadata_keys());
+    var metadata_1 = require_metadata();
+    var decorator_utils_1 = require_decorator_utils();
+    function unmanaged() {
+      return function(target, targetKey, index) {
+        var metadata = new metadata_1.Metadata(METADATA_KEY.UNMANAGED_TAG, true);
+        (0, decorator_utils_1.tagParameter)(target, targetKey, index, metadata);
+      };
+    }
+    exports.unmanaged = unmanaged;
+  }
+});
+
+// node_modules/inversify/lib/annotation/multi_inject.js
+var require_multi_inject = __commonJS({
+  "node_modules/inversify/lib/annotation/multi_inject.js"(exports) {
+    "use strict";
+    var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
+      if (k2 === void 0)
+        k2 = k;
+      Object.defineProperty(o, k2, { enumerable: true, get: function() {
+        return m[k];
+      } });
+    } : function(o, m, k, k2) {
+      if (k2 === void 0)
+        k2 = k;
+      o[k2] = m[k];
+    });
+    var __setModuleDefault = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
+      Object.defineProperty(o, "default", { enumerable: true, value: v });
+    } : function(o, v) {
+      o["default"] = v;
+    });
+    var __importStar = exports && exports.__importStar || function(mod) {
+      if (mod && mod.__esModule)
+        return mod;
+      var result = {};
+      if (mod != null) {
+        for (var k in mod)
+          if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
+            __createBinding(result, mod, k);
+      }
+      __setModuleDefault(result, mod);
+      return result;
+    };
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.multiInject = void 0;
+    var METADATA_KEY = __importStar(require_metadata_keys());
+    var inject_base_1 = require_inject_base();
+    var multiInject = (0, inject_base_1.injectBase)(METADATA_KEY.MULTI_INJECT_TAG);
+    exports.multiInject = multiInject;
+  }
+});
+
+// node_modules/inversify/lib/annotation/target_name.js
+var require_target_name = __commonJS({
+  "node_modules/inversify/lib/annotation/target_name.js"(exports) {
+    "use strict";
+    var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
+      if (k2 === void 0)
+        k2 = k;
+      Object.defineProperty(o, k2, { enumerable: true, get: function() {
+        return m[k];
+      } });
+    } : function(o, m, k, k2) {
+      if (k2 === void 0)
+        k2 = k;
+      o[k2] = m[k];
+    });
+    var __setModuleDefault = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
+      Object.defineProperty(o, "default", { enumerable: true, value: v });
+    } : function(o, v) {
+      o["default"] = v;
+    });
+    var __importStar = exports && exports.__importStar || function(mod) {
+      if (mod && mod.__esModule)
+        return mod;
+      var result = {};
+      if (mod != null) {
+        for (var k in mod)
+          if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
+            __createBinding(result, mod, k);
+      }
+      __setModuleDefault(result, mod);
+      return result;
+    };
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.targetName = void 0;
+    var METADATA_KEY = __importStar(require_metadata_keys());
+    var metadata_1 = require_metadata();
+    var decorator_utils_1 = require_decorator_utils();
+    function targetName(name) {
+      return function(target, targetKey, index) {
+        var metadata = new metadata_1.Metadata(METADATA_KEY.NAME_TAG, name);
+        (0, decorator_utils_1.tagParameter)(target, targetKey, index, metadata);
+      };
+    }
+    exports.targetName = targetName;
+  }
+});
+
+// node_modules/inversify/lib/annotation/property_event_decorator.js
+var require_property_event_decorator = __commonJS({
+  "node_modules/inversify/lib/annotation/property_event_decorator.js"(exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.propertyEventDecorator = void 0;
+    var metadata_1 = require_metadata();
+    function propertyEventDecorator(eventKey, errorMessage) {
+      return function() {
+        return function(target, propertyKey) {
+          var metadata = new metadata_1.Metadata(eventKey, propertyKey);
+          if (Reflect.hasOwnMetadata(eventKey, target.constructor)) {
+            throw new Error(errorMessage);
+          }
+          Reflect.defineMetadata(eventKey, metadata, target.constructor);
+        };
+      };
+    }
+    exports.propertyEventDecorator = propertyEventDecorator;
+  }
+});
+
+// node_modules/inversify/lib/annotation/post_construct.js
+var require_post_construct = __commonJS({
+  "node_modules/inversify/lib/annotation/post_construct.js"(exports) {
+    "use strict";
+    var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
+      if (k2 === void 0)
+        k2 = k;
+      Object.defineProperty(o, k2, { enumerable: true, get: function() {
+        return m[k];
+      } });
+    } : function(o, m, k, k2) {
+      if (k2 === void 0)
+        k2 = k;
+      o[k2] = m[k];
+    });
+    var __setModuleDefault = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
+      Object.defineProperty(o, "default", { enumerable: true, value: v });
+    } : function(o, v) {
+      o["default"] = v;
+    });
+    var __importStar = exports && exports.__importStar || function(mod) {
+      if (mod && mod.__esModule)
+        return mod;
+      var result = {};
+      if (mod != null) {
+        for (var k in mod)
+          if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
+            __createBinding(result, mod, k);
+      }
+      __setModuleDefault(result, mod);
+      return result;
+    };
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.postConstruct = void 0;
+    var ERRORS_MSGS = __importStar(require_error_msgs());
+    var METADATA_KEY = __importStar(require_metadata_keys());
+    var property_event_decorator_1 = require_property_event_decorator();
+    var postConstruct = (0, property_event_decorator_1.propertyEventDecorator)(METADATA_KEY.POST_CONSTRUCT, ERRORS_MSGS.MULTIPLE_POST_CONSTRUCT_METHODS);
+    exports.postConstruct = postConstruct;
+  }
+});
+
+// node_modules/inversify/lib/annotation/pre_destroy.js
+var require_pre_destroy = __commonJS({
+  "node_modules/inversify/lib/annotation/pre_destroy.js"(exports) {
+    "use strict";
+    var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
+      if (k2 === void 0)
+        k2 = k;
+      Object.defineProperty(o, k2, { enumerable: true, get: function() {
+        return m[k];
+      } });
+    } : function(o, m, k, k2) {
+      if (k2 === void 0)
+        k2 = k;
+      o[k2] = m[k];
+    });
+    var __setModuleDefault = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
+      Object.defineProperty(o, "default", { enumerable: true, value: v });
+    } : function(o, v) {
+      o["default"] = v;
+    });
+    var __importStar = exports && exports.__importStar || function(mod) {
+      if (mod && mod.__esModule)
+        return mod;
+      var result = {};
+      if (mod != null) {
+        for (var k in mod)
+          if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
+            __createBinding(result, mod, k);
+      }
+      __setModuleDefault(result, mod);
+      return result;
+    };
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.preDestroy = void 0;
+    var ERRORS_MSGS = __importStar(require_error_msgs());
+    var METADATA_KEY = __importStar(require_metadata_keys());
+    var property_event_decorator_1 = require_property_event_decorator();
+    var preDestroy = (0, property_event_decorator_1.propertyEventDecorator)(METADATA_KEY.PRE_DESTROY, ERRORS_MSGS.MULTIPLE_PRE_DESTROY_METHODS);
+    exports.preDestroy = preDestroy;
+  }
+});
+
+// node_modules/inversify/lib/interfaces/interfaces.js
+var require_interfaces = __commonJS({
+  "node_modules/inversify/lib/interfaces/interfaces.js"(exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.interfaces = void 0;
+    var interfaces;
+    (function(interfaces2) {
+      ;
+    })(interfaces || (interfaces = {}));
+    exports.interfaces = interfaces;
+  }
+});
+
+// node_modules/inversify/lib/inversify.js
+var require_inversify = __commonJS({
+  "node_modules/inversify/lib/inversify.js"(exports) {
+    "use strict";
+    var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
+      if (k2 === void 0)
+        k2 = k;
+      Object.defineProperty(o, k2, { enumerable: true, get: function() {
+        return m[k];
+      } });
+    } : function(o, m, k, k2) {
+      if (k2 === void 0)
+        k2 = k;
+      o[k2] = m[k];
+    });
+    var __setModuleDefault = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
+      Object.defineProperty(o, "default", { enumerable: true, value: v });
+    } : function(o, v) {
+      o["default"] = v;
+    });
+    var __importStar = exports && exports.__importStar || function(mod) {
+      if (mod && mod.__esModule)
+        return mod;
+      var result = {};
+      if (mod != null) {
+        for (var k in mod)
+          if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
+            __createBinding(result, mod, k);
+      }
+      __setModuleDefault(result, mod);
+      return result;
+    };
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.multiBindToService = exports.getServiceIdentifierAsString = exports.typeConstraint = exports.namedConstraint = exports.taggedConstraint = exports.traverseAncerstors = exports.decorate = exports.interfaces = exports.id = exports.MetadataReader = exports.preDestroy = exports.postConstruct = exports.targetName = exports.multiInject = exports.unmanaged = exports.optional = exports.LazyServiceIdentifer = exports.inject = exports.named = exports.tagged = exports.injectable = exports.createTaggedDecorator = exports.ContainerModule = exports.AsyncContainerModule = exports.TargetTypeEnum = exports.BindingTypeEnum = exports.BindingScopeEnum = exports.Container = exports.METADATA_KEY = void 0;
+    var keys = __importStar(require_metadata_keys());
+    exports.METADATA_KEY = keys;
+    var container_1 = require_container();
+    Object.defineProperty(exports, "Container", { enumerable: true, get: function() {
+      return container_1.Container;
+    } });
+    var literal_types_1 = require_literal_types();
+    Object.defineProperty(exports, "BindingScopeEnum", { enumerable: true, get: function() {
+      return literal_types_1.BindingScopeEnum;
+    } });
+    Object.defineProperty(exports, "BindingTypeEnum", { enumerable: true, get: function() {
+      return literal_types_1.BindingTypeEnum;
+    } });
+    Object.defineProperty(exports, "TargetTypeEnum", { enumerable: true, get: function() {
+      return literal_types_1.TargetTypeEnum;
+    } });
+    var container_module_1 = require_container_module();
+    Object.defineProperty(exports, "AsyncContainerModule", { enumerable: true, get: function() {
+      return container_module_1.AsyncContainerModule;
+    } });
+    Object.defineProperty(exports, "ContainerModule", { enumerable: true, get: function() {
+      return container_module_1.ContainerModule;
+    } });
+    var decorator_utils_1 = require_decorator_utils();
+    Object.defineProperty(exports, "createTaggedDecorator", { enumerable: true, get: function() {
+      return decorator_utils_1.createTaggedDecorator;
+    } });
+    var injectable_1 = require_injectable();
+    Object.defineProperty(exports, "injectable", { enumerable: true, get: function() {
+      return injectable_1.injectable;
+    } });
+    var tagged_1 = require_tagged();
+    Object.defineProperty(exports, "tagged", { enumerable: true, get: function() {
+      return tagged_1.tagged;
+    } });
+    var named_1 = require_named();
+    Object.defineProperty(exports, "named", { enumerable: true, get: function() {
+      return named_1.named;
+    } });
+    var inject_1 = require_inject();
+    Object.defineProperty(exports, "inject", { enumerable: true, get: function() {
+      return inject_1.inject;
+    } });
+    var lazy_service_identifier_1 = require_lazy_service_identifier();
+    Object.defineProperty(exports, "LazyServiceIdentifer", { enumerable: true, get: function() {
+      return lazy_service_identifier_1.LazyServiceIdentifer;
+    } });
+    var optional_1 = require_optional();
+    Object.defineProperty(exports, "optional", { enumerable: true, get: function() {
+      return optional_1.optional;
+    } });
+    var unmanaged_1 = require_unmanaged();
+    Object.defineProperty(exports, "unmanaged", { enumerable: true, get: function() {
+      return unmanaged_1.unmanaged;
+    } });
+    var multi_inject_1 = require_multi_inject();
+    Object.defineProperty(exports, "multiInject", { enumerable: true, get: function() {
+      return multi_inject_1.multiInject;
+    } });
+    var target_name_1 = require_target_name();
+    Object.defineProperty(exports, "targetName", { enumerable: true, get: function() {
+      return target_name_1.targetName;
+    } });
+    var post_construct_1 = require_post_construct();
+    Object.defineProperty(exports, "postConstruct", { enumerable: true, get: function() {
+      return post_construct_1.postConstruct;
+    } });
+    var pre_destroy_1 = require_pre_destroy();
+    Object.defineProperty(exports, "preDestroy", { enumerable: true, get: function() {
+      return pre_destroy_1.preDestroy;
+    } });
+    var metadata_reader_1 = require_metadata_reader();
+    Object.defineProperty(exports, "MetadataReader", { enumerable: true, get: function() {
+      return metadata_reader_1.MetadataReader;
+    } });
+    var id_1 = require_id();
+    Object.defineProperty(exports, "id", { enumerable: true, get: function() {
+      return id_1.id;
+    } });
+    var interfaces_1 = require_interfaces();
+    Object.defineProperty(exports, "interfaces", { enumerable: true, get: function() {
+      return interfaces_1.interfaces;
+    } });
+    var decorator_utils_2 = require_decorator_utils();
+    Object.defineProperty(exports, "decorate", { enumerable: true, get: function() {
+      return decorator_utils_2.decorate;
+    } });
+    var constraint_helpers_1 = require_constraint_helpers();
+    Object.defineProperty(exports, "traverseAncerstors", { enumerable: true, get: function() {
+      return constraint_helpers_1.traverseAncerstors;
+    } });
+    Object.defineProperty(exports, "taggedConstraint", { enumerable: true, get: function() {
+      return constraint_helpers_1.taggedConstraint;
+    } });
+    Object.defineProperty(exports, "namedConstraint", { enumerable: true, get: function() {
+      return constraint_helpers_1.namedConstraint;
+    } });
+    Object.defineProperty(exports, "typeConstraint", { enumerable: true, get: function() {
+      return constraint_helpers_1.typeConstraint;
+    } });
+    var serialization_1 = require_serialization();
+    Object.defineProperty(exports, "getServiceIdentifierAsString", { enumerable: true, get: function() {
+      return serialization_1.getServiceIdentifierAsString;
+    } });
+    var binding_utils_1 = require_binding_utils();
+    Object.defineProperty(exports, "multiBindToService", { enumerable: true, get: function() {
+      return binding_utils_1.multiBindToService;
+    } });
+  }
+});
 
 // node_modules/mongoose/lib/driver.js
 var require_driver = __commonJS({
@@ -58825,4397 +63222,4626 @@ var require_mongoose = __commonJS({
   }
 });
 
-// node_modules/inversify/lib/constants/metadata_keys.js
-var require_metadata_keys = __commonJS({
-  "node_modules/inversify/lib/constants/metadata_keys.js"(exports) {
+// node_modules/postgres-array/index.js
+var require_postgres_array = __commonJS({
+  "node_modules/postgres-array/index.js"(exports) {
     "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.NON_CUSTOM_TAG_KEYS = exports.PRE_DESTROY = exports.POST_CONSTRUCT = exports.DESIGN_PARAM_TYPES = exports.PARAM_TYPES = exports.TAGGED_PROP = exports.TAGGED = exports.MULTI_INJECT_TAG = exports.INJECT_TAG = exports.OPTIONAL_TAG = exports.UNMANAGED_TAG = exports.NAME_TAG = exports.NAMED_TAG = void 0;
-    exports.NAMED_TAG = "named";
-    exports.NAME_TAG = "name";
-    exports.UNMANAGED_TAG = "unmanaged";
-    exports.OPTIONAL_TAG = "optional";
-    exports.INJECT_TAG = "inject";
-    exports.MULTI_INJECT_TAG = "multi_inject";
-    exports.TAGGED = "inversify:tagged";
-    exports.TAGGED_PROP = "inversify:tagged_props";
-    exports.PARAM_TYPES = "inversify:paramtypes";
-    exports.DESIGN_PARAM_TYPES = "design:paramtypes";
-    exports.POST_CONSTRUCT = "post_construct";
-    exports.PRE_DESTROY = "pre_destroy";
-    function getNonCustomTagKeys() {
-      return [
-        exports.INJECT_TAG,
-        exports.MULTI_INJECT_TAG,
-        exports.NAME_TAG,
-        exports.UNMANAGED_TAG,
-        exports.NAMED_TAG,
-        exports.OPTIONAL_TAG
-      ];
-    }
-    exports.NON_CUSTOM_TAG_KEYS = getNonCustomTagKeys();
-  }
-});
-
-// node_modules/inversify/lib/constants/literal_types.js
-var require_literal_types = __commonJS({
-  "node_modules/inversify/lib/constants/literal_types.js"(exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.TargetTypeEnum = exports.BindingTypeEnum = exports.BindingScopeEnum = void 0;
-    var BindingScopeEnum = {
-      Request: "Request",
-      Singleton: "Singleton",
-      Transient: "Transient"
+    exports.parse = function(source, transform) {
+      return new ArrayParser(source, transform).parse();
     };
-    exports.BindingScopeEnum = BindingScopeEnum;
-    var BindingTypeEnum = {
-      ConstantValue: "ConstantValue",
-      Constructor: "Constructor",
-      DynamicValue: "DynamicValue",
-      Factory: "Factory",
-      Function: "Function",
-      Instance: "Instance",
-      Invalid: "Invalid",
-      Provider: "Provider"
-    };
-    exports.BindingTypeEnum = BindingTypeEnum;
-    var TargetTypeEnum = {
-      ClassProperty: "ClassProperty",
-      ConstructorArgument: "ConstructorArgument",
-      Variable: "Variable"
-    };
-    exports.TargetTypeEnum = TargetTypeEnum;
-  }
-});
-
-// node_modules/inversify/lib/utils/id.js
-var require_id = __commonJS({
-  "node_modules/inversify/lib/utils/id.js"(exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.id = void 0;
-    var idCounter = 0;
-    function id() {
-      return idCounter++;
-    }
-    exports.id = id;
-  }
-});
-
-// node_modules/inversify/lib/bindings/binding.js
-var require_binding = __commonJS({
-  "node_modules/inversify/lib/bindings/binding.js"(exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.Binding = void 0;
-    var literal_types_1 = require_literal_types();
-    var id_1 = require_id();
-    var Binding = function() {
-      function Binding2(serviceIdentifier, scope) {
-        this.id = (0, id_1.id)();
-        this.activated = false;
-        this.serviceIdentifier = serviceIdentifier;
-        this.scope = scope;
-        this.type = literal_types_1.BindingTypeEnum.Invalid;
-        this.constraint = function(request) {
-          return true;
-        };
-        this.implementationType = null;
-        this.cache = null;
-        this.factory = null;
-        this.provider = null;
-        this.onActivation = null;
-        this.onDeactivation = null;
-        this.dynamicValue = null;
+    var ArrayParser = class {
+      constructor(source, transform) {
+        this.source = source;
+        this.transform = transform || identity;
+        this.position = 0;
+        this.entries = [];
+        this.recorded = [];
+        this.dimension = 0;
       }
-      Binding2.prototype.clone = function() {
-        var clone = new Binding2(this.serviceIdentifier, this.scope);
-        clone.activated = clone.scope === literal_types_1.BindingScopeEnum.Singleton ? this.activated : false;
-        clone.implementationType = this.implementationType;
-        clone.dynamicValue = this.dynamicValue;
-        clone.scope = this.scope;
-        clone.type = this.type;
-        clone.factory = this.factory;
-        clone.provider = this.provider;
-        clone.constraint = this.constraint;
-        clone.onActivation = this.onActivation;
-        clone.onDeactivation = this.onDeactivation;
-        clone.cache = this.cache;
-        return clone;
-      };
-      return Binding2;
-    }();
-    exports.Binding = Binding;
-  }
-});
-
-// node_modules/inversify/lib/constants/error_msgs.js
-var require_error_msgs = __commonJS({
-  "node_modules/inversify/lib/constants/error_msgs.js"(exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.STACK_OVERFLOW = exports.CIRCULAR_DEPENDENCY_IN_FACTORY = exports.ON_DEACTIVATION_ERROR = exports.PRE_DESTROY_ERROR = exports.POST_CONSTRUCT_ERROR = exports.ASYNC_UNBIND_REQUIRED = exports.MULTIPLE_POST_CONSTRUCT_METHODS = exports.MULTIPLE_PRE_DESTROY_METHODS = exports.CONTAINER_OPTIONS_INVALID_SKIP_BASE_CHECK = exports.CONTAINER_OPTIONS_INVALID_AUTO_BIND_INJECTABLE = exports.CONTAINER_OPTIONS_INVALID_DEFAULT_SCOPE = exports.CONTAINER_OPTIONS_MUST_BE_AN_OBJECT = exports.ARGUMENTS_LENGTH_MISMATCH = exports.INVALID_DECORATOR_OPERATION = exports.INVALID_TO_SELF_VALUE = exports.LAZY_IN_SYNC = exports.INVALID_FUNCTION_BINDING = exports.INVALID_MIDDLEWARE_RETURN = exports.NO_MORE_SNAPSHOTS_AVAILABLE = exports.INVALID_BINDING_TYPE = exports.NOT_IMPLEMENTED = exports.CIRCULAR_DEPENDENCY = exports.UNDEFINED_INJECT_ANNOTATION = exports.MISSING_INJECT_ANNOTATION = exports.MISSING_INJECTABLE_ANNOTATION = exports.NOT_REGISTERED = exports.CANNOT_UNBIND = exports.AMBIGUOUS_MATCH = exports.KEY_NOT_FOUND = exports.NULL_ARGUMENT = exports.DUPLICATED_METADATA = exports.DUPLICATED_INJECTABLE_DECORATOR = void 0;
-    exports.DUPLICATED_INJECTABLE_DECORATOR = "Cannot apply @injectable decorator multiple times.";
-    exports.DUPLICATED_METADATA = "Metadata key was used more than once in a parameter:";
-    exports.NULL_ARGUMENT = "NULL argument";
-    exports.KEY_NOT_FOUND = "Key Not Found";
-    exports.AMBIGUOUS_MATCH = "Ambiguous match found for serviceIdentifier:";
-    exports.CANNOT_UNBIND = "Could not unbind serviceIdentifier:";
-    exports.NOT_REGISTERED = "No matching bindings found for serviceIdentifier:";
-    exports.MISSING_INJECTABLE_ANNOTATION = "Missing required @injectable annotation in:";
-    exports.MISSING_INJECT_ANNOTATION = "Missing required @inject or @multiInject annotation in:";
-    var UNDEFINED_INJECT_ANNOTATION = function(name) {
-      return "@inject called with undefined this could mean that the class " + name + " has a circular dependency problem. You can use a LazyServiceIdentifer to  overcome this limitation.";
-    };
-    exports.UNDEFINED_INJECT_ANNOTATION = UNDEFINED_INJECT_ANNOTATION;
-    exports.CIRCULAR_DEPENDENCY = "Circular dependency found:";
-    exports.NOT_IMPLEMENTED = "Sorry, this feature is not fully implemented yet.";
-    exports.INVALID_BINDING_TYPE = "Invalid binding type:";
-    exports.NO_MORE_SNAPSHOTS_AVAILABLE = "No snapshot available to restore.";
-    exports.INVALID_MIDDLEWARE_RETURN = "Invalid return type in middleware. Middleware must return!";
-    exports.INVALID_FUNCTION_BINDING = "Value provided to function binding must be a function!";
-    var LAZY_IN_SYNC = function(key) {
-      return "You are attempting to construct '" + key + "' in a synchronous way\n but it has asynchronous dependencies.";
-    };
-    exports.LAZY_IN_SYNC = LAZY_IN_SYNC;
-    exports.INVALID_TO_SELF_VALUE = "The toSelf function can only be applied when a constructor is used as service identifier";
-    exports.INVALID_DECORATOR_OPERATION = "The @inject @multiInject @tagged and @named decorators must be applied to the parameters of a class constructor or a class property.";
-    var ARGUMENTS_LENGTH_MISMATCH = function() {
-      var values = [];
-      for (var _i = 0; _i < arguments.length; _i++) {
-        values[_i] = arguments[_i];
+      isEof() {
+        return this.position >= this.source.length;
       }
-      return "The number of constructor arguments in the derived class " + (values[0] + " must be >= than the number of constructor arguments of its base class.");
-    };
-    exports.ARGUMENTS_LENGTH_MISMATCH = ARGUMENTS_LENGTH_MISMATCH;
-    exports.CONTAINER_OPTIONS_MUST_BE_AN_OBJECT = "Invalid Container constructor argument. Container options must be an object.";
-    exports.CONTAINER_OPTIONS_INVALID_DEFAULT_SCOPE = "Invalid Container option. Default scope must be a string ('singleton' or 'transient').";
-    exports.CONTAINER_OPTIONS_INVALID_AUTO_BIND_INJECTABLE = "Invalid Container option. Auto bind injectable must be a boolean";
-    exports.CONTAINER_OPTIONS_INVALID_SKIP_BASE_CHECK = "Invalid Container option. Skip base check must be a boolean";
-    exports.MULTIPLE_PRE_DESTROY_METHODS = "Cannot apply @preDestroy decorator multiple times in the same class";
-    exports.MULTIPLE_POST_CONSTRUCT_METHODS = "Cannot apply @postConstruct decorator multiple times in the same class";
-    exports.ASYNC_UNBIND_REQUIRED = "Attempting to unbind dependency with asynchronous destruction (@preDestroy or onDeactivation)";
-    var POST_CONSTRUCT_ERROR = function(clazz, errorMessage) {
-      return "@postConstruct error in class " + clazz + ": " + errorMessage;
-    };
-    exports.POST_CONSTRUCT_ERROR = POST_CONSTRUCT_ERROR;
-    var PRE_DESTROY_ERROR = function(clazz, errorMessage) {
-      return "@preDestroy error in class " + clazz + ": " + errorMessage;
-    };
-    exports.PRE_DESTROY_ERROR = PRE_DESTROY_ERROR;
-    var ON_DEACTIVATION_ERROR = function(clazz, errorMessage) {
-      return "onDeactivation() error in class " + clazz + ": " + errorMessage;
-    };
-    exports.ON_DEACTIVATION_ERROR = ON_DEACTIVATION_ERROR;
-    var CIRCULAR_DEPENDENCY_IN_FACTORY = function(factoryType, serviceIdentifier) {
-      return "It looks like there is a circular dependency in one of the '" + factoryType + "' bindings. Please investigate bindings with" + ("service identifier '" + serviceIdentifier + "'.");
-    };
-    exports.CIRCULAR_DEPENDENCY_IN_FACTORY = CIRCULAR_DEPENDENCY_IN_FACTORY;
-    exports.STACK_OVERFLOW = "Maximum call stack size exceeded";
-  }
-});
-
-// node_modules/inversify/lib/planning/metadata_reader.js
-var require_metadata_reader = __commonJS({
-  "node_modules/inversify/lib/planning/metadata_reader.js"(exports) {
-    "use strict";
-    var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
-      if (k2 === void 0)
-        k2 = k;
-      Object.defineProperty(o, k2, { enumerable: true, get: function() {
-        return m[k];
-      } });
-    } : function(o, m, k, k2) {
-      if (k2 === void 0)
-        k2 = k;
-      o[k2] = m[k];
-    });
-    var __setModuleDefault = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
-      Object.defineProperty(o, "default", { enumerable: true, value: v });
-    } : function(o, v) {
-      o["default"] = v;
-    });
-    var __importStar = exports && exports.__importStar || function(mod) {
-      if (mod && mod.__esModule)
-        return mod;
-      var result = {};
-      if (mod != null) {
-        for (var k in mod)
-          if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
-            __createBinding(result, mod, k);
-      }
-      __setModuleDefault(result, mod);
-      return result;
-    };
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.MetadataReader = void 0;
-    var METADATA_KEY = __importStar(require_metadata_keys());
-    var MetadataReader = function() {
-      function MetadataReader2() {
-      }
-      MetadataReader2.prototype.getConstructorMetadata = function(constructorFunc) {
-        var compilerGeneratedMetadata = Reflect.getMetadata(METADATA_KEY.PARAM_TYPES, constructorFunc);
-        var userGeneratedMetadata = Reflect.getMetadata(METADATA_KEY.TAGGED, constructorFunc);
+      nextCharacter() {
+        var character = this.source[this.position++];
+        if (character === "\\") {
+          return {
+            value: this.source[this.position++],
+            escaped: true
+          };
+        }
         return {
-          compilerGeneratedMetadata,
-          userGeneratedMetadata: userGeneratedMetadata || {}
+          value: character,
+          escaped: false
         };
-      };
-      MetadataReader2.prototype.getPropertiesMetadata = function(constructorFunc) {
-        var userGeneratedMetadata = Reflect.getMetadata(METADATA_KEY.TAGGED_PROP, constructorFunc) || [];
-        return userGeneratedMetadata;
-      };
-      return MetadataReader2;
-    }();
-    exports.MetadataReader = MetadataReader;
-  }
-});
-
-// node_modules/inversify/lib/bindings/binding_count.js
-var require_binding_count = __commonJS({
-  "node_modules/inversify/lib/bindings/binding_count.js"(exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.BindingCount = void 0;
-    var BindingCount = {
-      MultipleBindingsAvailable: 2,
-      NoBindingsAvailable: 0,
-      OnlyOneBindingAvailable: 1
-    };
-    exports.BindingCount = BindingCount;
-  }
-});
-
-// node_modules/inversify/lib/utils/exceptions.js
-var require_exceptions = __commonJS({
-  "node_modules/inversify/lib/utils/exceptions.js"(exports) {
-    "use strict";
-    var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
-      if (k2 === void 0)
-        k2 = k;
-      Object.defineProperty(o, k2, { enumerable: true, get: function() {
-        return m[k];
-      } });
-    } : function(o, m, k, k2) {
-      if (k2 === void 0)
-        k2 = k;
-      o[k2] = m[k];
-    });
-    var __setModuleDefault = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
-      Object.defineProperty(o, "default", { enumerable: true, value: v });
-    } : function(o, v) {
-      o["default"] = v;
-    });
-    var __importStar = exports && exports.__importStar || function(mod) {
-      if (mod && mod.__esModule)
-        return mod;
-      var result = {};
-      if (mod != null) {
-        for (var k in mod)
-          if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
-            __createBinding(result, mod, k);
       }
-      __setModuleDefault(result, mod);
-      return result;
-    };
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.tryAndThrowErrorIfStackOverflow = exports.isStackOverflowExeption = void 0;
-    var ERROR_MSGS = __importStar(require_error_msgs());
-    function isStackOverflowExeption(error) {
-      return error instanceof RangeError || error.message === ERROR_MSGS.STACK_OVERFLOW;
-    }
-    exports.isStackOverflowExeption = isStackOverflowExeption;
-    var tryAndThrowErrorIfStackOverflow = function(fn, errorCallback) {
-      try {
-        return fn();
-      } catch (error) {
-        if (isStackOverflowExeption(error)) {
-          error = errorCallback();
-        }
-        throw error;
+      record(character) {
+        this.recorded.push(character);
       }
-    };
-    exports.tryAndThrowErrorIfStackOverflow = tryAndThrowErrorIfStackOverflow;
-  }
-});
-
-// node_modules/inversify/lib/utils/serialization.js
-var require_serialization = __commonJS({
-  "node_modules/inversify/lib/utils/serialization.js"(exports) {
-    "use strict";
-    var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
-      if (k2 === void 0)
-        k2 = k;
-      Object.defineProperty(o, k2, { enumerable: true, get: function() {
-        return m[k];
-      } });
-    } : function(o, m, k, k2) {
-      if (k2 === void 0)
-        k2 = k;
-      o[k2] = m[k];
-    });
-    var __setModuleDefault = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
-      Object.defineProperty(o, "default", { enumerable: true, value: v });
-    } : function(o, v) {
-      o["default"] = v;
-    });
-    var __importStar = exports && exports.__importStar || function(mod) {
-      if (mod && mod.__esModule)
-        return mod;
-      var result = {};
-      if (mod != null) {
-        for (var k in mod)
-          if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
-            __createBinding(result, mod, k);
-      }
-      __setModuleDefault(result, mod);
-      return result;
-    };
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.getSymbolDescription = exports.circularDependencyToException = exports.listMetadataForTarget = exports.listRegisteredBindingsForServiceIdentifier = exports.getServiceIdentifierAsString = exports.getFunctionName = void 0;
-    var ERROR_MSGS = __importStar(require_error_msgs());
-    function getServiceIdentifierAsString(serviceIdentifier) {
-      if (typeof serviceIdentifier === "function") {
-        var _serviceIdentifier = serviceIdentifier;
-        return _serviceIdentifier.name;
-      } else if (typeof serviceIdentifier === "symbol") {
-        return serviceIdentifier.toString();
-      } else {
-        var _serviceIdentifier = serviceIdentifier;
-        return _serviceIdentifier;
-      }
-    }
-    exports.getServiceIdentifierAsString = getServiceIdentifierAsString;
-    function listRegisteredBindingsForServiceIdentifier(container2, serviceIdentifier, getBindings) {
-      var registeredBindingsList = "";
-      var registeredBindings = getBindings(container2, serviceIdentifier);
-      if (registeredBindings.length !== 0) {
-        registeredBindingsList = "\nRegistered bindings:";
-        registeredBindings.forEach(function(binding) {
-          var name = "Object";
-          if (binding.implementationType !== null) {
-            name = getFunctionName(binding.implementationType);
+      newEntry(includeEmpty) {
+        var entry;
+        if (this.recorded.length > 0 || includeEmpty) {
+          entry = this.recorded.join("");
+          if (entry === "NULL" && !includeEmpty) {
+            entry = null;
           }
-          registeredBindingsList = registeredBindingsList + "\n " + name;
-          if (binding.constraint.metaData) {
-            registeredBindingsList = registeredBindingsList + " - " + binding.constraint.metaData;
-          }
-        });
-      }
-      return registeredBindingsList;
-    }
-    exports.listRegisteredBindingsForServiceIdentifier = listRegisteredBindingsForServiceIdentifier;
-    function alreadyDependencyChain(request, serviceIdentifier) {
-      if (request.parentRequest === null) {
-        return false;
-      } else if (request.parentRequest.serviceIdentifier === serviceIdentifier) {
-        return true;
-      } else {
-        return alreadyDependencyChain(request.parentRequest, serviceIdentifier);
-      }
-    }
-    function dependencyChainToString(request) {
-      function _createStringArr(req, result) {
-        if (result === void 0) {
-          result = [];
-        }
-        var serviceIdentifier = getServiceIdentifierAsString(req.serviceIdentifier);
-        result.push(serviceIdentifier);
-        if (req.parentRequest !== null) {
-          return _createStringArr(req.parentRequest, result);
-        }
-        return result;
-      }
-      var stringArr = _createStringArr(request);
-      return stringArr.reverse().join(" --> ");
-    }
-    function circularDependencyToException(request) {
-      request.childRequests.forEach(function(childRequest) {
-        if (alreadyDependencyChain(childRequest, childRequest.serviceIdentifier)) {
-          var services = dependencyChainToString(childRequest);
-          throw new Error(ERROR_MSGS.CIRCULAR_DEPENDENCY + " " + services);
-        } else {
-          circularDependencyToException(childRequest);
-        }
-      });
-    }
-    exports.circularDependencyToException = circularDependencyToException;
-    function listMetadataForTarget(serviceIdentifierString, target) {
-      if (target.isTagged() || target.isNamed()) {
-        var m_1 = "";
-        var namedTag = target.getNamedTag();
-        var otherTags = target.getCustomTags();
-        if (namedTag !== null) {
-          m_1 += namedTag.toString() + "\n";
-        }
-        if (otherTags !== null) {
-          otherTags.forEach(function(tag) {
-            m_1 += tag.toString() + "\n";
-          });
-        }
-        return " " + serviceIdentifierString + "\n " + serviceIdentifierString + " - " + m_1;
-      } else {
-        return " " + serviceIdentifierString;
-      }
-    }
-    exports.listMetadataForTarget = listMetadataForTarget;
-    function getFunctionName(func) {
-      if (func.name) {
-        return func.name;
-      } else {
-        var name_1 = func.toString();
-        var match = name_1.match(/^function\s*([^\s(]+)/);
-        return match ? match[1] : "Anonymous function: " + name_1;
-      }
-    }
-    exports.getFunctionName = getFunctionName;
-    function getSymbolDescription(symbol) {
-      return symbol.toString().slice(7, -1);
-    }
-    exports.getSymbolDescription = getSymbolDescription;
-  }
-});
-
-// node_modules/inversify/lib/planning/context.js
-var require_context = __commonJS({
-  "node_modules/inversify/lib/planning/context.js"(exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.Context = void 0;
-    var id_1 = require_id();
-    var Context = function() {
-      function Context2(container2) {
-        this.id = (0, id_1.id)();
-        this.container = container2;
-      }
-      Context2.prototype.addPlan = function(plan) {
-        this.plan = plan;
-      };
-      Context2.prototype.setCurrentRequest = function(currentRequest) {
-        this.currentRequest = currentRequest;
-      };
-      return Context2;
-    }();
-    exports.Context = Context;
-  }
-});
-
-// node_modules/inversify/lib/planning/metadata.js
-var require_metadata = __commonJS({
-  "node_modules/inversify/lib/planning/metadata.js"(exports) {
-    "use strict";
-    var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
-      if (k2 === void 0)
-        k2 = k;
-      Object.defineProperty(o, k2, { enumerable: true, get: function() {
-        return m[k];
-      } });
-    } : function(o, m, k, k2) {
-      if (k2 === void 0)
-        k2 = k;
-      o[k2] = m[k];
-    });
-    var __setModuleDefault = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
-      Object.defineProperty(o, "default", { enumerable: true, value: v });
-    } : function(o, v) {
-      o["default"] = v;
-    });
-    var __importStar = exports && exports.__importStar || function(mod) {
-      if (mod && mod.__esModule)
-        return mod;
-      var result = {};
-      if (mod != null) {
-        for (var k in mod)
-          if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
-            __createBinding(result, mod, k);
-      }
-      __setModuleDefault(result, mod);
-      return result;
-    };
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.Metadata = void 0;
-    var METADATA_KEY = __importStar(require_metadata_keys());
-    var Metadata = function() {
-      function Metadata2(key, value) {
-        this.key = key;
-        this.value = value;
-      }
-      Metadata2.prototype.toString = function() {
-        if (this.key === METADATA_KEY.NAMED_TAG) {
-          return "named: " + String(this.value).toString() + " ";
-        } else {
-          return "tagged: { key:" + this.key.toString() + ", value: " + String(this.value) + " }";
-        }
-      };
-      return Metadata2;
-    }();
-    exports.Metadata = Metadata;
-  }
-});
-
-// node_modules/inversify/lib/planning/plan.js
-var require_plan = __commonJS({
-  "node_modules/inversify/lib/planning/plan.js"(exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.Plan = void 0;
-    var Plan = function() {
-      function Plan2(parentContext, rootRequest) {
-        this.parentContext = parentContext;
-        this.rootRequest = rootRequest;
-      }
-      return Plan2;
-    }();
-    exports.Plan = Plan;
-  }
-});
-
-// node_modules/inversify/lib/annotation/lazy_service_identifier.js
-var require_lazy_service_identifier = __commonJS({
-  "node_modules/inversify/lib/annotation/lazy_service_identifier.js"(exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.LazyServiceIdentifer = void 0;
-    var LazyServiceIdentifer = function() {
-      function LazyServiceIdentifer2(cb) {
-        this._cb = cb;
-      }
-      LazyServiceIdentifer2.prototype.unwrap = function() {
-        return this._cb();
-      };
-      return LazyServiceIdentifer2;
-    }();
-    exports.LazyServiceIdentifer = LazyServiceIdentifer;
-  }
-});
-
-// node_modules/inversify/lib/planning/queryable_string.js
-var require_queryable_string = __commonJS({
-  "node_modules/inversify/lib/planning/queryable_string.js"(exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.QueryableString = void 0;
-    var QueryableString = function() {
-      function QueryableString2(str) {
-        this.str = str;
-      }
-      QueryableString2.prototype.startsWith = function(searchString) {
-        return this.str.indexOf(searchString) === 0;
-      };
-      QueryableString2.prototype.endsWith = function(searchString) {
-        var reverseString = "";
-        var reverseSearchString = searchString.split("").reverse().join("");
-        reverseString = this.str.split("").reverse().join("");
-        return this.startsWith.call({ str: reverseString }, reverseSearchString);
-      };
-      QueryableString2.prototype.contains = function(searchString) {
-        return this.str.indexOf(searchString) !== -1;
-      };
-      QueryableString2.prototype.equals = function(compareString) {
-        return this.str === compareString;
-      };
-      QueryableString2.prototype.value = function() {
-        return this.str;
-      };
-      return QueryableString2;
-    }();
-    exports.QueryableString = QueryableString;
-  }
-});
-
-// node_modules/inversify/lib/planning/target.js
-var require_target = __commonJS({
-  "node_modules/inversify/lib/planning/target.js"(exports) {
-    "use strict";
-    var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
-      if (k2 === void 0)
-        k2 = k;
-      Object.defineProperty(o, k2, { enumerable: true, get: function() {
-        return m[k];
-      } });
-    } : function(o, m, k, k2) {
-      if (k2 === void 0)
-        k2 = k;
-      o[k2] = m[k];
-    });
-    var __setModuleDefault = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
-      Object.defineProperty(o, "default", { enumerable: true, value: v });
-    } : function(o, v) {
-      o["default"] = v;
-    });
-    var __importStar = exports && exports.__importStar || function(mod) {
-      if (mod && mod.__esModule)
-        return mod;
-      var result = {};
-      if (mod != null) {
-        for (var k in mod)
-          if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
-            __createBinding(result, mod, k);
-      }
-      __setModuleDefault(result, mod);
-      return result;
-    };
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.Target = void 0;
-    var METADATA_KEY = __importStar(require_metadata_keys());
-    var id_1 = require_id();
-    var serialization_1 = require_serialization();
-    var metadata_1 = require_metadata();
-    var queryable_string_1 = require_queryable_string();
-    var Target = function() {
-      function Target2(type, identifier, serviceIdentifier, namedOrTagged) {
-        this.id = (0, id_1.id)();
-        this.type = type;
-        this.serviceIdentifier = serviceIdentifier;
-        var queryableName = typeof identifier === "symbol" ? (0, serialization_1.getSymbolDescription)(identifier) : identifier;
-        this.name = new queryable_string_1.QueryableString(queryableName || "");
-        this.identifier = identifier;
-        this.metadata = new Array();
-        var metadataItem = null;
-        if (typeof namedOrTagged === "string") {
-          metadataItem = new metadata_1.Metadata(METADATA_KEY.NAMED_TAG, namedOrTagged);
-        } else if (namedOrTagged instanceof metadata_1.Metadata) {
-          metadataItem = namedOrTagged;
-        }
-        if (metadataItem !== null) {
-          this.metadata.push(metadataItem);
+          if (entry !== null)
+            entry = this.transform(entry);
+          this.entries.push(entry);
+          this.recorded = [];
         }
       }
-      Target2.prototype.hasTag = function(key) {
-        for (var _i = 0, _a = this.metadata; _i < _a.length; _i++) {
-          var m = _a[_i];
-          if (m.key === key) {
-            return true;
+      consumeDimensions() {
+        if (this.source[0] === "[") {
+          while (!this.isEof()) {
+            var char = this.nextCharacter();
+            if (char.value === "=")
+              break;
           }
         }
-        return false;
-      };
-      Target2.prototype.isArray = function() {
-        return this.hasTag(METADATA_KEY.MULTI_INJECT_TAG);
-      };
-      Target2.prototype.matchesArray = function(name) {
-        return this.matchesTag(METADATA_KEY.MULTI_INJECT_TAG)(name);
-      };
-      Target2.prototype.isNamed = function() {
-        return this.hasTag(METADATA_KEY.NAMED_TAG);
-      };
-      Target2.prototype.isTagged = function() {
-        return this.metadata.some(function(metadata) {
-          return METADATA_KEY.NON_CUSTOM_TAG_KEYS.every(function(key) {
-            return metadata.key !== key;
-          });
-        });
-      };
-      Target2.prototype.isOptional = function() {
-        return this.matchesTag(METADATA_KEY.OPTIONAL_TAG)(true);
-      };
-      Target2.prototype.getNamedTag = function() {
-        if (this.isNamed()) {
-          return this.metadata.filter(function(m) {
-            return m.key === METADATA_KEY.NAMED_TAG;
-          })[0];
-        }
-        return null;
-      };
-      Target2.prototype.getCustomTags = function() {
-        if (this.isTagged()) {
-          return this.metadata.filter(function(metadata) {
-            return METADATA_KEY.NON_CUSTOM_TAG_KEYS.every(function(key) {
-              return metadata.key !== key;
-            });
-          });
-        } else {
-          return null;
-        }
-      };
-      Target2.prototype.matchesNamedTag = function(name) {
-        return this.matchesTag(METADATA_KEY.NAMED_TAG)(name);
-      };
-      Target2.prototype.matchesTag = function(key) {
-        var _this = this;
-        return function(value) {
-          for (var _i = 0, _a = _this.metadata; _i < _a.length; _i++) {
-            var m = _a[_i];
-            if (m.key === key && m.value === value) {
-              return true;
+      }
+      parse(nested) {
+        var character, parser, quote;
+        this.consumeDimensions();
+        while (!this.isEof()) {
+          character = this.nextCharacter();
+          if (character.value === "{" && !quote) {
+            this.dimension++;
+            if (this.dimension > 1) {
+              parser = new ArrayParser(this.source.substr(this.position - 1), this.transform);
+              this.entries.push(parser.parse(true));
+              this.position += parser.position - 2;
             }
+          } else if (character.value === "}" && !quote) {
+            this.dimension--;
+            if (!this.dimension) {
+              this.newEntry();
+              if (nested)
+                return this.entries;
+            }
+          } else if (character.value === '"' && !character.escaped) {
+            if (quote)
+              this.newEntry(true);
+            quote = !quote;
+          } else if (character.value === "," && !quote) {
+            this.newEntry();
+          } else {
+            this.record(character.value);
           }
-          return false;
-        };
-      };
-      return Target2;
-    }();
-    exports.Target = Target;
+        }
+        if (this.dimension !== 0) {
+          throw new Error("array dimension not balanced");
+        }
+        return this.entries;
+      }
+    };
+    function identity(value) {
+      return value;
+    }
   }
 });
 
-// node_modules/inversify/lib/planning/reflection_utils.js
-var require_reflection_utils = __commonJS({
-  "node_modules/inversify/lib/planning/reflection_utils.js"(exports) {
-    "use strict";
-    var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
-      if (k2 === void 0)
-        k2 = k;
-      Object.defineProperty(o, k2, { enumerable: true, get: function() {
-        return m[k];
-      } });
-    } : function(o, m, k, k2) {
-      if (k2 === void 0)
-        k2 = k;
-      o[k2] = m[k];
-    });
-    var __setModuleDefault = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
-      Object.defineProperty(o, "default", { enumerable: true, value: v });
-    } : function(o, v) {
-      o["default"] = v;
-    });
-    var __importStar = exports && exports.__importStar || function(mod) {
-      if (mod && mod.__esModule)
-        return mod;
-      var result = {};
-      if (mod != null) {
-        for (var k in mod)
-          if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
-            __createBinding(result, mod, k);
-      }
-      __setModuleDefault(result, mod);
-      return result;
-    };
-    var __spreadArray = exports && exports.__spreadArray || function(to, from, pack) {
-      if (pack || arguments.length === 2)
-        for (var i = 0, l = from.length, ar; i < l; i++) {
-          if (ar || !(i in from)) {
-            if (!ar)
-              ar = Array.prototype.slice.call(from, 0, i);
-            ar[i] = from[i];
+// node_modules/pg-types/lib/arrayParser.js
+var require_arrayParser = __commonJS({
+  "node_modules/pg-types/lib/arrayParser.js"(exports, module2) {
+    var array = require_postgres_array();
+    module2.exports = {
+      create: function(source, transform) {
+        return {
+          parse: function() {
+            return array.parse(source, transform);
           }
-        }
-      return to.concat(ar || Array.prototype.slice.call(from));
+        };
+      }
     };
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.getFunctionName = exports.getBaseClassDependencyCount = exports.getDependencies = void 0;
-    var lazy_service_identifier_1 = require_lazy_service_identifier();
-    var ERROR_MSGS = __importStar(require_error_msgs());
-    var literal_types_1 = require_literal_types();
-    var METADATA_KEY = __importStar(require_metadata_keys());
-    var serialization_1 = require_serialization();
-    Object.defineProperty(exports, "getFunctionName", { enumerable: true, get: function() {
-      return serialization_1.getFunctionName;
-    } });
-    var target_1 = require_target();
-    function getDependencies(metadataReader, func) {
-      var constructorName = (0, serialization_1.getFunctionName)(func);
-      return getTargets(metadataReader, constructorName, func, false);
-    }
-    exports.getDependencies = getDependencies;
-    function getTargets(metadataReader, constructorName, func, isBaseClass) {
-      var metadata = metadataReader.getConstructorMetadata(func);
-      var serviceIdentifiers = metadata.compilerGeneratedMetadata;
-      if (serviceIdentifiers === void 0) {
-        var msg = ERROR_MSGS.MISSING_INJECTABLE_ANNOTATION + " " + constructorName + ".";
-        throw new Error(msg);
+  }
+});
+
+// node_modules/postgres-date/index.js
+var require_postgres_date = __commonJS({
+  "node_modules/postgres-date/index.js"(exports, module2) {
+    "use strict";
+    var DATE_TIME = /(\d{1,})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})(\.\d{1,})?.*?( BC)?$/;
+    var DATE = /^(\d{1,})-(\d{2})-(\d{2})( BC)?$/;
+    var TIME_ZONE = /([Z+-])(\d{2})?:?(\d{2})?:?(\d{2})?/;
+    var INFINITY = /^-?infinity$/;
+    module2.exports = function parseDate(isoDate) {
+      if (INFINITY.test(isoDate)) {
+        return Number(isoDate.replace("i", "I"));
       }
-      var constructorArgsMetadata = metadata.userGeneratedMetadata;
-      var keys = Object.keys(constructorArgsMetadata);
-      var hasUserDeclaredUnknownInjections = func.length === 0 && keys.length > 0;
-      var hasOptionalParameters = keys.length > func.length;
-      var iterations = hasUserDeclaredUnknownInjections || hasOptionalParameters ? keys.length : func.length;
-      var constructorTargets = getConstructorArgsAsTargets(isBaseClass, constructorName, serviceIdentifiers, constructorArgsMetadata, iterations);
-      var propertyTargets = getClassPropsAsTargets(metadataReader, func, constructorName);
-      var targets = __spreadArray(__spreadArray([], constructorTargets, true), propertyTargets, true);
-      return targets;
-    }
-    function getConstructorArgsAsTarget(index, isBaseClass, constructorName, serviceIdentifiers, constructorArgsMetadata) {
-      var targetMetadata = constructorArgsMetadata[index.toString()] || [];
-      var metadata = formatTargetMetadata(targetMetadata);
-      var isManaged = metadata.unmanaged !== true;
-      var serviceIdentifier = serviceIdentifiers[index];
-      var injectIdentifier = metadata.inject || metadata.multiInject;
-      serviceIdentifier = injectIdentifier ? injectIdentifier : serviceIdentifier;
-      if (serviceIdentifier instanceof lazy_service_identifier_1.LazyServiceIdentifer) {
-        serviceIdentifier = serviceIdentifier.unwrap();
+      var matches = DATE_TIME.exec(isoDate);
+      if (!matches) {
+        return getDate(isoDate) || null;
       }
-      if (isManaged) {
-        var isObject = serviceIdentifier === Object;
-        var isFunction = serviceIdentifier === Function;
-        var isUndefined = serviceIdentifier === void 0;
-        var isUnknownType = isObject || isFunction || isUndefined;
-        if (!isBaseClass && isUnknownType) {
-          var msg = ERROR_MSGS.MISSING_INJECT_ANNOTATION + " argument " + index + " in class " + constructorName + ".";
-          throw new Error(msg);
+      var isBC = !!matches[8];
+      var year = parseInt(matches[1], 10);
+      if (isBC) {
+        year = bcYearToNegativeYear(year);
+      }
+      var month = parseInt(matches[2], 10) - 1;
+      var day = matches[3];
+      var hour = parseInt(matches[4], 10);
+      var minute = parseInt(matches[5], 10);
+      var second = parseInt(matches[6], 10);
+      var ms = matches[7];
+      ms = ms ? 1e3 * parseFloat(ms) : 0;
+      var date;
+      var offset = timeZoneOffset(isoDate);
+      if (offset != null) {
+        date = new Date(Date.UTC(year, month, day, hour, minute, second, ms));
+        if (is0To99(year)) {
+          date.setUTCFullYear(year);
         }
-        var target = new target_1.Target(literal_types_1.TargetTypeEnum.ConstructorArgument, metadata.targetName, serviceIdentifier);
-        target.metadata = targetMetadata;
-        return target;
-      }
-      return null;
-    }
-    function getConstructorArgsAsTargets(isBaseClass, constructorName, serviceIdentifiers, constructorArgsMetadata, iterations) {
-      var targets = [];
-      for (var i = 0; i < iterations; i++) {
-        var index = i;
-        var target = getConstructorArgsAsTarget(index, isBaseClass, constructorName, serviceIdentifiers, constructorArgsMetadata);
-        if (target !== null) {
-          targets.push(target);
-        }
-      }
-      return targets;
-    }
-    function _getServiceIdentifierForProperty(inject6, multiInject, propertyName, className) {
-      var serviceIdentifier = inject6 || multiInject;
-      if (serviceIdentifier === void 0) {
-        var msg = ERROR_MSGS.MISSING_INJECTABLE_ANNOTATION + " for property " + String(propertyName) + " in class " + className + ".";
-        throw new Error(msg);
-      }
-      return serviceIdentifier;
-    }
-    function getClassPropsAsTargets(metadataReader, constructorFunc, constructorName) {
-      var classPropsMetadata = metadataReader.getPropertiesMetadata(constructorFunc);
-      var targets = [];
-      var symbolKeys = Object.getOwnPropertySymbols(classPropsMetadata);
-      var stringKeys = Object.keys(classPropsMetadata);
-      var keys = stringKeys.concat(symbolKeys);
-      for (var _i = 0, keys_1 = keys; _i < keys_1.length; _i++) {
-        var key = keys_1[_i];
-        var targetMetadata = classPropsMetadata[key];
-        var metadata = formatTargetMetadata(targetMetadata);
-        var identifier = metadata.targetName || key;
-        var serviceIdentifier = _getServiceIdentifierForProperty(metadata.inject, metadata.multiInject, key, constructorName);
-        var target = new target_1.Target(literal_types_1.TargetTypeEnum.ClassProperty, identifier, serviceIdentifier);
-        target.metadata = targetMetadata;
-        targets.push(target);
-      }
-      var baseConstructor = Object.getPrototypeOf(constructorFunc.prototype).constructor;
-      if (baseConstructor !== Object) {
-        var baseTargets = getClassPropsAsTargets(metadataReader, baseConstructor, constructorName);
-        targets = __spreadArray(__spreadArray([], targets, true), baseTargets, true);
-      }
-      return targets;
-    }
-    function getBaseClassDependencyCount(metadataReader, func) {
-      var baseConstructor = Object.getPrototypeOf(func.prototype).constructor;
-      if (baseConstructor !== Object) {
-        var baseConstructorName = (0, serialization_1.getFunctionName)(baseConstructor);
-        var targets = getTargets(metadataReader, baseConstructorName, baseConstructor, true);
-        var metadata = targets.map(function(t) {
-          return t.metadata.filter(function(m) {
-            return m.key === METADATA_KEY.UNMANAGED_TAG;
-          });
-        });
-        var unmanagedCount = [].concat.apply([], metadata).length;
-        var dependencyCount = targets.length - unmanagedCount;
-        if (dependencyCount > 0) {
-          return dependencyCount;
-        } else {
-          return getBaseClassDependencyCount(metadataReader, baseConstructor);
+        if (offset !== 0) {
+          date.setTime(date.getTime() - offset);
         }
       } else {
+        date = new Date(year, month, day, hour, minute, second, ms);
+        if (is0To99(year)) {
+          date.setFullYear(year);
+        }
+      }
+      return date;
+    };
+    function getDate(isoDate) {
+      var matches = DATE.exec(isoDate);
+      if (!matches) {
+        return;
+      }
+      var year = parseInt(matches[1], 10);
+      var isBC = !!matches[4];
+      if (isBC) {
+        year = bcYearToNegativeYear(year);
+      }
+      var month = parseInt(matches[2], 10) - 1;
+      var day = matches[3];
+      var date = new Date(year, month, day);
+      if (is0To99(year)) {
+        date.setFullYear(year);
+      }
+      return date;
+    }
+    function timeZoneOffset(isoDate) {
+      if (isoDate.endsWith("+00")) {
         return 0;
       }
+      var zone = TIME_ZONE.exec(isoDate.split(" ")[1]);
+      if (!zone)
+        return;
+      var type = zone[1];
+      if (type === "Z") {
+        return 0;
+      }
+      var sign = type === "-" ? -1 : 1;
+      var offset = parseInt(zone[2], 10) * 3600 + parseInt(zone[3] || 0, 10) * 60 + parseInt(zone[4] || 0, 10);
+      return offset * sign * 1e3;
     }
-    exports.getBaseClassDependencyCount = getBaseClassDependencyCount;
-    function formatTargetMetadata(targetMetadata) {
-      var targetMetadataMap = {};
-      targetMetadata.forEach(function(m) {
-        targetMetadataMap[m.key.toString()] = m.value;
-      });
-      return {
-        inject: targetMetadataMap[METADATA_KEY.INJECT_TAG],
-        multiInject: targetMetadataMap[METADATA_KEY.MULTI_INJECT_TAG],
-        targetName: targetMetadataMap[METADATA_KEY.NAME_TAG],
-        unmanaged: targetMetadataMap[METADATA_KEY.UNMANAGED_TAG]
-      };
+    function bcYearToNegativeYear(year) {
+      return -(year - 1);
+    }
+    function is0To99(num) {
+      return num >= 0 && num < 100;
     }
   }
 });
 
-// node_modules/inversify/lib/planning/request.js
-var require_request = __commonJS({
-  "node_modules/inversify/lib/planning/request.js"(exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.Request = void 0;
-    var id_1 = require_id();
-    var Request = function() {
-      function Request2(serviceIdentifier, parentContext, parentRequest, bindings, target) {
-        this.id = (0, id_1.id)();
-        this.serviceIdentifier = serviceIdentifier;
-        this.parentContext = parentContext;
-        this.parentRequest = parentRequest;
-        this.target = target;
-        this.childRequests = [];
-        this.bindings = Array.isArray(bindings) ? bindings : [bindings];
-        this.requestScope = parentRequest === null ? /* @__PURE__ */ new Map() : null;
-      }
-      Request2.prototype.addChildRequest = function(serviceIdentifier, bindings, target) {
-        var child = new Request2(serviceIdentifier, this.parentContext, this, bindings, target);
-        this.childRequests.push(child);
-        return child;
-      };
-      return Request2;
-    }();
-    exports.Request = Request;
-  }
-});
-
-// node_modules/inversify/lib/planning/planner.js
-var require_planner = __commonJS({
-  "node_modules/inversify/lib/planning/planner.js"(exports) {
-    "use strict";
-    var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
-      if (k2 === void 0)
-        k2 = k;
-      Object.defineProperty(o, k2, { enumerable: true, get: function() {
-        return m[k];
-      } });
-    } : function(o, m, k, k2) {
-      if (k2 === void 0)
-        k2 = k;
-      o[k2] = m[k];
-    });
-    var __setModuleDefault = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
-      Object.defineProperty(o, "default", { enumerable: true, value: v });
-    } : function(o, v) {
-      o["default"] = v;
-    });
-    var __importStar = exports && exports.__importStar || function(mod) {
-      if (mod && mod.__esModule)
-        return mod;
-      var result = {};
-      if (mod != null) {
-        for (var k in mod)
-          if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
-            __createBinding(result, mod, k);
-      }
-      __setModuleDefault(result, mod);
-      return result;
-    };
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.getBindingDictionary = exports.createMockRequest = exports.plan = void 0;
-    var binding_count_1 = require_binding_count();
-    var ERROR_MSGS = __importStar(require_error_msgs());
-    var literal_types_1 = require_literal_types();
-    var METADATA_KEY = __importStar(require_metadata_keys());
-    var exceptions_1 = require_exceptions();
-    var serialization_1 = require_serialization();
-    var context_1 = require_context();
-    var metadata_1 = require_metadata();
-    var plan_1 = require_plan();
-    var reflection_utils_1 = require_reflection_utils();
-    var request_1 = require_request();
-    var target_1 = require_target();
-    function getBindingDictionary(cntnr) {
-      return cntnr._bindingDictionary;
-    }
-    exports.getBindingDictionary = getBindingDictionary;
-    function _createTarget(isMultiInject, targetType, serviceIdentifier, name, key, value) {
-      var metadataKey = isMultiInject ? METADATA_KEY.MULTI_INJECT_TAG : METADATA_KEY.INJECT_TAG;
-      var injectMetadata = new metadata_1.Metadata(metadataKey, serviceIdentifier);
-      var target = new target_1.Target(targetType, name, serviceIdentifier, injectMetadata);
-      if (key !== void 0) {
-        var tagMetadata = new metadata_1.Metadata(key, value);
-        target.metadata.push(tagMetadata);
+// node_modules/xtend/mutable.js
+var require_mutable = __commonJS({
+  "node_modules/xtend/mutable.js"(exports, module2) {
+    module2.exports = extend;
+    var hasOwnProperty = Object.prototype.hasOwnProperty;
+    function extend(target) {
+      for (var i = 1; i < arguments.length; i++) {
+        var source = arguments[i];
+        for (var key in source) {
+          if (hasOwnProperty.call(source, key)) {
+            target[key] = source[key];
+          }
+        }
       }
       return target;
     }
-    function _getActiveBindings(metadataReader, avoidConstraints, context, parentRequest, target) {
-      var bindings = getBindings(context.container, target.serviceIdentifier);
-      var activeBindings = [];
-      if (bindings.length === binding_count_1.BindingCount.NoBindingsAvailable && context.container.options.autoBindInjectable && typeof target.serviceIdentifier === "function" && metadataReader.getConstructorMetadata(target.serviceIdentifier).compilerGeneratedMetadata) {
-        context.container.bind(target.serviceIdentifier).toSelf();
-        bindings = getBindings(context.container, target.serviceIdentifier);
+  }
+});
+
+// node_modules/postgres-interval/index.js
+var require_postgres_interval = __commonJS({
+  "node_modules/postgres-interval/index.js"(exports, module2) {
+    "use strict";
+    var extend = require_mutable();
+    module2.exports = PostgresInterval;
+    function PostgresInterval(raw) {
+      if (!(this instanceof PostgresInterval)) {
+        return new PostgresInterval(raw);
       }
-      if (!avoidConstraints) {
-        activeBindings = bindings.filter(function(binding) {
-          var request = new request_1.Request(binding.serviceIdentifier, context, parentRequest, binding, target);
-          return binding.constraint(request);
-        });
-      } else {
-        activeBindings = bindings;
-      }
-      _validateActiveBindingCount(target.serviceIdentifier, activeBindings, target, context.container);
-      return activeBindings;
+      extend(this, parse(raw));
     }
-    function _validateActiveBindingCount(serviceIdentifier, bindings, target, container2) {
-      switch (bindings.length) {
-        case binding_count_1.BindingCount.NoBindingsAvailable:
-          if (target.isOptional()) {
-            return bindings;
-          } else {
-            var serviceIdentifierString = (0, serialization_1.getServiceIdentifierAsString)(serviceIdentifier);
-            var msg = ERROR_MSGS.NOT_REGISTERED;
-            msg += (0, serialization_1.listMetadataForTarget)(serviceIdentifierString, target);
-            msg += (0, serialization_1.listRegisteredBindingsForServiceIdentifier)(container2, serviceIdentifierString, getBindings);
-            throw new Error(msg);
-          }
-        case binding_count_1.BindingCount.OnlyOneBindingAvailable:
-          return bindings;
-        case binding_count_1.BindingCount.MultipleBindingsAvailable:
-        default:
-          if (!target.isArray()) {
-            var serviceIdentifierString = (0, serialization_1.getServiceIdentifierAsString)(serviceIdentifier);
-            var msg = ERROR_MSGS.AMBIGUOUS_MATCH + " " + serviceIdentifierString;
-            msg += (0, serialization_1.listRegisteredBindingsForServiceIdentifier)(container2, serviceIdentifierString, getBindings);
-            throw new Error(msg);
-          } else {
-            return bindings;
-          }
+    var properties = ["seconds", "minutes", "hours", "days", "months", "years"];
+    PostgresInterval.prototype.toPostgres = function() {
+      var filtered = properties.filter(this.hasOwnProperty, this);
+      if (this.milliseconds && filtered.indexOf("seconds") < 0) {
+        filtered.push("seconds");
       }
+      if (filtered.length === 0)
+        return "0";
+      return filtered.map(function(property) {
+        var value = this[property] || 0;
+        if (property === "seconds" && this.milliseconds) {
+          value = (value + this.milliseconds / 1e3).toFixed(6).replace(/\.?0+$/, "");
+        }
+        return value + " " + property;
+      }, this).join(" ");
+    };
+    var propertiesISOEquivalent = {
+      years: "Y",
+      months: "M",
+      days: "D",
+      hours: "H",
+      minutes: "M",
+      seconds: "S"
+    };
+    var dateProperties = ["years", "months", "days"];
+    var timeProperties = ["hours", "minutes", "seconds"];
+    PostgresInterval.prototype.toISOString = PostgresInterval.prototype.toISO = function() {
+      var datePart = dateProperties.map(buildProperty, this).join("");
+      var timePart = timeProperties.map(buildProperty, this).join("");
+      return "P" + datePart + "T" + timePart;
+      function buildProperty(property) {
+        var value = this[property] || 0;
+        if (property === "seconds" && this.milliseconds) {
+          value = (value + this.milliseconds / 1e3).toFixed(6).replace(/0+$/, "");
+        }
+        return value + propertiesISOEquivalent[property];
+      }
+    };
+    var NUMBER = "([+-]?\\d+)";
+    var YEAR = NUMBER + "\\s+years?";
+    var MONTH = NUMBER + "\\s+mons?";
+    var DAY = NUMBER + "\\s+days?";
+    var TIME = "([+-])?([\\d]*):(\\d\\d):(\\d\\d)\\.?(\\d{1,6})?";
+    var INTERVAL = new RegExp([YEAR, MONTH, DAY, TIME].map(function(regexString) {
+      return "(" + regexString + ")?";
+    }).join("\\s*"));
+    var positions = {
+      years: 2,
+      months: 4,
+      days: 6,
+      hours: 9,
+      minutes: 10,
+      seconds: 11,
+      milliseconds: 12
+    };
+    var negatives = ["hours", "minutes", "seconds", "milliseconds"];
+    function parseMilliseconds(fraction) {
+      var microseconds = fraction + "000000".slice(fraction.length);
+      return parseInt(microseconds, 10) / 1e3;
     }
-    function _createSubRequests(metadataReader, avoidConstraints, serviceIdentifier, context, parentRequest, target) {
-      var activeBindings;
-      var childRequest;
-      if (parentRequest === null) {
-        activeBindings = _getActiveBindings(metadataReader, avoidConstraints, context, null, target);
-        childRequest = new request_1.Request(serviceIdentifier, context, null, activeBindings, target);
-        var thePlan = new plan_1.Plan(context, childRequest);
-        context.addPlan(thePlan);
-      } else {
-        activeBindings = _getActiveBindings(metadataReader, avoidConstraints, context, parentRequest, target);
-        childRequest = parentRequest.addChildRequest(target.serviceIdentifier, activeBindings, target);
+    function parse(interval) {
+      if (!interval)
+        return {};
+      var matches = INTERVAL.exec(interval);
+      var isNegative = matches[8] === "-";
+      return Object.keys(positions).reduce(function(parsed, property) {
+        var position = positions[property];
+        var value = matches[position];
+        if (!value)
+          return parsed;
+        value = property === "milliseconds" ? parseMilliseconds(value) : parseInt(value, 10);
+        if (!value)
+          return parsed;
+        if (isNegative && ~negatives.indexOf(property)) {
+          value *= -1;
+        }
+        parsed[property] = value;
+        return parsed;
+      }, {});
+    }
+  }
+});
+
+// node_modules/postgres-bytea/index.js
+var require_postgres_bytea = __commonJS({
+  "node_modules/postgres-bytea/index.js"(exports, module2) {
+    "use strict";
+    module2.exports = function parseBytea(input) {
+      if (/^\\x/.test(input)) {
+        return new Buffer(input.substr(2), "hex");
       }
-      activeBindings.forEach(function(binding) {
-        var subChildRequest = null;
-        if (target.isArray()) {
-          subChildRequest = childRequest.addChildRequest(binding.serviceIdentifier, binding, target);
+      var output = "";
+      var i = 0;
+      while (i < input.length) {
+        if (input[i] !== "\\") {
+          output += input[i];
+          ++i;
         } else {
-          if (binding.cache) {
-            return;
-          }
-          subChildRequest = childRequest;
-        }
-        if (binding.type === literal_types_1.BindingTypeEnum.Instance && binding.implementationType !== null) {
-          var dependencies = (0, reflection_utils_1.getDependencies)(metadataReader, binding.implementationType);
-          if (!context.container.options.skipBaseClassChecks) {
-            var baseClassDependencyCount = (0, reflection_utils_1.getBaseClassDependencyCount)(metadataReader, binding.implementationType);
-            if (dependencies.length < baseClassDependencyCount) {
-              var error = ERROR_MSGS.ARGUMENTS_LENGTH_MISMATCH((0, reflection_utils_1.getFunctionName)(binding.implementationType));
-              throw new Error(error);
+          if (/[0-7]{3}/.test(input.substr(i + 1, 3))) {
+            output += String.fromCharCode(parseInt(input.substr(i + 1, 3), 8));
+            i += 4;
+          } else {
+            var backslashes = 1;
+            while (i + backslashes < input.length && input[i + backslashes] === "\\") {
+              backslashes++;
             }
+            for (var k = 0; k < Math.floor(backslashes / 2); ++k) {
+              output += "\\";
+            }
+            i += Math.floor(backslashes / 2) * 2;
           }
-          dependencies.forEach(function(dependency) {
-            _createSubRequests(metadataReader, false, dependency.serviceIdentifier, context, subChildRequest, dependency);
-          });
         }
+      }
+      return new Buffer(output, "binary");
+    };
+  }
+});
+
+// node_modules/pg-types/lib/textParsers.js
+var require_textParsers = __commonJS({
+  "node_modules/pg-types/lib/textParsers.js"(exports, module2) {
+    var array = require_postgres_array();
+    var arrayParser = require_arrayParser();
+    var parseDate = require_postgres_date();
+    var parseInterval = require_postgres_interval();
+    var parseByteA = require_postgres_bytea();
+    function allowNull(fn) {
+      return function nullAllowed(value) {
+        if (value === null)
+          return value;
+        return fn(value);
+      };
+    }
+    function parseBool(value) {
+      if (value === null)
+        return value;
+      return value === "TRUE" || value === "t" || value === "true" || value === "y" || value === "yes" || value === "on" || value === "1";
+    }
+    function parseBoolArray(value) {
+      if (!value)
+        return null;
+      return array.parse(value, parseBool);
+    }
+    function parseBaseTenInt(string) {
+      return parseInt(string, 10);
+    }
+    function parseIntegerArray(value) {
+      if (!value)
+        return null;
+      return array.parse(value, allowNull(parseBaseTenInt));
+    }
+    function parseBigIntegerArray(value) {
+      if (!value)
+        return null;
+      return array.parse(value, allowNull(function(entry) {
+        return parseBigInteger(entry).trim();
+      }));
+    }
+    var parsePointArray = function(value) {
+      if (!value) {
+        return null;
+      }
+      var p = arrayParser.create(value, function(entry) {
+        if (entry !== null) {
+          entry = parsePoint(entry);
+        }
+        return entry;
       });
-    }
-    function getBindings(container2, serviceIdentifier) {
-      var bindings = [];
-      var bindingDictionary = getBindingDictionary(container2);
-      if (bindingDictionary.hasKey(serviceIdentifier)) {
-        bindings = bindingDictionary.get(serviceIdentifier);
-      } else if (container2.parent !== null) {
-        bindings = getBindings(container2.parent, serviceIdentifier);
+      return p.parse();
+    };
+    var parseFloatArray = function(value) {
+      if (!value) {
+        return null;
       }
-      return bindings;
-    }
-    function plan(metadataReader, container2, isMultiInject, targetType, serviceIdentifier, key, value, avoidConstraints) {
-      if (avoidConstraints === void 0) {
-        avoidConstraints = false;
+      var p = arrayParser.create(value, function(entry) {
+        if (entry !== null) {
+          entry = parseFloat(entry);
+        }
+        return entry;
+      });
+      return p.parse();
+    };
+    var parseStringArray = function(value) {
+      if (!value) {
+        return null;
       }
-      var context = new context_1.Context(container2);
-      var target = _createTarget(isMultiInject, targetType, serviceIdentifier, "", key, value);
+      var p = arrayParser.create(value);
+      return p.parse();
+    };
+    var parseDateArray = function(value) {
+      if (!value) {
+        return null;
+      }
+      var p = arrayParser.create(value, function(entry) {
+        if (entry !== null) {
+          entry = parseDate(entry);
+        }
+        return entry;
+      });
+      return p.parse();
+    };
+    var parseIntervalArray = function(value) {
+      if (!value) {
+        return null;
+      }
+      var p = arrayParser.create(value, function(entry) {
+        if (entry !== null) {
+          entry = parseInterval(entry);
+        }
+        return entry;
+      });
+      return p.parse();
+    };
+    var parseByteAArray = function(value) {
+      if (!value) {
+        return null;
+      }
+      return array.parse(value, allowNull(parseByteA));
+    };
+    var parseInteger = function(value) {
+      return parseInt(value, 10);
+    };
+    var parseBigInteger = function(value) {
+      var valStr = String(value);
+      if (/^\d+$/.test(valStr)) {
+        return valStr;
+      }
+      return value;
+    };
+    var parseJsonArray = function(value) {
+      if (!value) {
+        return null;
+      }
+      return array.parse(value, allowNull(JSON.parse));
+    };
+    var parsePoint = function(value) {
+      if (value[0] !== "(") {
+        return null;
+      }
+      value = value.substring(1, value.length - 1).split(",");
+      return {
+        x: parseFloat(value[0]),
+        y: parseFloat(value[1])
+      };
+    };
+    var parseCircle = function(value) {
+      if (value[0] !== "<" && value[1] !== "(") {
+        return null;
+      }
+      var point = "(";
+      var radius = "";
+      var pointParsed = false;
+      for (var i = 2; i < value.length - 1; i++) {
+        if (!pointParsed) {
+          point += value[i];
+        }
+        if (value[i] === ")") {
+          pointParsed = true;
+          continue;
+        } else if (!pointParsed) {
+          continue;
+        }
+        if (value[i] === ",") {
+          continue;
+        }
+        radius += value[i];
+      }
+      var result = parsePoint(point);
+      result.radius = parseFloat(radius);
+      return result;
+    };
+    var init = function(register) {
+      register(20, parseBigInteger);
+      register(21, parseInteger);
+      register(23, parseInteger);
+      register(26, parseInteger);
+      register(700, parseFloat);
+      register(701, parseFloat);
+      register(16, parseBool);
+      register(1082, parseDate);
+      register(1114, parseDate);
+      register(1184, parseDate);
+      register(600, parsePoint);
+      register(651, parseStringArray);
+      register(718, parseCircle);
+      register(1e3, parseBoolArray);
+      register(1001, parseByteAArray);
+      register(1005, parseIntegerArray);
+      register(1007, parseIntegerArray);
+      register(1028, parseIntegerArray);
+      register(1016, parseBigIntegerArray);
+      register(1017, parsePointArray);
+      register(1021, parseFloatArray);
+      register(1022, parseFloatArray);
+      register(1231, parseFloatArray);
+      register(1014, parseStringArray);
+      register(1015, parseStringArray);
+      register(1008, parseStringArray);
+      register(1009, parseStringArray);
+      register(1040, parseStringArray);
+      register(1041, parseStringArray);
+      register(1115, parseDateArray);
+      register(1182, parseDateArray);
+      register(1185, parseDateArray);
+      register(1186, parseInterval);
+      register(1187, parseIntervalArray);
+      register(17, parseByteA);
+      register(114, JSON.parse.bind(JSON));
+      register(3802, JSON.parse.bind(JSON));
+      register(199, parseJsonArray);
+      register(3807, parseJsonArray);
+      register(3907, parseStringArray);
+      register(2951, parseStringArray);
+      register(791, parseStringArray);
+      register(1183, parseStringArray);
+      register(1270, parseStringArray);
+    };
+    module2.exports = {
+      init
+    };
+  }
+});
+
+// node_modules/pg-int8/index.js
+var require_pg_int8 = __commonJS({
+  "node_modules/pg-int8/index.js"(exports, module2) {
+    "use strict";
+    var BASE = 1e6;
+    function readInt8(buffer) {
+      var high = buffer.readInt32BE(0);
+      var low = buffer.readUInt32BE(4);
+      var sign = "";
+      if (high < 0) {
+        high = ~high + (low === 0);
+        low = ~low + 1 >>> 0;
+        sign = "-";
+      }
+      var result = "";
+      var carry;
+      var t;
+      var digits;
+      var pad;
+      var l;
+      var i;
+      {
+        carry = high % BASE;
+        high = high / BASE >>> 0;
+        t = 4294967296 * carry + low;
+        low = t / BASE >>> 0;
+        digits = "" + (t - BASE * low);
+        if (low === 0 && high === 0) {
+          return sign + digits + result;
+        }
+        pad = "";
+        l = 6 - digits.length;
+        for (i = 0; i < l; i++) {
+          pad += "0";
+        }
+        result = pad + digits + result;
+      }
+      {
+        carry = high % BASE;
+        high = high / BASE >>> 0;
+        t = 4294967296 * carry + low;
+        low = t / BASE >>> 0;
+        digits = "" + (t - BASE * low);
+        if (low === 0 && high === 0) {
+          return sign + digits + result;
+        }
+        pad = "";
+        l = 6 - digits.length;
+        for (i = 0; i < l; i++) {
+          pad += "0";
+        }
+        result = pad + digits + result;
+      }
+      {
+        carry = high % BASE;
+        high = high / BASE >>> 0;
+        t = 4294967296 * carry + low;
+        low = t / BASE >>> 0;
+        digits = "" + (t - BASE * low);
+        if (low === 0 && high === 0) {
+          return sign + digits + result;
+        }
+        pad = "";
+        l = 6 - digits.length;
+        for (i = 0; i < l; i++) {
+          pad += "0";
+        }
+        result = pad + digits + result;
+      }
+      {
+        carry = high % BASE;
+        t = 4294967296 * carry + low;
+        digits = "" + t % BASE;
+        return sign + digits + result;
+      }
+    }
+    module2.exports = readInt8;
+  }
+});
+
+// node_modules/pg-types/lib/binaryParsers.js
+var require_binaryParsers = __commonJS({
+  "node_modules/pg-types/lib/binaryParsers.js"(exports, module2) {
+    var parseInt64 = require_pg_int8();
+    var parseBits = function(data, bits, offset, invert, callback2) {
+      offset = offset || 0;
+      invert = invert || false;
+      callback2 = callback2 || function(lastValue, newValue, bits2) {
+        return lastValue * Math.pow(2, bits2) + newValue;
+      };
+      var offsetBytes = offset >> 3;
+      var inv = function(value) {
+        if (invert) {
+          return ~value & 255;
+        }
+        return value;
+      };
+      var mask = 255;
+      var firstBits = 8 - offset % 8;
+      if (bits < firstBits) {
+        mask = 255 << 8 - bits & 255;
+        firstBits = bits;
+      }
+      if (offset) {
+        mask = mask >> offset % 8;
+      }
+      var result = 0;
+      if (offset % 8 + bits >= 8) {
+        result = callback2(0, inv(data[offsetBytes]) & mask, firstBits);
+      }
+      var bytes = bits + offset >> 3;
+      for (var i = offsetBytes + 1; i < bytes; i++) {
+        result = callback2(result, inv(data[i]), 8);
+      }
+      var lastBits = (bits + offset) % 8;
+      if (lastBits > 0) {
+        result = callback2(result, inv(data[bytes]) >> 8 - lastBits, lastBits);
+      }
+      return result;
+    };
+    var parseFloatFromBits = function(data, precisionBits, exponentBits) {
+      var bias = Math.pow(2, exponentBits - 1) - 1;
+      var sign = parseBits(data, 1);
+      var exponent = parseBits(data, exponentBits, 1);
+      if (exponent === 0) {
+        return 0;
+      }
+      var precisionBitsCounter = 1;
+      var parsePrecisionBits = function(lastValue, newValue, bits) {
+        if (lastValue === 0) {
+          lastValue = 1;
+        }
+        for (var i = 1; i <= bits; i++) {
+          precisionBitsCounter /= 2;
+          if ((newValue & 1 << bits - i) > 0) {
+            lastValue += precisionBitsCounter;
+          }
+        }
+        return lastValue;
+      };
+      var mantissa = parseBits(data, precisionBits, exponentBits + 1, false, parsePrecisionBits);
+      if (exponent == Math.pow(2, exponentBits + 1) - 1) {
+        if (mantissa === 0) {
+          return sign === 0 ? Infinity : -Infinity;
+        }
+        return NaN;
+      }
+      return (sign === 0 ? 1 : -1) * Math.pow(2, exponent - bias) * mantissa;
+    };
+    var parseInt16 = function(value) {
+      if (parseBits(value, 1) == 1) {
+        return -1 * (parseBits(value, 15, 1, true) + 1);
+      }
+      return parseBits(value, 15, 1);
+    };
+    var parseInt32 = function(value) {
+      if (parseBits(value, 1) == 1) {
+        return -1 * (parseBits(value, 31, 1, true) + 1);
+      }
+      return parseBits(value, 31, 1);
+    };
+    var parseFloat32 = function(value) {
+      return parseFloatFromBits(value, 23, 8);
+    };
+    var parseFloat64 = function(value) {
+      return parseFloatFromBits(value, 52, 11);
+    };
+    var parseNumeric = function(value) {
+      var sign = parseBits(value, 16, 32);
+      if (sign == 49152) {
+        return NaN;
+      }
+      var weight = Math.pow(1e4, parseBits(value, 16, 16));
+      var result = 0;
+      var digits = [];
+      var ndigits = parseBits(value, 16);
+      for (var i = 0; i < ndigits; i++) {
+        result += parseBits(value, 16, 64 + 16 * i) * weight;
+        weight /= 1e4;
+      }
+      var scale = Math.pow(10, parseBits(value, 16, 48));
+      return (sign === 0 ? 1 : -1) * Math.round(result * scale) / scale;
+    };
+    var parseDate = function(isUTC, value) {
+      var sign = parseBits(value, 1);
+      var rawValue = parseBits(value, 63, 1);
+      var result = new Date((sign === 0 ? 1 : -1) * rawValue / 1e3 + 9466848e5);
+      if (!isUTC) {
+        result.setTime(result.getTime() + result.getTimezoneOffset() * 6e4);
+      }
+      result.usec = rawValue % 1e3;
+      result.getMicroSeconds = function() {
+        return this.usec;
+      };
+      result.setMicroSeconds = function(value2) {
+        this.usec = value2;
+      };
+      result.getUTCMicroSeconds = function() {
+        return this.usec;
+      };
+      return result;
+    };
+    var parseArray = function(value) {
+      var dim = parseBits(value, 32);
+      var flags = parseBits(value, 32, 32);
+      var elementType = parseBits(value, 32, 64);
+      var offset = 96;
+      var dims = [];
+      for (var i = 0; i < dim; i++) {
+        dims[i] = parseBits(value, 32, offset);
+        offset += 32;
+        offset += 32;
+      }
+      var parseElement = function(elementType2) {
+        var length = parseBits(value, 32, offset);
+        offset += 32;
+        if (length == 4294967295) {
+          return null;
+        }
+        var result;
+        if (elementType2 == 23 || elementType2 == 20) {
+          result = parseBits(value, length * 8, offset);
+          offset += length * 8;
+          return result;
+        } else if (elementType2 == 25) {
+          result = value.toString(this.encoding, offset >> 3, (offset += length << 3) >> 3);
+          return result;
+        } else {
+          console.log("ERROR: ElementType not implemented: " + elementType2);
+        }
+      };
+      var parse = function(dimension, elementType2) {
+        var array = [];
+        var i2;
+        if (dimension.length > 1) {
+          var count = dimension.shift();
+          for (i2 = 0; i2 < count; i2++) {
+            array[i2] = parse(dimension, elementType2);
+          }
+          dimension.unshift(count);
+        } else {
+          for (i2 = 0; i2 < dimension[0]; i2++) {
+            array[i2] = parseElement(elementType2);
+          }
+        }
+        return array;
+      };
+      return parse(dims, elementType);
+    };
+    var parseText = function(value) {
+      return value.toString("utf8");
+    };
+    var parseBool = function(value) {
+      if (value === null)
+        return null;
+      return parseBits(value, 8) > 0;
+    };
+    var init = function(register) {
+      register(20, parseInt64);
+      register(21, parseInt16);
+      register(23, parseInt32);
+      register(26, parseInt32);
+      register(1700, parseNumeric);
+      register(700, parseFloat32);
+      register(701, parseFloat64);
+      register(16, parseBool);
+      register(1114, parseDate.bind(null, false));
+      register(1184, parseDate.bind(null, true));
+      register(1e3, parseArray);
+      register(1007, parseArray);
+      register(1016, parseArray);
+      register(1008, parseArray);
+      register(1009, parseArray);
+      register(25, parseText);
+    };
+    module2.exports = {
+      init
+    };
+  }
+});
+
+// node_modules/pg-types/lib/builtins.js
+var require_builtins = __commonJS({
+  "node_modules/pg-types/lib/builtins.js"(exports, module2) {
+    module2.exports = {
+      BOOL: 16,
+      BYTEA: 17,
+      CHAR: 18,
+      INT8: 20,
+      INT2: 21,
+      INT4: 23,
+      REGPROC: 24,
+      TEXT: 25,
+      OID: 26,
+      TID: 27,
+      XID: 28,
+      CID: 29,
+      JSON: 114,
+      XML: 142,
+      PG_NODE_TREE: 194,
+      SMGR: 210,
+      PATH: 602,
+      POLYGON: 604,
+      CIDR: 650,
+      FLOAT4: 700,
+      FLOAT8: 701,
+      ABSTIME: 702,
+      RELTIME: 703,
+      TINTERVAL: 704,
+      CIRCLE: 718,
+      MACADDR8: 774,
+      MONEY: 790,
+      MACADDR: 829,
+      INET: 869,
+      ACLITEM: 1033,
+      BPCHAR: 1042,
+      VARCHAR: 1043,
+      DATE: 1082,
+      TIME: 1083,
+      TIMESTAMP: 1114,
+      TIMESTAMPTZ: 1184,
+      INTERVAL: 1186,
+      TIMETZ: 1266,
+      BIT: 1560,
+      VARBIT: 1562,
+      NUMERIC: 1700,
+      REFCURSOR: 1790,
+      REGPROCEDURE: 2202,
+      REGOPER: 2203,
+      REGOPERATOR: 2204,
+      REGCLASS: 2205,
+      REGTYPE: 2206,
+      UUID: 2950,
+      TXID_SNAPSHOT: 2970,
+      PG_LSN: 3220,
+      PG_NDISTINCT: 3361,
+      PG_DEPENDENCIES: 3402,
+      TSVECTOR: 3614,
+      TSQUERY: 3615,
+      GTSVECTOR: 3642,
+      REGCONFIG: 3734,
+      REGDICTIONARY: 3769,
+      JSONB: 3802,
+      REGNAMESPACE: 4089,
+      REGROLE: 4096
+    };
+  }
+});
+
+// node_modules/pg-types/index.js
+var require_pg_types = __commonJS({
+  "node_modules/pg-types/index.js"(exports) {
+    var textParsers = require_textParsers();
+    var binaryParsers = require_binaryParsers();
+    var arrayParser = require_arrayParser();
+    var builtinTypes = require_builtins();
+    exports.getTypeParser = getTypeParser;
+    exports.setTypeParser = setTypeParser;
+    exports.arrayParser = arrayParser;
+    exports.builtins = builtinTypes;
+    var typeParsers = {
+      text: {},
+      binary: {}
+    };
+    function noParse(val) {
+      return String(val);
+    }
+    function getTypeParser(oid, format) {
+      format = format || "text";
+      if (!typeParsers[format]) {
+        return noParse;
+      }
+      return typeParsers[format][oid] || noParse;
+    }
+    function setTypeParser(oid, format, parseFn) {
+      if (typeof format == "function") {
+        parseFn = format;
+        format = "text";
+      }
+      typeParsers[format][oid] = parseFn;
+    }
+    textParsers.init(function(oid, converter) {
+      typeParsers.text[oid] = converter;
+    });
+    binaryParsers.init(function(oid, converter) {
+      typeParsers.binary[oid] = converter;
+    });
+  }
+});
+
+// node_modules/pg/lib/defaults.js
+var require_defaults = __commonJS({
+  "node_modules/pg/lib/defaults.js"(exports, module2) {
+    "use strict";
+    module2.exports = {
+      // database host. defaults to localhost
+      host: "localhost",
+      // database user's name
+      user: process.platform === "win32" ? process.env.USERNAME : process.env.USER,
+      // name of database to connect
+      database: void 0,
+      // database user's password
+      password: null,
+      // a Postgres connection string to be used instead of setting individual connection items
+      // NOTE:  Setting this value will cause it to override any other value (such as database or user) defined
+      // in the defaults object.
+      connectionString: void 0,
+      // database port
+      port: 5432,
+      // number of rows to return at a time from a prepared statement's
+      // portal. 0 will return all rows at once
+      rows: 0,
+      // binary result mode
+      binary: false,
+      // Connection pool options - see https://github.com/brianc/node-pg-pool
+      // number of connections to use in connection pool
+      // 0 will disable connection pooling
+      max: 10,
+      // max milliseconds a client can go unused before it is removed
+      // from the pool and destroyed
+      idleTimeoutMillis: 3e4,
+      client_encoding: "",
+      ssl: false,
+      application_name: void 0,
+      fallback_application_name: void 0,
+      options: void 0,
+      parseInputDatesAsUTC: false,
+      // max milliseconds any query using this connection will execute for before timing out in error.
+      // false=unlimited
+      statement_timeout: false,
+      // Abort any statement that waits longer than the specified duration in milliseconds while attempting to acquire a lock.
+      // false=unlimited
+      lock_timeout: false,
+      // Terminate any session with an open transaction that has been idle for longer than the specified duration in milliseconds
+      // false=unlimited
+      idle_in_transaction_session_timeout: false,
+      // max milliseconds to wait for query to complete (client side)
+      query_timeout: false,
+      connect_timeout: 0,
+      keepalives: 1,
+      keepalives_idle: 0
+    };
+    var pgTypes = require_pg_types();
+    var parseBigInteger = pgTypes.getTypeParser(20, "text");
+    var parseBigIntegerArray = pgTypes.getTypeParser(1016, "text");
+    module2.exports.__defineSetter__("parseInt8", function(val) {
+      pgTypes.setTypeParser(20, "text", val ? pgTypes.getTypeParser(23, "text") : parseBigInteger);
+      pgTypes.setTypeParser(1016, "text", val ? pgTypes.getTypeParser(1007, "text") : parseBigIntegerArray);
+    });
+  }
+});
+
+// node_modules/pg/lib/utils.js
+var require_utils6 = __commonJS({
+  "node_modules/pg/lib/utils.js"(exports, module2) {
+    "use strict";
+    var defaults2 = require_defaults();
+    function escapeElement(elementRepresentation) {
+      var escaped = elementRepresentation.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
+      return '"' + escaped + '"';
+    }
+    function arrayString(val) {
+      var result = "{";
+      for (var i = 0; i < val.length; i++) {
+        if (i > 0) {
+          result = result + ",";
+        }
+        if (val[i] === null || typeof val[i] === "undefined") {
+          result = result + "NULL";
+        } else if (Array.isArray(val[i])) {
+          result = result + arrayString(val[i]);
+        } else if (val[i] instanceof Buffer) {
+          result += "\\\\x" + val[i].toString("hex");
+        } else {
+          result += escapeElement(prepareValue(val[i]));
+        }
+      }
+      result = result + "}";
+      return result;
+    }
+    var prepareValue = function(val, seen) {
+      if (val == null) {
+        return null;
+      }
+      if (val instanceof Buffer) {
+        return val;
+      }
+      if (ArrayBuffer.isView(val)) {
+        var buf = Buffer.from(val.buffer, val.byteOffset, val.byteLength);
+        if (buf.length === val.byteLength) {
+          return buf;
+        }
+        return buf.slice(val.byteOffset, val.byteOffset + val.byteLength);
+      }
+      if (val instanceof Date) {
+        if (defaults2.parseInputDatesAsUTC) {
+          return dateToStringUTC(val);
+        } else {
+          return dateToString(val);
+        }
+      }
+      if (Array.isArray(val)) {
+        return arrayString(val);
+      }
+      if (typeof val === "object") {
+        return prepareObject(val, seen);
+      }
+      return val.toString();
+    };
+    function prepareObject(val, seen) {
+      if (val && typeof val.toPostgres === "function") {
+        seen = seen || [];
+        if (seen.indexOf(val) !== -1) {
+          throw new Error('circular reference detected while preparing "' + val + '" for query');
+        }
+        seen.push(val);
+        return prepareValue(val.toPostgres(prepareValue), seen);
+      }
+      return JSON.stringify(val);
+    }
+    function pad(number, digits) {
+      number = "" + number;
+      while (number.length < digits) {
+        number = "0" + number;
+      }
+      return number;
+    }
+    function dateToString(date) {
+      var offset = -date.getTimezoneOffset();
+      var year = date.getFullYear();
+      var isBCYear = year < 1;
+      if (isBCYear)
+        year = Math.abs(year) + 1;
+      var ret = pad(year, 4) + "-" + pad(date.getMonth() + 1, 2) + "-" + pad(date.getDate(), 2) + "T" + pad(date.getHours(), 2) + ":" + pad(date.getMinutes(), 2) + ":" + pad(date.getSeconds(), 2) + "." + pad(date.getMilliseconds(), 3);
+      if (offset < 0) {
+        ret += "-";
+        offset *= -1;
+      } else {
+        ret += "+";
+      }
+      ret += pad(Math.floor(offset / 60), 2) + ":" + pad(offset % 60, 2);
+      if (isBCYear)
+        ret += " BC";
+      return ret;
+    }
+    function dateToStringUTC(date) {
+      var year = date.getUTCFullYear();
+      var isBCYear = year < 1;
+      if (isBCYear)
+        year = Math.abs(year) + 1;
+      var ret = pad(year, 4) + "-" + pad(date.getUTCMonth() + 1, 2) + "-" + pad(date.getUTCDate(), 2) + "T" + pad(date.getUTCHours(), 2) + ":" + pad(date.getUTCMinutes(), 2) + ":" + pad(date.getUTCSeconds(), 2) + "." + pad(date.getUTCMilliseconds(), 3);
+      ret += "+00:00";
+      if (isBCYear)
+        ret += " BC";
+      return ret;
+    }
+    function normalizeQueryConfig(config, values, callback2) {
+      config = typeof config === "string" ? { text: config } : config;
+      if (values) {
+        if (typeof values === "function") {
+          config.callback = values;
+        } else {
+          config.values = values;
+        }
+      }
+      if (callback2) {
+        config.callback = callback2;
+      }
+      return config;
+    }
+    var escapeIdentifier = function(str) {
+      return '"' + str.replace(/"/g, '""') + '"';
+    };
+    var escapeLiteral = function(str) {
+      var hasBackslash = false;
+      var escaped = "'";
+      for (var i = 0; i < str.length; i++) {
+        var c = str[i];
+        if (c === "'") {
+          escaped += c + c;
+        } else if (c === "\\") {
+          escaped += c + c;
+          hasBackslash = true;
+        } else {
+          escaped += c;
+        }
+      }
+      escaped += "'";
+      if (hasBackslash === true) {
+        escaped = " E" + escaped;
+      }
+      return escaped;
+    };
+    module2.exports = {
+      prepareValue: function prepareValueWrapper(value) {
+        return prepareValue(value);
+      },
+      normalizeQueryConfig,
+      escapeIdentifier,
+      escapeLiteral
+    };
+  }
+});
+
+// node_modules/pg/lib/crypto/utils-legacy.js
+var require_utils_legacy = __commonJS({
+  "node_modules/pg/lib/crypto/utils-legacy.js"(exports, module2) {
+    "use strict";
+    var nodeCrypto = require("crypto");
+    function md5(string) {
+      return nodeCrypto.createHash("md5").update(string, "utf-8").digest("hex");
+    }
+    function postgresMd5PasswordHash(user, password, salt) {
+      var inner = md5(password + user);
+      var outer = md5(Buffer.concat([Buffer.from(inner), salt]));
+      return "md5" + outer;
+    }
+    function sha256(text) {
+      return nodeCrypto.createHash("sha256").update(text).digest();
+    }
+    function hmacSha256(key, msg) {
+      return nodeCrypto.createHmac("sha256", key).update(msg).digest();
+    }
+    async function deriveKey(password, salt, iterations) {
+      return nodeCrypto.pbkdf2Sync(password, salt, iterations, 32, "sha256");
+    }
+    module2.exports = {
+      postgresMd5PasswordHash,
+      randomBytes: nodeCrypto.randomBytes,
+      deriveKey,
+      sha256,
+      hmacSha256,
+      md5
+    };
+  }
+});
+
+// node_modules/pg/lib/crypto/utils.js
+var require_utils7 = __commonJS({
+  "node_modules/pg/lib/crypto/utils.js"(exports, module2) {
+    "use strict";
+    var useLegacyCrypto = parseInt(process.versions && process.versions.node && process.versions.node.split(".")[0]) < 15;
+    if (useLegacyCrypto) {
+      module2.exports = require_utils_legacy();
+      return;
+    }
+    var nodeCrypto = require("crypto");
+    module2.exports = {
+      postgresMd5PasswordHash,
+      randomBytes,
+      deriveKey,
+      sha256,
+      hmacSha256,
+      md5
+    };
+    var webCrypto = nodeCrypto.webcrypto || globalThis.crypto;
+    var subtleCrypto = webCrypto.subtle;
+    var textEncoder = new TextEncoder();
+    function randomBytes(length) {
+      return webCrypto.getRandomValues(Buffer.alloc(length));
+    }
+    async function md5(string) {
       try {
-        _createSubRequests(metadataReader, avoidConstraints, serviceIdentifier, context, null, target);
-        return context;
-      } catch (error) {
-        if ((0, exceptions_1.isStackOverflowExeption)(error)) {
-          (0, serialization_1.circularDependencyToException)(context.plan.rootRequest);
-        }
-        throw error;
+        return nodeCrypto.createHash("md5").update(string, "utf-8").digest("hex");
+      } catch (e) {
+        const data = typeof string === "string" ? textEncoder.encode(string) : string;
+        const hash = await subtleCrypto.digest("MD5", data);
+        return Array.from(new Uint8Array(hash)).map((b) => b.toString(16).padStart(2, "0")).join("");
       }
     }
-    exports.plan = plan;
-    function createMockRequest(container2, serviceIdentifier, key, value) {
-      var target = new target_1.Target(literal_types_1.TargetTypeEnum.Variable, "", serviceIdentifier, new metadata_1.Metadata(key, value));
-      var context = new context_1.Context(container2);
-      var request = new request_1.Request(serviceIdentifier, context, null, [], target);
-      return request;
+    async function postgresMd5PasswordHash(user, password, salt) {
+      var inner = await md5(password + user);
+      var outer = await md5(Buffer.concat([Buffer.from(inner), salt]));
+      return "md5" + outer;
     }
-    exports.createMockRequest = createMockRequest;
+    async function sha256(text) {
+      return await subtleCrypto.digest("SHA-256", text);
+    }
+    async function hmacSha256(keyBuffer, msg) {
+      const key = await subtleCrypto.importKey("raw", keyBuffer, { name: "HMAC", hash: "SHA-256" }, false, ["sign"]);
+      return await subtleCrypto.sign("HMAC", key, textEncoder.encode(msg));
+    }
+    async function deriveKey(password, salt, iterations) {
+      const key = await subtleCrypto.importKey("raw", textEncoder.encode(password), "PBKDF2", false, ["deriveBits"]);
+      const params = { name: "PBKDF2", hash: "SHA-256", salt, iterations };
+      return await subtleCrypto.deriveBits(params, key, 32 * 8, ["deriveBits"]);
+    }
   }
 });
 
-// node_modules/inversify/lib/utils/async.js
-var require_async = __commonJS({
-  "node_modules/inversify/lib/utils/async.js"(exports) {
+// node_modules/pg/lib/crypto/sasl.js
+var require_sasl = __commonJS({
+  "node_modules/pg/lib/crypto/sasl.js"(exports, module2) {
     "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.isPromiseOrContainsPromise = exports.isPromise = void 0;
-    function isPromise(object) {
-      var isObjectOrFunction = typeof object === "object" && object !== null || typeof object === "function";
-      return isObjectOrFunction && typeof object.then === "function";
-    }
-    exports.isPromise = isPromise;
-    function isPromiseOrContainsPromise(object) {
-      if (isPromise(object)) {
-        return true;
+    var crypto3 = require_utils7();
+    function startSession(mechanisms) {
+      if (mechanisms.indexOf("SCRAM-SHA-256") === -1) {
+        throw new Error("SASL: Only mechanism SCRAM-SHA-256 is currently supported");
       }
-      return Array.isArray(object) && object.some(isPromise);
-    }
-    exports.isPromiseOrContainsPromise = isPromiseOrContainsPromise;
-  }
-});
-
-// node_modules/inversify/lib/scope/scope.js
-var require_scope = __commonJS({
-  "node_modules/inversify/lib/scope/scope.js"(exports) {
-    "use strict";
-    var __awaiter = exports && exports.__awaiter || function(thisArg, _arguments, P, generator) {
-      function adopt(value) {
-        return value instanceof P ? value : new P(function(resolve) {
-          resolve(value);
-        });
-      }
-      return new (P || (P = Promise))(function(resolve, reject) {
-        function fulfilled(value) {
-          try {
-            step(generator.next(value));
-          } catch (e) {
-            reject(e);
-          }
-        }
-        function rejected(value) {
-          try {
-            step(generator["throw"](value));
-          } catch (e) {
-            reject(e);
-          }
-        }
-        function step(result) {
-          result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
-        }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-      });
-    };
-    var __generator = exports && exports.__generator || function(thisArg, body) {
-      var _ = { label: 0, sent: function() {
-        if (t[0] & 1)
-          throw t[1];
-        return t[1];
-      }, trys: [], ops: [] }, f, y, t, g;
-      return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() {
-        return this;
-      }), g;
-      function verb(n) {
-        return function(v) {
-          return step([n, v]);
-        };
-      }
-      function step(op) {
-        if (f)
-          throw new TypeError("Generator is already executing.");
-        while (_)
-          try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done)
-              return t;
-            if (y = 0, t)
-              op = [op[0] & 2, t.value];
-            switch (op[0]) {
-              case 0:
-              case 1:
-                t = op;
-                break;
-              case 4:
-                _.label++;
-                return { value: op[1], done: false };
-              case 5:
-                _.label++;
-                y = op[1];
-                op = [0];
-                continue;
-              case 7:
-                op = _.ops.pop();
-                _.trys.pop();
-                continue;
-              default:
-                if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
-                  _ = 0;
-                  continue;
-                }
-                if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
-                  _.label = op[1];
-                  break;
-                }
-                if (op[0] === 6 && _.label < t[1]) {
-                  _.label = t[1];
-                  t = op;
-                  break;
-                }
-                if (t && _.label < t[2]) {
-                  _.label = t[2];
-                  _.ops.push(op);
-                  break;
-                }
-                if (t[2])
-                  _.ops.pop();
-                _.trys.pop();
-                continue;
-            }
-            op = body.call(thisArg, _);
-          } catch (e) {
-            op = [6, e];
-            y = 0;
-          } finally {
-            f = t = 0;
-          }
-        if (op[0] & 5)
-          throw op[1];
-        return { value: op[0] ? op[1] : void 0, done: true };
-      }
-    };
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.saveToScope = exports.tryGetFromScope = void 0;
-    var inversify_1 = require_inversify();
-    var async_1 = require_async();
-    var tryGetFromScope = function(requestScope, binding) {
-      if (binding.scope === inversify_1.BindingScopeEnum.Singleton && binding.activated) {
-        return binding.cache;
-      }
-      if (binding.scope === inversify_1.BindingScopeEnum.Request && requestScope.has(binding.id)) {
-        return requestScope.get(binding.id);
-      }
-      return null;
-    };
-    exports.tryGetFromScope = tryGetFromScope;
-    var saveToScope = function(requestScope, binding, result) {
-      if (binding.scope === inversify_1.BindingScopeEnum.Singleton) {
-        _saveToSingletonScope(binding, result);
-      }
-      if (binding.scope === inversify_1.BindingScopeEnum.Request) {
-        _saveToRequestScope(requestScope, binding, result);
-      }
-    };
-    exports.saveToScope = saveToScope;
-    var _saveToRequestScope = function(requestScope, binding, result) {
-      if (!requestScope.has(binding.id)) {
-        requestScope.set(binding.id, result);
-      }
-    };
-    var _saveToSingletonScope = function(binding, result) {
-      binding.cache = result;
-      binding.activated = true;
-      if ((0, async_1.isPromise)(result)) {
-        void _saveAsyncResultToSingletonScope(binding, result);
-      }
-    };
-    var _saveAsyncResultToSingletonScope = function(binding, asyncResult) {
-      return __awaiter(void 0, void 0, void 0, function() {
-        var result, ex_1;
-        return __generator(this, function(_a) {
-          switch (_a.label) {
-            case 0:
-              _a.trys.push([0, 2, , 3]);
-              return [4, asyncResult];
-            case 1:
-              result = _a.sent();
-              binding.cache = result;
-              return [3, 3];
-            case 2:
-              ex_1 = _a.sent();
-              binding.cache = null;
-              binding.activated = false;
-              throw ex_1;
-            case 3:
-              return [2];
-          }
-        });
-      });
-    };
-  }
-});
-
-// node_modules/inversify/lib/utils/factory_type.js
-var require_factory_type = __commonJS({
-  "node_modules/inversify/lib/utils/factory_type.js"(exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.FactoryType = void 0;
-    var FactoryType;
-    (function(FactoryType2) {
-      FactoryType2["DynamicValue"] = "toDynamicValue";
-      FactoryType2["Factory"] = "toFactory";
-      FactoryType2["Provider"] = "toProvider";
-    })(FactoryType = exports.FactoryType || (exports.FactoryType = {}));
-  }
-});
-
-// node_modules/inversify/lib/utils/binding_utils.js
-var require_binding_utils = __commonJS({
-  "node_modules/inversify/lib/utils/binding_utils.js"(exports) {
-    "use strict";
-    var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
-      if (k2 === void 0)
-        k2 = k;
-      Object.defineProperty(o, k2, { enumerable: true, get: function() {
-        return m[k];
-      } });
-    } : function(o, m, k, k2) {
-      if (k2 === void 0)
-        k2 = k;
-      o[k2] = m[k];
-    });
-    var __setModuleDefault = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
-      Object.defineProperty(o, "default", { enumerable: true, value: v });
-    } : function(o, v) {
-      o["default"] = v;
-    });
-    var __importStar = exports && exports.__importStar || function(mod) {
-      if (mod && mod.__esModule)
-        return mod;
-      var result = {};
-      if (mod != null) {
-        for (var k in mod)
-          if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
-            __createBinding(result, mod, k);
-      }
-      __setModuleDefault(result, mod);
-      return result;
-    };
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.getFactoryDetails = exports.ensureFullyBound = exports.multiBindToService = void 0;
-    var inversify_1 = require_inversify();
-    var ERROR_MSGS = __importStar(require_error_msgs());
-    var literal_types_1 = require_literal_types();
-    var factory_type_1 = require_factory_type();
-    var multiBindToService = function(container2) {
-      return function(service) {
-        return function() {
-          var types = [];
-          for (var _i = 0; _i < arguments.length; _i++) {
-            types[_i] = arguments[_i];
-          }
-          return types.forEach(function(t) {
-            return container2.bind(t).toService(service);
-          });
-        };
+      const clientNonce = crypto3.randomBytes(18).toString("base64");
+      return {
+        mechanism: "SCRAM-SHA-256",
+        clientNonce,
+        response: "n,,n=*,r=" + clientNonce,
+        message: "SASLInitialResponse"
       };
-    };
-    exports.multiBindToService = multiBindToService;
-    var ensureFullyBound = function(binding) {
-      var boundValue = null;
-      switch (binding.type) {
-        case literal_types_1.BindingTypeEnum.ConstantValue:
-        case literal_types_1.BindingTypeEnum.Function:
-          boundValue = binding.cache;
-          break;
-        case literal_types_1.BindingTypeEnum.Constructor:
-        case literal_types_1.BindingTypeEnum.Instance:
-          boundValue = binding.implementationType;
-          break;
-        case literal_types_1.BindingTypeEnum.DynamicValue:
-          boundValue = binding.dynamicValue;
-          break;
-        case literal_types_1.BindingTypeEnum.Provider:
-          boundValue = binding.provider;
-          break;
-        case literal_types_1.BindingTypeEnum.Factory:
-          boundValue = binding.factory;
-          break;
+    }
+    async function continueSession(session, password, serverData) {
+      if (session.message !== "SASLInitialResponse") {
+        throw new Error("SASL: Last message was not SASLInitialResponse");
       }
-      if (boundValue === null) {
-        var serviceIdentifierAsString = (0, inversify_1.getServiceIdentifierAsString)(binding.serviceIdentifier);
-        throw new Error(ERROR_MSGS.INVALID_BINDING_TYPE + " " + serviceIdentifierAsString);
+      if (typeof password !== "string") {
+        throw new Error("SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string");
       }
+      if (password === "") {
+        throw new Error("SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a non-empty string");
+      }
+      if (typeof serverData !== "string") {
+        throw new Error("SASL: SCRAM-SERVER-FIRST-MESSAGE: serverData must be a string");
+      }
+      const sv = parseServerFirstMessage(serverData);
+      if (!sv.nonce.startsWith(session.clientNonce)) {
+        throw new Error("SASL: SCRAM-SERVER-FIRST-MESSAGE: server nonce does not start with client nonce");
+      } else if (sv.nonce.length === session.clientNonce.length) {
+        throw new Error("SASL: SCRAM-SERVER-FIRST-MESSAGE: server nonce is too short");
+      }
+      var clientFirstMessageBare = "n=*,r=" + session.clientNonce;
+      var serverFirstMessage = "r=" + sv.nonce + ",s=" + sv.salt + ",i=" + sv.iteration;
+      var clientFinalMessageWithoutProof = "c=biws,r=" + sv.nonce;
+      var authMessage = clientFirstMessageBare + "," + serverFirstMessage + "," + clientFinalMessageWithoutProof;
+      var saltBytes = Buffer.from(sv.salt, "base64");
+      var saltedPassword = await crypto3.deriveKey(password, saltBytes, sv.iteration);
+      var clientKey = await crypto3.hmacSha256(saltedPassword, "Client Key");
+      var storedKey = await crypto3.sha256(clientKey);
+      var clientSignature = await crypto3.hmacSha256(storedKey, authMessage);
+      var clientProof = xorBuffers(Buffer.from(clientKey), Buffer.from(clientSignature)).toString("base64");
+      var serverKey = await crypto3.hmacSha256(saltedPassword, "Server Key");
+      var serverSignatureBytes = await crypto3.hmacSha256(serverKey, authMessage);
+      session.message = "SASLResponse";
+      session.serverSignature = Buffer.from(serverSignatureBytes).toString("base64");
+      session.response = clientFinalMessageWithoutProof + ",p=" + clientProof;
+    }
+    function finalizeSession(session, serverData) {
+      if (session.message !== "SASLResponse") {
+        throw new Error("SASL: Last message was not SASLResponse");
+      }
+      if (typeof serverData !== "string") {
+        throw new Error("SASL: SCRAM-SERVER-FINAL-MESSAGE: serverData must be a string");
+      }
+      const { serverSignature } = parseServerFinalMessage(serverData);
+      if (serverSignature !== session.serverSignature) {
+        throw new Error("SASL: SCRAM-SERVER-FINAL-MESSAGE: server signature does not match");
+      }
+    }
+    function isPrintableChars(text) {
+      if (typeof text !== "string") {
+        throw new TypeError("SASL: text must be a string");
+      }
+      return text.split("").map((_, i) => text.charCodeAt(i)).every((c) => c >= 33 && c <= 43 || c >= 45 && c <= 126);
+    }
+    function isBase64(text) {
+      return /^(?:[a-zA-Z0-9+/]{4})*(?:[a-zA-Z0-9+/]{2}==|[a-zA-Z0-9+/]{3}=)?$/.test(text);
+    }
+    function parseAttributePairs(text) {
+      if (typeof text !== "string") {
+        throw new TypeError("SASL: attribute pairs text must be a string");
+      }
+      return new Map(
+        text.split(",").map((attrValue) => {
+          if (!/^.=/.test(attrValue)) {
+            throw new Error("SASL: Invalid attribute pair entry");
+          }
+          const name = attrValue[0];
+          const value = attrValue.substring(2);
+          return [name, value];
+        })
+      );
+    }
+    function parseServerFirstMessage(data) {
+      const attrPairs = parseAttributePairs(data);
+      const nonce = attrPairs.get("r");
+      if (!nonce) {
+        throw new Error("SASL: SCRAM-SERVER-FIRST-MESSAGE: nonce missing");
+      } else if (!isPrintableChars(nonce)) {
+        throw new Error("SASL: SCRAM-SERVER-FIRST-MESSAGE: nonce must only contain printable characters");
+      }
+      const salt = attrPairs.get("s");
+      if (!salt) {
+        throw new Error("SASL: SCRAM-SERVER-FIRST-MESSAGE: salt missing");
+      } else if (!isBase64(salt)) {
+        throw new Error("SASL: SCRAM-SERVER-FIRST-MESSAGE: salt must be base64");
+      }
+      const iterationText = attrPairs.get("i");
+      if (!iterationText) {
+        throw new Error("SASL: SCRAM-SERVER-FIRST-MESSAGE: iteration missing");
+      } else if (!/^[1-9][0-9]*$/.test(iterationText)) {
+        throw new Error("SASL: SCRAM-SERVER-FIRST-MESSAGE: invalid iteration count");
+      }
+      const iteration = parseInt(iterationText, 10);
+      return {
+        nonce,
+        salt,
+        iteration
+      };
+    }
+    function parseServerFinalMessage(serverData) {
+      const attrPairs = parseAttributePairs(serverData);
+      const serverSignature = attrPairs.get("v");
+      if (!serverSignature) {
+        throw new Error("SASL: SCRAM-SERVER-FINAL-MESSAGE: server signature is missing");
+      } else if (!isBase64(serverSignature)) {
+        throw new Error("SASL: SCRAM-SERVER-FINAL-MESSAGE: server signature must be base64");
+      }
+      return {
+        serverSignature
+      };
+    }
+    function xorBuffers(a, b) {
+      if (!Buffer.isBuffer(a)) {
+        throw new TypeError("first argument must be a Buffer");
+      }
+      if (!Buffer.isBuffer(b)) {
+        throw new TypeError("second argument must be a Buffer");
+      }
+      if (a.length !== b.length) {
+        throw new Error("Buffer lengths must match");
+      }
+      if (a.length === 0) {
+        throw new Error("Buffers cannot be empty");
+      }
+      return Buffer.from(a.map((_, i) => a[i] ^ b[i]));
+    }
+    module2.exports = {
+      startSession,
+      continueSession,
+      finalizeSession
     };
-    exports.ensureFullyBound = ensureFullyBound;
-    var getFactoryDetails = function(binding) {
-      switch (binding.type) {
-        case literal_types_1.BindingTypeEnum.Factory:
-          return { factory: binding.factory, factoryType: factory_type_1.FactoryType.Factory };
-        case literal_types_1.BindingTypeEnum.Provider:
-          return { factory: binding.provider, factoryType: factory_type_1.FactoryType.Provider };
-        case literal_types_1.BindingTypeEnum.DynamicValue:
-          return { factory: binding.dynamicValue, factoryType: factory_type_1.FactoryType.DynamicValue };
+  }
+});
+
+// node_modules/pg/lib/type-overrides.js
+var require_type_overrides = __commonJS({
+  "node_modules/pg/lib/type-overrides.js"(exports, module2) {
+    "use strict";
+    var types = require_pg_types();
+    function TypeOverrides(userTypes) {
+      this._types = userTypes || types;
+      this.text = {};
+      this.binary = {};
+    }
+    TypeOverrides.prototype.getOverrides = function(format) {
+      switch (format) {
+        case "text":
+          return this.text;
+        case "binary":
+          return this.binary;
         default:
-          throw new Error("Unexpected factory type " + binding.type);
+          return {};
       }
     };
-    exports.getFactoryDetails = getFactoryDetails;
+    TypeOverrides.prototype.setTypeParser = function(oid, format, parseFn) {
+      if (typeof format === "function") {
+        parseFn = format;
+        format = "text";
+      }
+      this.getOverrides(format)[oid] = parseFn;
+    };
+    TypeOverrides.prototype.getTypeParser = function(oid, format) {
+      format = format || "text";
+      return this.getOverrides(format)[oid] || this._types.getTypeParser(oid, format);
+    };
+    module2.exports = TypeOverrides;
   }
 });
 
-// node_modules/inversify/lib/resolution/instantiation.js
-var require_instantiation = __commonJS({
-  "node_modules/inversify/lib/resolution/instantiation.js"(exports) {
+// node_modules/pg-connection-string/index.js
+var require_pg_connection_string = __commonJS({
+  "node_modules/pg-connection-string/index.js"(exports, module2) {
     "use strict";
-    var __assign = exports && exports.__assign || function() {
-      __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-          s = arguments[i];
-          for (var p in s)
-            if (Object.prototype.hasOwnProperty.call(s, p))
-              t[p] = s[p];
-        }
-        return t;
-      };
-      return __assign.apply(this, arguments);
-    };
-    var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
-      if (k2 === void 0)
-        k2 = k;
-      Object.defineProperty(o, k2, { enumerable: true, get: function() {
-        return m[k];
-      } });
-    } : function(o, m, k, k2) {
-      if (k2 === void 0)
-        k2 = k;
-      o[k2] = m[k];
-    });
-    var __setModuleDefault = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
-      Object.defineProperty(o, "default", { enumerable: true, value: v });
-    } : function(o, v) {
-      o["default"] = v;
-    });
-    var __importStar = exports && exports.__importStar || function(mod) {
-      if (mod && mod.__esModule)
-        return mod;
-      var result = {};
-      if (mod != null) {
-        for (var k in mod)
-          if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
-            __createBinding(result, mod, k);
+    function parse(str) {
+      if (str.charAt(0) === "/") {
+        const config2 = str.split(" ");
+        return { host: config2[0], database: config2[1] };
       }
-      __setModuleDefault(result, mod);
-      return result;
-    };
-    var __awaiter = exports && exports.__awaiter || function(thisArg, _arguments, P, generator) {
-      function adopt(value) {
-        return value instanceof P ? value : new P(function(resolve) {
-          resolve(value);
-        });
+      const config = {};
+      let result;
+      let dummyHost = false;
+      if (/ |%[^a-f0-9]|%[a-f0-9][^a-f0-9]/i.test(str)) {
+        str = encodeURI(str).replace(/\%25(\d\d)/g, "%$1");
       }
-      return new (P || (P = Promise))(function(resolve, reject) {
-        function fulfilled(value) {
-          try {
-            step(generator.next(value));
-          } catch (e) {
-            reject(e);
-          }
-        }
-        function rejected(value) {
-          try {
-            step(generator["throw"](value));
-          } catch (e) {
-            reject(e);
-          }
-        }
-        function step(result) {
-          result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
-        }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-      });
-    };
-    var __generator = exports && exports.__generator || function(thisArg, body) {
-      var _ = { label: 0, sent: function() {
-        if (t[0] & 1)
-          throw t[1];
-        return t[1];
-      }, trys: [], ops: [] }, f, y, t, g;
-      return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() {
-        return this;
-      }), g;
-      function verb(n) {
-        return function(v) {
-          return step([n, v]);
-        };
+      try {
+        result = new URL(str, "postgres://base");
+      } catch (e) {
+        result = new URL(str.replace("@/", "@___DUMMY___/"), "postgres://base");
+        dummyHost = true;
       }
-      function step(op) {
-        if (f)
-          throw new TypeError("Generator is already executing.");
-        while (_)
-          try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done)
-              return t;
-            if (y = 0, t)
-              op = [op[0] & 2, t.value];
-            switch (op[0]) {
-              case 0:
-              case 1:
-                t = op;
-                break;
-              case 4:
-                _.label++;
-                return { value: op[1], done: false };
-              case 5:
-                _.label++;
-                y = op[1];
-                op = [0];
-                continue;
-              case 7:
-                op = _.ops.pop();
-                _.trys.pop();
-                continue;
-              default:
-                if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
-                  _ = 0;
-                  continue;
-                }
-                if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
-                  _.label = op[1];
-                  break;
-                }
-                if (op[0] === 6 && _.label < t[1]) {
-                  _.label = t[1];
-                  t = op;
-                  break;
-                }
-                if (t && _.label < t[2]) {
-                  _.label = t[2];
-                  _.ops.push(op);
-                  break;
-                }
-                if (t[2])
-                  _.ops.pop();
-                _.trys.pop();
-                continue;
-            }
-            op = body.call(thisArg, _);
-          } catch (e) {
-            op = [6, e];
-            y = 0;
-          } finally {
-            f = t = 0;
-          }
-        if (op[0] & 5)
-          throw op[1];
-        return { value: op[0] ? op[1] : void 0, done: true };
+      for (const entry of result.searchParams.entries()) {
+        config[entry[0]] = entry[1];
       }
-    };
-    var __spreadArray = exports && exports.__spreadArray || function(to, from, pack) {
-      if (pack || arguments.length === 2)
-        for (var i = 0, l = from.length, ar; i < l; i++) {
-          if (ar || !(i in from)) {
-            if (!ar)
-              ar = Array.prototype.slice.call(from, 0, i);
-            ar[i] = from[i];
-          }
-        }
-      return to.concat(ar || Array.prototype.slice.call(from));
-    };
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.resolveInstance = void 0;
-    var error_msgs_1 = require_error_msgs();
-    var literal_types_1 = require_literal_types();
-    var METADATA_KEY = __importStar(require_metadata_keys());
-    var async_1 = require_async();
-    function _resolveRequests(childRequests, resolveRequest) {
-      return childRequests.reduce(function(resolvedRequests, childRequest) {
-        var injection = resolveRequest(childRequest);
-        var targetType = childRequest.target.type;
-        if (targetType === literal_types_1.TargetTypeEnum.ConstructorArgument) {
-          resolvedRequests.constructorInjections.push(injection);
-        } else {
-          resolvedRequests.propertyRequests.push(childRequest);
-          resolvedRequests.propertyInjections.push(injection);
-        }
-        if (!resolvedRequests.isAsync) {
-          resolvedRequests.isAsync = (0, async_1.isPromiseOrContainsPromise)(injection);
-        }
-        return resolvedRequests;
-      }, { constructorInjections: [], propertyInjections: [], propertyRequests: [], isAsync: false });
-    }
-    function _createInstance(constr, childRequests, resolveRequest) {
-      var result;
-      if (childRequests.length > 0) {
-        var resolved = _resolveRequests(childRequests, resolveRequest);
-        var createInstanceWithInjectionsArg = __assign(__assign({}, resolved), { constr });
-        if (resolved.isAsync) {
-          result = createInstanceWithInjectionsAsync(createInstanceWithInjectionsArg);
-        } else {
-          result = createInstanceWithInjections(createInstanceWithInjectionsArg);
-        }
-      } else {
-        result = new constr();
+      config.user = config.user || decodeURIComponent(result.username);
+      config.password = config.password || decodeURIComponent(result.password);
+      config.port = result.port;
+      if (result.protocol == "socket:") {
+        config.host = decodeURI(result.pathname);
+        config.database = result.searchParams.get("db");
+        config.client_encoding = result.searchParams.get("encoding");
+        return config;
       }
-      return result;
-    }
-    function createInstanceWithInjections(args) {
-      var _a;
-      var instance = new ((_a = args.constr).bind.apply(_a, __spreadArray([void 0], args.constructorInjections, false)))();
-      args.propertyRequests.forEach(function(r, index) {
-        var property = r.target.identifier;
-        var injection = args.propertyInjections[index];
-        instance[property] = injection;
-      });
-      return instance;
-    }
-    function createInstanceWithInjectionsAsync(args) {
-      return __awaiter(this, void 0, void 0, function() {
-        var constructorInjections, propertyInjections;
-        return __generator(this, function(_a) {
-          switch (_a.label) {
-            case 0:
-              return [4, possiblyWaitInjections(args.constructorInjections)];
-            case 1:
-              constructorInjections = _a.sent();
-              return [4, possiblyWaitInjections(args.propertyInjections)];
-            case 2:
-              propertyInjections = _a.sent();
-              return [2, createInstanceWithInjections(__assign(__assign({}, args), { constructorInjections, propertyInjections }))];
-          }
-        });
-      });
-    }
-    function possiblyWaitInjections(possiblePromiseinjections) {
-      return __awaiter(this, void 0, void 0, function() {
-        var injections, _i, possiblePromiseinjections_1, injection;
-        return __generator(this, function(_a) {
-          injections = [];
-          for (_i = 0, possiblePromiseinjections_1 = possiblePromiseinjections; _i < possiblePromiseinjections_1.length; _i++) {
-            injection = possiblePromiseinjections_1[_i];
-            if (Array.isArray(injection)) {
-              injections.push(Promise.all(injection));
-            } else {
-              injections.push(injection);
-            }
-          }
-          return [2, Promise.all(injections)];
-        });
-      });
-    }
-    function _getInstanceAfterPostConstruct(constr, result) {
-      var postConstructResult = _postConstruct(constr, result);
-      if ((0, async_1.isPromise)(postConstructResult)) {
-        return postConstructResult.then(function() {
-          return result;
-        });
-      } else {
-        return result;
+      const hostname = dummyHost ? "" : result.hostname;
+      if (!config.host) {
+        config.host = decodeURIComponent(hostname);
+      } else if (hostname && /^%2f/i.test(hostname)) {
+        result.pathname = hostname + result.pathname;
       }
-    }
-    function _postConstruct(constr, instance) {
-      var _a, _b;
-      if (Reflect.hasMetadata(METADATA_KEY.POST_CONSTRUCT, constr)) {
-        var data = Reflect.getMetadata(METADATA_KEY.POST_CONSTRUCT, constr);
-        try {
-          return (_b = (_a = instance)[data.value]) === null || _b === void 0 ? void 0 : _b.call(_a);
-        } catch (e) {
-          throw new Error((0, error_msgs_1.POST_CONSTRUCT_ERROR)(constr.name, e.message));
+      const pathname = result.pathname.slice(1) || null;
+      config.database = pathname ? decodeURI(pathname) : null;
+      if (config.ssl === "true" || config.ssl === "1") {
+        config.ssl = true;
+      }
+      if (config.ssl === "0") {
+        config.ssl = false;
+      }
+      if (config.sslcert || config.sslkey || config.sslrootcert || config.sslmode) {
+        config.ssl = {};
+      }
+      const fs = config.sslcert || config.sslkey || config.sslrootcert ? require("fs") : null;
+      if (config.sslcert) {
+        config.ssl.cert = fs.readFileSync(config.sslcert).toString();
+      }
+      if (config.sslkey) {
+        config.ssl.key = fs.readFileSync(config.sslkey).toString();
+      }
+      if (config.sslrootcert) {
+        config.ssl.ca = fs.readFileSync(config.sslrootcert).toString();
+      }
+      switch (config.sslmode) {
+        case "disable": {
+          config.ssl = false;
+          break;
+        }
+        case "prefer":
+        case "require":
+        case "verify-ca":
+        case "verify-full": {
+          break;
+        }
+        case "no-verify": {
+          config.ssl.rejectUnauthorized = false;
+          break;
         }
       }
+      return config;
     }
-    function _validateInstanceResolution(binding, constr) {
-      if (binding.scope !== literal_types_1.BindingScopeEnum.Singleton) {
-        _throwIfHandlingDeactivation(binding, constr);
-      }
-    }
-    function _throwIfHandlingDeactivation(binding, constr) {
-      var scopeErrorMessage = "Class cannot be instantiated in " + (binding.scope === literal_types_1.BindingScopeEnum.Request ? "request" : "transient") + " scope.";
-      if (typeof binding.onDeactivation === "function") {
-        throw new Error((0, error_msgs_1.ON_DEACTIVATION_ERROR)(constr.name, scopeErrorMessage));
-      }
-      if (Reflect.hasMetadata(METADATA_KEY.PRE_DESTROY, constr)) {
-        throw new Error((0, error_msgs_1.PRE_DESTROY_ERROR)(constr.name, scopeErrorMessage));
-      }
-    }
-    function resolveInstance(binding, constr, childRequests, resolveRequest) {
-      _validateInstanceResolution(binding, constr);
-      var result = _createInstance(constr, childRequests, resolveRequest);
-      if ((0, async_1.isPromise)(result)) {
-        return result.then(function(resolvedResult) {
-          return _getInstanceAfterPostConstruct(constr, resolvedResult);
-        });
-      } else {
-        return _getInstanceAfterPostConstruct(constr, result);
-      }
-    }
-    exports.resolveInstance = resolveInstance;
+    module2.exports = parse;
+    parse.parse = parse;
   }
 });
 
-// node_modules/inversify/lib/resolution/resolver.js
-var require_resolver = __commonJS({
-  "node_modules/inversify/lib/resolution/resolver.js"(exports) {
+// node_modules/pg/lib/connection-parameters.js
+var require_connection_parameters = __commonJS({
+  "node_modules/pg/lib/connection-parameters.js"(exports, module2) {
     "use strict";
-    var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
-      if (k2 === void 0)
-        k2 = k;
-      Object.defineProperty(o, k2, { enumerable: true, get: function() {
-        return m[k];
-      } });
-    } : function(o, m, k, k2) {
-      if (k2 === void 0)
-        k2 = k;
-      o[k2] = m[k];
-    });
-    var __setModuleDefault = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
-      Object.defineProperty(o, "default", { enumerable: true, value: v });
-    } : function(o, v) {
-      o["default"] = v;
-    });
-    var __importStar = exports && exports.__importStar || function(mod) {
-      if (mod && mod.__esModule)
-        return mod;
-      var result = {};
-      if (mod != null) {
-        for (var k in mod)
-          if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
-            __createBinding(result, mod, k);
+    var dns = require("dns");
+    var defaults2 = require_defaults();
+    var parse = require_pg_connection_string().parse;
+    var val = function(key, config, envVar) {
+      if (envVar === void 0) {
+        envVar = process.env["PG" + key.toUpperCase()];
+      } else if (envVar === false) {
+      } else {
+        envVar = process.env[envVar];
       }
-      __setModuleDefault(result, mod);
-      return result;
+      return config[key] || envVar || defaults2[key];
     };
-    var __awaiter = exports && exports.__awaiter || function(thisArg, _arguments, P, generator) {
-      function adopt(value) {
-        return value instanceof P ? value : new P(function(resolve2) {
-          resolve2(value);
+    var readSSLConfigFromEnvironment = function() {
+      switch (process.env.PGSSLMODE) {
+        case "disable":
+          return false;
+        case "prefer":
+        case "require":
+        case "verify-ca":
+        case "verify-full":
+          return true;
+        case "no-verify":
+          return { rejectUnauthorized: false };
+      }
+      return defaults2.ssl;
+    };
+    var quoteParamValue = function(value) {
+      return "'" + ("" + value).replace(/\\/g, "\\\\").replace(/'/g, "\\'") + "'";
+    };
+    var add = function(params, config, paramName) {
+      var value = config[paramName];
+      if (value !== void 0 && value !== null) {
+        params.push(paramName + "=" + quoteParamValue(value));
+      }
+    };
+    var ConnectionParameters = class {
+      constructor(config) {
+        config = typeof config === "string" ? parse(config) : config || {};
+        if (config.connectionString) {
+          config = Object.assign({}, config, parse(config.connectionString));
+        }
+        this.user = val("user", config);
+        this.database = val("database", config);
+        if (this.database === void 0) {
+          this.database = this.user;
+        }
+        this.port = parseInt(val("port", config), 10);
+        this.host = val("host", config);
+        Object.defineProperty(this, "password", {
+          configurable: true,
+          enumerable: false,
+          writable: true,
+          value: val("password", config)
         });
-      }
-      return new (P || (P = Promise))(function(resolve2, reject) {
-        function fulfilled(value) {
-          try {
-            step(generator.next(value));
-          } catch (e) {
-            reject(e);
+        this.binary = val("binary", config);
+        this.options = val("options", config);
+        this.ssl = typeof config.ssl === "undefined" ? readSSLConfigFromEnvironment() : config.ssl;
+        if (typeof this.ssl === "string") {
+          if (this.ssl === "true") {
+            this.ssl = true;
           }
         }
-        function rejected(value) {
-          try {
-            step(generator["throw"](value));
-          } catch (e) {
-            reject(e);
-          }
+        if (this.ssl === "no-verify") {
+          this.ssl = { rejectUnauthorized: false };
         }
-        function step(result) {
-          result.done ? resolve2(result.value) : adopt(result.value).then(fulfilled, rejected);
-        }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-      });
-    };
-    var __generator = exports && exports.__generator || function(thisArg, body) {
-      var _ = { label: 0, sent: function() {
-        if (t[0] & 1)
-          throw t[1];
-        return t[1];
-      }, trys: [], ops: [] }, f, y, t, g;
-      return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() {
-        return this;
-      }), g;
-      function verb(n) {
-        return function(v) {
-          return step([n, v]);
-        };
-      }
-      function step(op) {
-        if (f)
-          throw new TypeError("Generator is already executing.");
-        while (_)
-          try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done)
-              return t;
-            if (y = 0, t)
-              op = [op[0] & 2, t.value];
-            switch (op[0]) {
-              case 0:
-              case 1:
-                t = op;
-                break;
-              case 4:
-                _.label++;
-                return { value: op[1], done: false };
-              case 5:
-                _.label++;
-                y = op[1];
-                op = [0];
-                continue;
-              case 7:
-                op = _.ops.pop();
-                _.trys.pop();
-                continue;
-              default:
-                if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
-                  _ = 0;
-                  continue;
-                }
-                if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
-                  _.label = op[1];
-                  break;
-                }
-                if (op[0] === 6 && _.label < t[1]) {
-                  _.label = t[1];
-                  t = op;
-                  break;
-                }
-                if (t && _.label < t[2]) {
-                  _.label = t[2];
-                  _.ops.push(op);
-                  break;
-                }
-                if (t[2])
-                  _.ops.pop();
-                _.trys.pop();
-                continue;
-            }
-            op = body.call(thisArg, _);
-          } catch (e) {
-            op = [6, e];
-            y = 0;
-          } finally {
-            f = t = 0;
-          }
-        if (op[0] & 5)
-          throw op[1];
-        return { value: op[0] ? op[1] : void 0, done: true };
-      }
-    };
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.resolve = void 0;
-    var ERROR_MSGS = __importStar(require_error_msgs());
-    var literal_types_1 = require_literal_types();
-    var planner_1 = require_planner();
-    var scope_1 = require_scope();
-    var async_1 = require_async();
-    var binding_utils_1 = require_binding_utils();
-    var exceptions_1 = require_exceptions();
-    var instantiation_1 = require_instantiation();
-    var _resolveRequest = function(requestScope) {
-      return function(request) {
-        request.parentContext.setCurrentRequest(request);
-        var bindings = request.bindings;
-        var childRequests = request.childRequests;
-        var targetIsAnArray = request.target && request.target.isArray();
-        var targetParentIsNotAnArray = !request.parentRequest || !request.parentRequest.target || !request.target || !request.parentRequest.target.matchesArray(request.target.serviceIdentifier);
-        if (targetIsAnArray && targetParentIsNotAnArray) {
-          return childRequests.map(function(childRequest) {
-            var _f = _resolveRequest(requestScope);
-            return _f(childRequest);
+        if (this.ssl && this.ssl.key) {
+          Object.defineProperty(this.ssl, "key", {
+            enumerable: false
           });
+        }
+        this.client_encoding = val("client_encoding", config);
+        this.replication = val("replication", config);
+        this.isDomainSocket = !(this.host || "").indexOf("/");
+        this.application_name = val("application_name", config, "PGAPPNAME");
+        this.fallback_application_name = val("fallback_application_name", config, false);
+        this.statement_timeout = val("statement_timeout", config, false);
+        this.lock_timeout = val("lock_timeout", config, false);
+        this.idle_in_transaction_session_timeout = val("idle_in_transaction_session_timeout", config, false);
+        this.query_timeout = val("query_timeout", config, false);
+        if (config.connectionTimeoutMillis === void 0) {
+          this.connect_timeout = process.env.PGCONNECT_TIMEOUT || 0;
         } else {
-          if (request.target.isOptional() && bindings.length === 0) {
-            return void 0;
-          }
-          var binding = bindings[0];
-          return _resolveBinding(requestScope, request, binding);
+          this.connect_timeout = Math.floor(config.connectionTimeoutMillis / 1e3);
         }
-      };
-    };
-    var _resolveFactoryFromBinding = function(binding, context) {
-      var factoryDetails = (0, binding_utils_1.getFactoryDetails)(binding);
-      return (0, exceptions_1.tryAndThrowErrorIfStackOverflow)(function() {
-        return factoryDetails.factory.bind(binding)(context);
-      }, function() {
-        return new Error(ERROR_MSGS.CIRCULAR_DEPENDENCY_IN_FACTORY(factoryDetails.factoryType, context.currentRequest.serviceIdentifier.toString()));
-      });
-    };
-    var _getResolvedFromBinding = function(requestScope, request, binding) {
-      var result;
-      var childRequests = request.childRequests;
-      (0, binding_utils_1.ensureFullyBound)(binding);
-      switch (binding.type) {
-        case literal_types_1.BindingTypeEnum.ConstantValue:
-        case literal_types_1.BindingTypeEnum.Function:
-          result = binding.cache;
-          break;
-        case literal_types_1.BindingTypeEnum.Constructor:
-          result = binding.implementationType;
-          break;
-        case literal_types_1.BindingTypeEnum.Instance:
-          result = (0, instantiation_1.resolveInstance)(binding, binding.implementationType, childRequests, _resolveRequest(requestScope));
-          break;
-        default:
-          result = _resolveFactoryFromBinding(binding, request.parentContext);
-      }
-      return result;
-    };
-    var _resolveInScope = function(requestScope, binding, resolveFromBinding) {
-      var result = (0, scope_1.tryGetFromScope)(requestScope, binding);
-      if (result !== null) {
-        return result;
-      }
-      result = resolveFromBinding();
-      (0, scope_1.saveToScope)(requestScope, binding, result);
-      return result;
-    };
-    var _resolveBinding = function(requestScope, request, binding) {
-      return _resolveInScope(requestScope, binding, function() {
-        var result = _getResolvedFromBinding(requestScope, request, binding);
-        if ((0, async_1.isPromise)(result)) {
-          result = result.then(function(resolved) {
-            return _onActivation(request, binding, resolved);
-          });
-        } else {
-          result = _onActivation(request, binding, result);
+        if (config.keepAlive === false) {
+          this.keepalives = 0;
+        } else if (config.keepAlive === true) {
+          this.keepalives = 1;
         }
-        return result;
-      });
-    };
-    function _onActivation(request, binding, resolved) {
-      var result = _bindingActivation(request.parentContext, binding, resolved);
-      var containersIterator = _getContainersIterator(request.parentContext.container);
-      var container2;
-      var containersIteratorResult = containersIterator.next();
-      do {
-        container2 = containersIteratorResult.value;
-        var context_1 = request.parentContext;
-        var serviceIdentifier = request.serviceIdentifier;
-        var activationsIterator = _getContainerActivationsForService(container2, serviceIdentifier);
-        if ((0, async_1.isPromise)(result)) {
-          result = _activateContainerAsync(activationsIterator, context_1, result);
-        } else {
-          result = _activateContainer(activationsIterator, context_1, result);
+        if (typeof config.keepAliveInitialDelayMillis === "number") {
+          this.keepalives_idle = Math.floor(config.keepAliveInitialDelayMillis / 1e3);
         }
-        containersIteratorResult = containersIterator.next();
-      } while (containersIteratorResult.done !== true && !(0, planner_1.getBindingDictionary)(container2).hasKey(request.serviceIdentifier));
-      return result;
-    }
-    var _bindingActivation = function(context, binding, previousResult) {
-      var result;
-      if (typeof binding.onActivation === "function") {
-        result = binding.onActivation(context, previousResult);
-      } else {
-        result = previousResult;
       }
-      return result;
-    };
-    var _activateContainer = function(activationsIterator, context, result) {
-      var activation = activationsIterator.next();
-      while (!activation.done) {
-        result = activation.value(context, result);
-        if ((0, async_1.isPromise)(result)) {
-          return _activateContainerAsync(activationsIterator, context, result);
+      getLibpqConnectionString(cb) {
+        var params = [];
+        add(params, this, "user");
+        add(params, this, "password");
+        add(params, this, "port");
+        add(params, this, "application_name");
+        add(params, this, "fallback_application_name");
+        add(params, this, "connect_timeout");
+        add(params, this, "options");
+        var ssl = typeof this.ssl === "object" ? this.ssl : this.ssl ? { sslmode: this.ssl } : {};
+        add(params, ssl, "sslmode");
+        add(params, ssl, "sslca");
+        add(params, ssl, "sslkey");
+        add(params, ssl, "sslcert");
+        add(params, ssl, "sslrootcert");
+        if (this.database) {
+          params.push("dbname=" + quoteParamValue(this.database));
         }
-        activation = activationsIterator.next();
-      }
-      return result;
-    };
-    var _activateContainerAsync = function(activationsIterator, context, resultPromise) {
-      return __awaiter(void 0, void 0, void 0, function() {
-        var result, activation;
-        return __generator(this, function(_a) {
-          switch (_a.label) {
-            case 0:
-              return [4, resultPromise];
-            case 1:
-              result = _a.sent();
-              activation = activationsIterator.next();
-              _a.label = 2;
-            case 2:
-              if (!!activation.done)
-                return [3, 4];
-              return [4, activation.value(context, result)];
-            case 3:
-              result = _a.sent();
-              activation = activationsIterator.next();
-              return [3, 2];
-            case 4:
-              return [2, result];
-          }
+        if (this.replication) {
+          params.push("replication=" + quoteParamValue(this.replication));
+        }
+        if (this.host) {
+          params.push("host=" + quoteParamValue(this.host));
+        }
+        if (this.isDomainSocket) {
+          return cb(null, params.join(" "));
+        }
+        if (this.client_encoding) {
+          params.push("client_encoding=" + quoteParamValue(this.client_encoding));
+        }
+        dns.lookup(this.host, function(err, address) {
+          if (err)
+            return cb(err, null);
+          params.push("hostaddr=" + quoteParamValue(address));
+          return cb(null, params.join(" "));
         });
-      });
-    };
-    var _getContainerActivationsForService = function(container2, serviceIdentifier) {
-      var activations = container2._activations;
-      return activations.hasKey(serviceIdentifier) ? activations.get(serviceIdentifier).values() : [].values();
-    };
-    var _getContainersIterator = function(container2) {
-      var containersStack = [container2];
-      var parent = container2.parent;
-      while (parent !== null) {
-        containersStack.push(parent);
-        parent = parent.parent;
       }
-      var getNextContainer = function() {
-        var nextContainer = containersStack.pop();
-        if (nextContainer !== void 0) {
-          return { done: false, value: nextContainer };
-        } else {
-          return { done: true, value: void 0 };
-        }
-      };
-      var containersIterator = {
-        next: getNextContainer
-      };
-      return containersIterator;
     };
-    function resolve(context) {
-      var _f = _resolveRequest(context.plan.rootRequest.requestScope);
-      return _f(context.plan.rootRequest);
-    }
-    exports.resolve = resolve;
+    module2.exports = ConnectionParameters;
   }
 });
 
-// node_modules/inversify/lib/syntax/constraint_helpers.js
-var require_constraint_helpers = __commonJS({
-  "node_modules/inversify/lib/syntax/constraint_helpers.js"(exports) {
+// node_modules/pg/lib/result.js
+var require_result = __commonJS({
+  "node_modules/pg/lib/result.js"(exports, module2) {
     "use strict";
-    var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
-      if (k2 === void 0)
-        k2 = k;
-      Object.defineProperty(o, k2, { enumerable: true, get: function() {
-        return m[k];
-      } });
-    } : function(o, m, k, k2) {
-      if (k2 === void 0)
-        k2 = k;
-      o[k2] = m[k];
-    });
-    var __setModuleDefault = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
-      Object.defineProperty(o, "default", { enumerable: true, value: v });
-    } : function(o, v) {
-      o["default"] = v;
-    });
-    var __importStar = exports && exports.__importStar || function(mod) {
-      if (mod && mod.__esModule)
-        return mod;
-      var result = {};
-      if (mod != null) {
-        for (var k in mod)
-          if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
-            __createBinding(result, mod, k);
+    var types = require_pg_types();
+    var matchRegexp = /^([A-Za-z]+)(?: (\d+))?(?: (\d+))?/;
+    var Result = class {
+      constructor(rowMode, types2) {
+        this.command = null;
+        this.rowCount = null;
+        this.oid = null;
+        this.rows = [];
+        this.fields = [];
+        this._parsers = void 0;
+        this._types = types2;
+        this.RowCtor = null;
+        this.rowAsArray = rowMode === "array";
+        if (this.rowAsArray) {
+          this.parseRow = this._parseRowAsArray;
+        }
       }
-      __setModuleDefault(result, mod);
-      return result;
-    };
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.typeConstraint = exports.namedConstraint = exports.taggedConstraint = exports.traverseAncerstors = void 0;
-    var METADATA_KEY = __importStar(require_metadata_keys());
-    var metadata_1 = require_metadata();
-    var traverseAncerstors = function(request, constraint) {
-      var parent = request.parentRequest;
-      if (parent !== null) {
-        return constraint(parent) ? true : traverseAncerstors(parent, constraint);
-      } else {
-        return false;
+      // adds a command complete message
+      addCommandComplete(msg) {
+        var match;
+        if (msg.text) {
+          match = matchRegexp.exec(msg.text);
+        } else {
+          match = matchRegexp.exec(msg.command);
+        }
+        if (match) {
+          this.command = match[1];
+          if (match[3]) {
+            this.oid = parseInt(match[2], 10);
+            this.rowCount = parseInt(match[3], 10);
+          } else if (match[2]) {
+            this.rowCount = parseInt(match[2], 10);
+          }
+        }
       }
-    };
-    exports.traverseAncerstors = traverseAncerstors;
-    var taggedConstraint = function(key) {
-      return function(value) {
-        var constraint = function(request) {
-          return request !== null && request.target !== null && request.target.matchesTag(key)(value);
-        };
-        constraint.metaData = new metadata_1.Metadata(key, value);
-        return constraint;
-      };
-    };
-    exports.taggedConstraint = taggedConstraint;
-    var namedConstraint = taggedConstraint(METADATA_KEY.NAMED_TAG);
-    exports.namedConstraint = namedConstraint;
-    var typeConstraint = function(type) {
-      return function(request) {
-        var binding = null;
-        if (request !== null) {
-          binding = request.bindings[0];
-          if (typeof type === "string") {
-            var serviceIdentifier = binding.serviceIdentifier;
-            return serviceIdentifier === type;
+      _parseRowAsArray(rowData) {
+        var row = new Array(rowData.length);
+        for (var i = 0, len = rowData.length; i < len; i++) {
+          var rawValue = rowData[i];
+          if (rawValue !== null) {
+            row[i] = this._parsers[i](rawValue);
           } else {
-            var constructor = request.bindings[0].implementationType;
-            return type === constructor;
+            row[i] = null;
           }
         }
-        return false;
-      };
-    };
-    exports.typeConstraint = typeConstraint;
-  }
-});
-
-// node_modules/inversify/lib/syntax/binding_when_syntax.js
-var require_binding_when_syntax = __commonJS({
-  "node_modules/inversify/lib/syntax/binding_when_syntax.js"(exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.BindingWhenSyntax = void 0;
-    var binding_on_syntax_1 = require_binding_on_syntax();
-    var constraint_helpers_1 = require_constraint_helpers();
-    var BindingWhenSyntax = function() {
-      function BindingWhenSyntax2(binding) {
-        this._binding = binding;
+        return row;
       }
-      BindingWhenSyntax2.prototype.when = function(constraint) {
-        this._binding.constraint = constraint;
-        return new binding_on_syntax_1.BindingOnSyntax(this._binding);
-      };
-      BindingWhenSyntax2.prototype.whenTargetNamed = function(name) {
-        this._binding.constraint = (0, constraint_helpers_1.namedConstraint)(name);
-        return new binding_on_syntax_1.BindingOnSyntax(this._binding);
-      };
-      BindingWhenSyntax2.prototype.whenTargetIsDefault = function() {
-        this._binding.constraint = function(request) {
-          if (request === null) {
-            return false;
-          }
-          var targetIsDefault = request.target !== null && !request.target.isNamed() && !request.target.isTagged();
-          return targetIsDefault;
-        };
-        return new binding_on_syntax_1.BindingOnSyntax(this._binding);
-      };
-      BindingWhenSyntax2.prototype.whenTargetTagged = function(tag, value) {
-        this._binding.constraint = (0, constraint_helpers_1.taggedConstraint)(tag)(value);
-        return new binding_on_syntax_1.BindingOnSyntax(this._binding);
-      };
-      BindingWhenSyntax2.prototype.whenInjectedInto = function(parent) {
-        this._binding.constraint = function(request) {
-          return request !== null && (0, constraint_helpers_1.typeConstraint)(parent)(request.parentRequest);
-        };
-        return new binding_on_syntax_1.BindingOnSyntax(this._binding);
-      };
-      BindingWhenSyntax2.prototype.whenParentNamed = function(name) {
-        this._binding.constraint = function(request) {
-          return request !== null && (0, constraint_helpers_1.namedConstraint)(name)(request.parentRequest);
-        };
-        return new binding_on_syntax_1.BindingOnSyntax(this._binding);
-      };
-      BindingWhenSyntax2.prototype.whenParentTagged = function(tag, value) {
-        this._binding.constraint = function(request) {
-          return request !== null && (0, constraint_helpers_1.taggedConstraint)(tag)(value)(request.parentRequest);
-        };
-        return new binding_on_syntax_1.BindingOnSyntax(this._binding);
-      };
-      BindingWhenSyntax2.prototype.whenAnyAncestorIs = function(ancestor) {
-        this._binding.constraint = function(request) {
-          return request !== null && (0, constraint_helpers_1.traverseAncerstors)(request, (0, constraint_helpers_1.typeConstraint)(ancestor));
-        };
-        return new binding_on_syntax_1.BindingOnSyntax(this._binding);
-      };
-      BindingWhenSyntax2.prototype.whenNoAncestorIs = function(ancestor) {
-        this._binding.constraint = function(request) {
-          return request !== null && !(0, constraint_helpers_1.traverseAncerstors)(request, (0, constraint_helpers_1.typeConstraint)(ancestor));
-        };
-        return new binding_on_syntax_1.BindingOnSyntax(this._binding);
-      };
-      BindingWhenSyntax2.prototype.whenAnyAncestorNamed = function(name) {
-        this._binding.constraint = function(request) {
-          return request !== null && (0, constraint_helpers_1.traverseAncerstors)(request, (0, constraint_helpers_1.namedConstraint)(name));
-        };
-        return new binding_on_syntax_1.BindingOnSyntax(this._binding);
-      };
-      BindingWhenSyntax2.prototype.whenNoAncestorNamed = function(name) {
-        this._binding.constraint = function(request) {
-          return request !== null && !(0, constraint_helpers_1.traverseAncerstors)(request, (0, constraint_helpers_1.namedConstraint)(name));
-        };
-        return new binding_on_syntax_1.BindingOnSyntax(this._binding);
-      };
-      BindingWhenSyntax2.prototype.whenAnyAncestorTagged = function(tag, value) {
-        this._binding.constraint = function(request) {
-          return request !== null && (0, constraint_helpers_1.traverseAncerstors)(request, (0, constraint_helpers_1.taggedConstraint)(tag)(value));
-        };
-        return new binding_on_syntax_1.BindingOnSyntax(this._binding);
-      };
-      BindingWhenSyntax2.prototype.whenNoAncestorTagged = function(tag, value) {
-        this._binding.constraint = function(request) {
-          return request !== null && !(0, constraint_helpers_1.traverseAncerstors)(request, (0, constraint_helpers_1.taggedConstraint)(tag)(value));
-        };
-        return new binding_on_syntax_1.BindingOnSyntax(this._binding);
-      };
-      BindingWhenSyntax2.prototype.whenAnyAncestorMatches = function(constraint) {
-        this._binding.constraint = function(request) {
-          return request !== null && (0, constraint_helpers_1.traverseAncerstors)(request, constraint);
-        };
-        return new binding_on_syntax_1.BindingOnSyntax(this._binding);
-      };
-      BindingWhenSyntax2.prototype.whenNoAncestorMatches = function(constraint) {
-        this._binding.constraint = function(request) {
-          return request !== null && !(0, constraint_helpers_1.traverseAncerstors)(request, constraint);
-        };
-        return new binding_on_syntax_1.BindingOnSyntax(this._binding);
-      };
-      return BindingWhenSyntax2;
-    }();
-    exports.BindingWhenSyntax = BindingWhenSyntax;
-  }
-});
-
-// node_modules/inversify/lib/syntax/binding_on_syntax.js
-var require_binding_on_syntax = __commonJS({
-  "node_modules/inversify/lib/syntax/binding_on_syntax.js"(exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.BindingOnSyntax = void 0;
-    var binding_when_syntax_1 = require_binding_when_syntax();
-    var BindingOnSyntax = function() {
-      function BindingOnSyntax2(binding) {
-        this._binding = binding;
-      }
-      BindingOnSyntax2.prototype.onActivation = function(handler) {
-        this._binding.onActivation = handler;
-        return new binding_when_syntax_1.BindingWhenSyntax(this._binding);
-      };
-      BindingOnSyntax2.prototype.onDeactivation = function(handler) {
-        this._binding.onDeactivation = handler;
-        return new binding_when_syntax_1.BindingWhenSyntax(this._binding);
-      };
-      return BindingOnSyntax2;
-    }();
-    exports.BindingOnSyntax = BindingOnSyntax;
-  }
-});
-
-// node_modules/inversify/lib/syntax/binding_when_on_syntax.js
-var require_binding_when_on_syntax = __commonJS({
-  "node_modules/inversify/lib/syntax/binding_when_on_syntax.js"(exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.BindingWhenOnSyntax = void 0;
-    var binding_on_syntax_1 = require_binding_on_syntax();
-    var binding_when_syntax_1 = require_binding_when_syntax();
-    var BindingWhenOnSyntax = function() {
-      function BindingWhenOnSyntax2(binding) {
-        this._binding = binding;
-        this._bindingWhenSyntax = new binding_when_syntax_1.BindingWhenSyntax(this._binding);
-        this._bindingOnSyntax = new binding_on_syntax_1.BindingOnSyntax(this._binding);
-      }
-      BindingWhenOnSyntax2.prototype.when = function(constraint) {
-        return this._bindingWhenSyntax.when(constraint);
-      };
-      BindingWhenOnSyntax2.prototype.whenTargetNamed = function(name) {
-        return this._bindingWhenSyntax.whenTargetNamed(name);
-      };
-      BindingWhenOnSyntax2.prototype.whenTargetIsDefault = function() {
-        return this._bindingWhenSyntax.whenTargetIsDefault();
-      };
-      BindingWhenOnSyntax2.prototype.whenTargetTagged = function(tag, value) {
-        return this._bindingWhenSyntax.whenTargetTagged(tag, value);
-      };
-      BindingWhenOnSyntax2.prototype.whenInjectedInto = function(parent) {
-        return this._bindingWhenSyntax.whenInjectedInto(parent);
-      };
-      BindingWhenOnSyntax2.prototype.whenParentNamed = function(name) {
-        return this._bindingWhenSyntax.whenParentNamed(name);
-      };
-      BindingWhenOnSyntax2.prototype.whenParentTagged = function(tag, value) {
-        return this._bindingWhenSyntax.whenParentTagged(tag, value);
-      };
-      BindingWhenOnSyntax2.prototype.whenAnyAncestorIs = function(ancestor) {
-        return this._bindingWhenSyntax.whenAnyAncestorIs(ancestor);
-      };
-      BindingWhenOnSyntax2.prototype.whenNoAncestorIs = function(ancestor) {
-        return this._bindingWhenSyntax.whenNoAncestorIs(ancestor);
-      };
-      BindingWhenOnSyntax2.prototype.whenAnyAncestorNamed = function(name) {
-        return this._bindingWhenSyntax.whenAnyAncestorNamed(name);
-      };
-      BindingWhenOnSyntax2.prototype.whenAnyAncestorTagged = function(tag, value) {
-        return this._bindingWhenSyntax.whenAnyAncestorTagged(tag, value);
-      };
-      BindingWhenOnSyntax2.prototype.whenNoAncestorNamed = function(name) {
-        return this._bindingWhenSyntax.whenNoAncestorNamed(name);
-      };
-      BindingWhenOnSyntax2.prototype.whenNoAncestorTagged = function(tag, value) {
-        return this._bindingWhenSyntax.whenNoAncestorTagged(tag, value);
-      };
-      BindingWhenOnSyntax2.prototype.whenAnyAncestorMatches = function(constraint) {
-        return this._bindingWhenSyntax.whenAnyAncestorMatches(constraint);
-      };
-      BindingWhenOnSyntax2.prototype.whenNoAncestorMatches = function(constraint) {
-        return this._bindingWhenSyntax.whenNoAncestorMatches(constraint);
-      };
-      BindingWhenOnSyntax2.prototype.onActivation = function(handler) {
-        return this._bindingOnSyntax.onActivation(handler);
-      };
-      BindingWhenOnSyntax2.prototype.onDeactivation = function(handler) {
-        return this._bindingOnSyntax.onDeactivation(handler);
-      };
-      return BindingWhenOnSyntax2;
-    }();
-    exports.BindingWhenOnSyntax = BindingWhenOnSyntax;
-  }
-});
-
-// node_modules/inversify/lib/syntax/binding_in_syntax.js
-var require_binding_in_syntax = __commonJS({
-  "node_modules/inversify/lib/syntax/binding_in_syntax.js"(exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.BindingInSyntax = void 0;
-    var literal_types_1 = require_literal_types();
-    var binding_when_on_syntax_1 = require_binding_when_on_syntax();
-    var BindingInSyntax = function() {
-      function BindingInSyntax2(binding) {
-        this._binding = binding;
-      }
-      BindingInSyntax2.prototype.inRequestScope = function() {
-        this._binding.scope = literal_types_1.BindingScopeEnum.Request;
-        return new binding_when_on_syntax_1.BindingWhenOnSyntax(this._binding);
-      };
-      BindingInSyntax2.prototype.inSingletonScope = function() {
-        this._binding.scope = literal_types_1.BindingScopeEnum.Singleton;
-        return new binding_when_on_syntax_1.BindingWhenOnSyntax(this._binding);
-      };
-      BindingInSyntax2.prototype.inTransientScope = function() {
-        this._binding.scope = literal_types_1.BindingScopeEnum.Transient;
-        return new binding_when_on_syntax_1.BindingWhenOnSyntax(this._binding);
-      };
-      return BindingInSyntax2;
-    }();
-    exports.BindingInSyntax = BindingInSyntax;
-  }
-});
-
-// node_modules/inversify/lib/syntax/binding_in_when_on_syntax.js
-var require_binding_in_when_on_syntax = __commonJS({
-  "node_modules/inversify/lib/syntax/binding_in_when_on_syntax.js"(exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.BindingInWhenOnSyntax = void 0;
-    var binding_in_syntax_1 = require_binding_in_syntax();
-    var binding_on_syntax_1 = require_binding_on_syntax();
-    var binding_when_syntax_1 = require_binding_when_syntax();
-    var BindingInWhenOnSyntax = function() {
-      function BindingInWhenOnSyntax2(binding) {
-        this._binding = binding;
-        this._bindingWhenSyntax = new binding_when_syntax_1.BindingWhenSyntax(this._binding);
-        this._bindingOnSyntax = new binding_on_syntax_1.BindingOnSyntax(this._binding);
-        this._bindingInSyntax = new binding_in_syntax_1.BindingInSyntax(binding);
-      }
-      BindingInWhenOnSyntax2.prototype.inRequestScope = function() {
-        return this._bindingInSyntax.inRequestScope();
-      };
-      BindingInWhenOnSyntax2.prototype.inSingletonScope = function() {
-        return this._bindingInSyntax.inSingletonScope();
-      };
-      BindingInWhenOnSyntax2.prototype.inTransientScope = function() {
-        return this._bindingInSyntax.inTransientScope();
-      };
-      BindingInWhenOnSyntax2.prototype.when = function(constraint) {
-        return this._bindingWhenSyntax.when(constraint);
-      };
-      BindingInWhenOnSyntax2.prototype.whenTargetNamed = function(name) {
-        return this._bindingWhenSyntax.whenTargetNamed(name);
-      };
-      BindingInWhenOnSyntax2.prototype.whenTargetIsDefault = function() {
-        return this._bindingWhenSyntax.whenTargetIsDefault();
-      };
-      BindingInWhenOnSyntax2.prototype.whenTargetTagged = function(tag, value) {
-        return this._bindingWhenSyntax.whenTargetTagged(tag, value);
-      };
-      BindingInWhenOnSyntax2.prototype.whenInjectedInto = function(parent) {
-        return this._bindingWhenSyntax.whenInjectedInto(parent);
-      };
-      BindingInWhenOnSyntax2.prototype.whenParentNamed = function(name) {
-        return this._bindingWhenSyntax.whenParentNamed(name);
-      };
-      BindingInWhenOnSyntax2.prototype.whenParentTagged = function(tag, value) {
-        return this._bindingWhenSyntax.whenParentTagged(tag, value);
-      };
-      BindingInWhenOnSyntax2.prototype.whenAnyAncestorIs = function(ancestor) {
-        return this._bindingWhenSyntax.whenAnyAncestorIs(ancestor);
-      };
-      BindingInWhenOnSyntax2.prototype.whenNoAncestorIs = function(ancestor) {
-        return this._bindingWhenSyntax.whenNoAncestorIs(ancestor);
-      };
-      BindingInWhenOnSyntax2.prototype.whenAnyAncestorNamed = function(name) {
-        return this._bindingWhenSyntax.whenAnyAncestorNamed(name);
-      };
-      BindingInWhenOnSyntax2.prototype.whenAnyAncestorTagged = function(tag, value) {
-        return this._bindingWhenSyntax.whenAnyAncestorTagged(tag, value);
-      };
-      BindingInWhenOnSyntax2.prototype.whenNoAncestorNamed = function(name) {
-        return this._bindingWhenSyntax.whenNoAncestorNamed(name);
-      };
-      BindingInWhenOnSyntax2.prototype.whenNoAncestorTagged = function(tag, value) {
-        return this._bindingWhenSyntax.whenNoAncestorTagged(tag, value);
-      };
-      BindingInWhenOnSyntax2.prototype.whenAnyAncestorMatches = function(constraint) {
-        return this._bindingWhenSyntax.whenAnyAncestorMatches(constraint);
-      };
-      BindingInWhenOnSyntax2.prototype.whenNoAncestorMatches = function(constraint) {
-        return this._bindingWhenSyntax.whenNoAncestorMatches(constraint);
-      };
-      BindingInWhenOnSyntax2.prototype.onActivation = function(handler) {
-        return this._bindingOnSyntax.onActivation(handler);
-      };
-      BindingInWhenOnSyntax2.prototype.onDeactivation = function(handler) {
-        return this._bindingOnSyntax.onDeactivation(handler);
-      };
-      return BindingInWhenOnSyntax2;
-    }();
-    exports.BindingInWhenOnSyntax = BindingInWhenOnSyntax;
-  }
-});
-
-// node_modules/inversify/lib/syntax/binding_to_syntax.js
-var require_binding_to_syntax = __commonJS({
-  "node_modules/inversify/lib/syntax/binding_to_syntax.js"(exports) {
-    "use strict";
-    var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
-      if (k2 === void 0)
-        k2 = k;
-      Object.defineProperty(o, k2, { enumerable: true, get: function() {
-        return m[k];
-      } });
-    } : function(o, m, k, k2) {
-      if (k2 === void 0)
-        k2 = k;
-      o[k2] = m[k];
-    });
-    var __setModuleDefault = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
-      Object.defineProperty(o, "default", { enumerable: true, value: v });
-    } : function(o, v) {
-      o["default"] = v;
-    });
-    var __importStar = exports && exports.__importStar || function(mod) {
-      if (mod && mod.__esModule)
-        return mod;
-      var result = {};
-      if (mod != null) {
-        for (var k in mod)
-          if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
-            __createBinding(result, mod, k);
-      }
-      __setModuleDefault(result, mod);
-      return result;
-    };
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.BindingToSyntax = void 0;
-    var ERROR_MSGS = __importStar(require_error_msgs());
-    var literal_types_1 = require_literal_types();
-    var binding_in_when_on_syntax_1 = require_binding_in_when_on_syntax();
-    var binding_when_on_syntax_1 = require_binding_when_on_syntax();
-    var BindingToSyntax = function() {
-      function BindingToSyntax2(binding) {
-        this._binding = binding;
-      }
-      BindingToSyntax2.prototype.to = function(constructor) {
-        this._binding.type = literal_types_1.BindingTypeEnum.Instance;
-        this._binding.implementationType = constructor;
-        return new binding_in_when_on_syntax_1.BindingInWhenOnSyntax(this._binding);
-      };
-      BindingToSyntax2.prototype.toSelf = function() {
-        if (typeof this._binding.serviceIdentifier !== "function") {
-          throw new Error("" + ERROR_MSGS.INVALID_TO_SELF_VALUE);
-        }
-        var self2 = this._binding.serviceIdentifier;
-        return this.to(self2);
-      };
-      BindingToSyntax2.prototype.toConstantValue = function(value) {
-        this._binding.type = literal_types_1.BindingTypeEnum.ConstantValue;
-        this._binding.cache = value;
-        this._binding.dynamicValue = null;
-        this._binding.implementationType = null;
-        this._binding.scope = literal_types_1.BindingScopeEnum.Singleton;
-        return new binding_when_on_syntax_1.BindingWhenOnSyntax(this._binding);
-      };
-      BindingToSyntax2.prototype.toDynamicValue = function(func) {
-        this._binding.type = literal_types_1.BindingTypeEnum.DynamicValue;
-        this._binding.cache = null;
-        this._binding.dynamicValue = func;
-        this._binding.implementationType = null;
-        return new binding_in_when_on_syntax_1.BindingInWhenOnSyntax(this._binding);
-      };
-      BindingToSyntax2.prototype.toConstructor = function(constructor) {
-        this._binding.type = literal_types_1.BindingTypeEnum.Constructor;
-        this._binding.implementationType = constructor;
-        this._binding.scope = literal_types_1.BindingScopeEnum.Singleton;
-        return new binding_when_on_syntax_1.BindingWhenOnSyntax(this._binding);
-      };
-      BindingToSyntax2.prototype.toFactory = function(factory) {
-        this._binding.type = literal_types_1.BindingTypeEnum.Factory;
-        this._binding.factory = factory;
-        this._binding.scope = literal_types_1.BindingScopeEnum.Singleton;
-        return new binding_when_on_syntax_1.BindingWhenOnSyntax(this._binding);
-      };
-      BindingToSyntax2.prototype.toFunction = function(func) {
-        if (typeof func !== "function") {
-          throw new Error(ERROR_MSGS.INVALID_FUNCTION_BINDING);
-        }
-        var bindingWhenOnSyntax = this.toConstantValue(func);
-        this._binding.type = literal_types_1.BindingTypeEnum.Function;
-        this._binding.scope = literal_types_1.BindingScopeEnum.Singleton;
-        return bindingWhenOnSyntax;
-      };
-      BindingToSyntax2.prototype.toAutoFactory = function(serviceIdentifier) {
-        this._binding.type = literal_types_1.BindingTypeEnum.Factory;
-        this._binding.factory = function(context) {
-          var autofactory = function() {
-            return context.container.get(serviceIdentifier);
-          };
-          return autofactory;
-        };
-        this._binding.scope = literal_types_1.BindingScopeEnum.Singleton;
-        return new binding_when_on_syntax_1.BindingWhenOnSyntax(this._binding);
-      };
-      BindingToSyntax2.prototype.toAutoNamedFactory = function(serviceIdentifier) {
-        this._binding.type = literal_types_1.BindingTypeEnum.Factory;
-        this._binding.factory = function(context) {
-          return function(named) {
-            return context.container.getNamed(serviceIdentifier, named);
-          };
-        };
-        return new binding_when_on_syntax_1.BindingWhenOnSyntax(this._binding);
-      };
-      BindingToSyntax2.prototype.toProvider = function(provider) {
-        this._binding.type = literal_types_1.BindingTypeEnum.Provider;
-        this._binding.provider = provider;
-        this._binding.scope = literal_types_1.BindingScopeEnum.Singleton;
-        return new binding_when_on_syntax_1.BindingWhenOnSyntax(this._binding);
-      };
-      BindingToSyntax2.prototype.toService = function(service) {
-        this.toDynamicValue(function(context) {
-          return context.container.get(service);
-        });
-      };
-      return BindingToSyntax2;
-    }();
-    exports.BindingToSyntax = BindingToSyntax;
-  }
-});
-
-// node_modules/inversify/lib/container/container_snapshot.js
-var require_container_snapshot = __commonJS({
-  "node_modules/inversify/lib/container/container_snapshot.js"(exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.ContainerSnapshot = void 0;
-    var ContainerSnapshot = function() {
-      function ContainerSnapshot2() {
-      }
-      ContainerSnapshot2.of = function(bindings, middleware, activations, deactivations, moduleActivationStore) {
-        var snapshot = new ContainerSnapshot2();
-        snapshot.bindings = bindings;
-        snapshot.middleware = middleware;
-        snapshot.deactivations = deactivations;
-        snapshot.activations = activations;
-        snapshot.moduleActivationStore = moduleActivationStore;
-        return snapshot;
-      };
-      return ContainerSnapshot2;
-    }();
-    exports.ContainerSnapshot = ContainerSnapshot;
-  }
-});
-
-// node_modules/inversify/lib/utils/clonable.js
-var require_clonable = __commonJS({
-  "node_modules/inversify/lib/utils/clonable.js"(exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.isClonable = void 0;
-    function isClonable(obj) {
-      return typeof obj === "object" && obj !== null && "clone" in obj && typeof obj.clone === "function";
-    }
-    exports.isClonable = isClonable;
-  }
-});
-
-// node_modules/inversify/lib/container/lookup.js
-var require_lookup = __commonJS({
-  "node_modules/inversify/lib/container/lookup.js"(exports) {
-    "use strict";
-    var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
-      if (k2 === void 0)
-        k2 = k;
-      Object.defineProperty(o, k2, { enumerable: true, get: function() {
-        return m[k];
-      } });
-    } : function(o, m, k, k2) {
-      if (k2 === void 0)
-        k2 = k;
-      o[k2] = m[k];
-    });
-    var __setModuleDefault = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
-      Object.defineProperty(o, "default", { enumerable: true, value: v });
-    } : function(o, v) {
-      o["default"] = v;
-    });
-    var __importStar = exports && exports.__importStar || function(mod) {
-      if (mod && mod.__esModule)
-        return mod;
-      var result = {};
-      if (mod != null) {
-        for (var k in mod)
-          if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
-            __createBinding(result, mod, k);
-      }
-      __setModuleDefault(result, mod);
-      return result;
-    };
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.Lookup = void 0;
-    var ERROR_MSGS = __importStar(require_error_msgs());
-    var clonable_1 = require_clonable();
-    var Lookup = function() {
-      function Lookup2() {
-        this._map = /* @__PURE__ */ new Map();
-      }
-      Lookup2.prototype.getMap = function() {
-        return this._map;
-      };
-      Lookup2.prototype.add = function(serviceIdentifier, value) {
-        if (serviceIdentifier === null || serviceIdentifier === void 0) {
-          throw new Error(ERROR_MSGS.NULL_ARGUMENT);
-        }
-        if (value === null || value === void 0) {
-          throw new Error(ERROR_MSGS.NULL_ARGUMENT);
-        }
-        var entry = this._map.get(serviceIdentifier);
-        if (entry !== void 0) {
-          entry.push(value);
-        } else {
-          this._map.set(serviceIdentifier, [value]);
-        }
-      };
-      Lookup2.prototype.get = function(serviceIdentifier) {
-        if (serviceIdentifier === null || serviceIdentifier === void 0) {
-          throw new Error(ERROR_MSGS.NULL_ARGUMENT);
-        }
-        var entry = this._map.get(serviceIdentifier);
-        if (entry !== void 0) {
-          return entry;
-        } else {
-          throw new Error(ERROR_MSGS.KEY_NOT_FOUND);
-        }
-      };
-      Lookup2.prototype.remove = function(serviceIdentifier) {
-        if (serviceIdentifier === null || serviceIdentifier === void 0) {
-          throw new Error(ERROR_MSGS.NULL_ARGUMENT);
-        }
-        if (!this._map.delete(serviceIdentifier)) {
-          throw new Error(ERROR_MSGS.KEY_NOT_FOUND);
-        }
-      };
-      Lookup2.prototype.removeIntersection = function(lookup) {
-        var _this = this;
-        this.traverse(function(serviceIdentifier, value) {
-          var lookupActivations = lookup.hasKey(serviceIdentifier) ? lookup.get(serviceIdentifier) : void 0;
-          if (lookupActivations !== void 0) {
-            var filteredValues = value.filter(function(lookupValue) {
-              return !lookupActivations.some(function(moduleActivation) {
-                return lookupValue === moduleActivation;
-              });
-            });
-            _this._setValue(serviceIdentifier, filteredValues);
-          }
-        });
-      };
-      Lookup2.prototype.removeByCondition = function(condition) {
-        var _this = this;
-        var removals = [];
-        this._map.forEach(function(entries, key) {
-          var updatedEntries = [];
-          for (var _i = 0, entries_1 = entries; _i < entries_1.length; _i++) {
-            var entry = entries_1[_i];
-            var remove = condition(entry);
-            if (remove) {
-              removals.push(entry);
-            } else {
-              updatedEntries.push(entry);
-            }
-          }
-          _this._setValue(key, updatedEntries);
-        });
-        return removals;
-      };
-      Lookup2.prototype.hasKey = function(serviceIdentifier) {
-        if (serviceIdentifier === null || serviceIdentifier === void 0) {
-          throw new Error(ERROR_MSGS.NULL_ARGUMENT);
-        }
-        return this._map.has(serviceIdentifier);
-      };
-      Lookup2.prototype.clone = function() {
-        var copy = new Lookup2();
-        this._map.forEach(function(value, key) {
-          value.forEach(function(b) {
-            return copy.add(key, (0, clonable_1.isClonable)(b) ? b.clone() : b);
-          });
-        });
-        return copy;
-      };
-      Lookup2.prototype.traverse = function(func) {
-        this._map.forEach(function(value, key) {
-          func(key, value);
-        });
-      };
-      Lookup2.prototype._setValue = function(serviceIdentifier, value) {
-        if (value.length > 0) {
-          this._map.set(serviceIdentifier, value);
-        } else {
-          this._map.delete(serviceIdentifier);
-        }
-      };
-      return Lookup2;
-    }();
-    exports.Lookup = Lookup;
-  }
-});
-
-// node_modules/inversify/lib/container/module_activation_store.js
-var require_module_activation_store = __commonJS({
-  "node_modules/inversify/lib/container/module_activation_store.js"(exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.ModuleActivationStore = void 0;
-    var lookup_1 = require_lookup();
-    var ModuleActivationStore = function() {
-      function ModuleActivationStore2() {
-        this._map = /* @__PURE__ */ new Map();
-      }
-      ModuleActivationStore2.prototype.remove = function(moduleId) {
-        if (this._map.has(moduleId)) {
-          var handlers = this._map.get(moduleId);
-          this._map.delete(moduleId);
-          return handlers;
-        }
-        return this._getEmptyHandlersStore();
-      };
-      ModuleActivationStore2.prototype.addDeactivation = function(moduleId, serviceIdentifier, onDeactivation) {
-        this._getModuleActivationHandlers(moduleId).onDeactivations.add(serviceIdentifier, onDeactivation);
-      };
-      ModuleActivationStore2.prototype.addActivation = function(moduleId, serviceIdentifier, onActivation) {
-        this._getModuleActivationHandlers(moduleId).onActivations.add(serviceIdentifier, onActivation);
-      };
-      ModuleActivationStore2.prototype.clone = function() {
-        var clone = new ModuleActivationStore2();
-        this._map.forEach(function(handlersStore, moduleId) {
-          clone._map.set(moduleId, {
-            onActivations: handlersStore.onActivations.clone(),
-            onDeactivations: handlersStore.onDeactivations.clone()
-          });
-        });
-        return clone;
-      };
-      ModuleActivationStore2.prototype._getModuleActivationHandlers = function(moduleId) {
-        var moduleActivationHandlers = this._map.get(moduleId);
-        if (moduleActivationHandlers === void 0) {
-          moduleActivationHandlers = this._getEmptyHandlersStore();
-          this._map.set(moduleId, moduleActivationHandlers);
-        }
-        return moduleActivationHandlers;
-      };
-      ModuleActivationStore2.prototype._getEmptyHandlersStore = function() {
-        var handlersStore = {
-          onActivations: new lookup_1.Lookup(),
-          onDeactivations: new lookup_1.Lookup()
-        };
-        return handlersStore;
-      };
-      return ModuleActivationStore2;
-    }();
-    exports.ModuleActivationStore = ModuleActivationStore;
-  }
-});
-
-// node_modules/inversify/lib/container/container.js
-var require_container = __commonJS({
-  "node_modules/inversify/lib/container/container.js"(exports) {
-    "use strict";
-    var __assign = exports && exports.__assign || function() {
-      __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-          s = arguments[i];
-          for (var p in s)
-            if (Object.prototype.hasOwnProperty.call(s, p))
-              t[p] = s[p];
-        }
-        return t;
-      };
-      return __assign.apply(this, arguments);
-    };
-    var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
-      if (k2 === void 0)
-        k2 = k;
-      Object.defineProperty(o, k2, { enumerable: true, get: function() {
-        return m[k];
-      } });
-    } : function(o, m, k, k2) {
-      if (k2 === void 0)
-        k2 = k;
-      o[k2] = m[k];
-    });
-    var __setModuleDefault = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
-      Object.defineProperty(o, "default", { enumerable: true, value: v });
-    } : function(o, v) {
-      o["default"] = v;
-    });
-    var __importStar = exports && exports.__importStar || function(mod) {
-      if (mod && mod.__esModule)
-        return mod;
-      var result = {};
-      if (mod != null) {
-        for (var k in mod)
-          if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
-            __createBinding(result, mod, k);
-      }
-      __setModuleDefault(result, mod);
-      return result;
-    };
-    var __awaiter = exports && exports.__awaiter || function(thisArg, _arguments, P, generator) {
-      function adopt(value) {
-        return value instanceof P ? value : new P(function(resolve) {
-          resolve(value);
-        });
-      }
-      return new (P || (P = Promise))(function(resolve, reject) {
-        function fulfilled(value) {
-          try {
-            step(generator.next(value));
-          } catch (e) {
-            reject(e);
+      parseRow(rowData) {
+        var row = {};
+        for (var i = 0, len = rowData.length; i < len; i++) {
+          var rawValue = rowData[i];
+          var field = this.fields[i].name;
+          if (rawValue !== null) {
+            row[field] = this._parsers[i](rawValue);
+          } else {
+            row[field] = null;
           }
         }
-        function rejected(value) {
-          try {
-            step(generator["throw"](value));
-          } catch (e) {
-            reject(e);
-          }
-        }
-        function step(result) {
-          result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
-        }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-      });
-    };
-    var __generator = exports && exports.__generator || function(thisArg, body) {
-      var _ = { label: 0, sent: function() {
-        if (t[0] & 1)
-          throw t[1];
-        return t[1];
-      }, trys: [], ops: [] }, f, y, t, g;
-      return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() {
-        return this;
-      }), g;
-      function verb(n) {
-        return function(v) {
-          return step([n, v]);
-        };
+        return row;
       }
-      function step(op) {
-        if (f)
-          throw new TypeError("Generator is already executing.");
-        while (_)
-          try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done)
-              return t;
-            if (y = 0, t)
-              op = [op[0] & 2, t.value];
-            switch (op[0]) {
-              case 0:
-              case 1:
-                t = op;
-                break;
-              case 4:
-                _.label++;
-                return { value: op[1], done: false };
-              case 5:
-                _.label++;
-                y = op[1];
-                op = [0];
-                continue;
-              case 7:
-                op = _.ops.pop();
-                _.trys.pop();
-                continue;
-              default:
-                if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
-                  _ = 0;
-                  continue;
-                }
-                if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
-                  _.label = op[1];
-                  break;
-                }
-                if (op[0] === 6 && _.label < t[1]) {
-                  _.label = t[1];
-                  t = op;
-                  break;
-                }
-                if (t && _.label < t[2]) {
-                  _.label = t[2];
-                  _.ops.push(op);
-                  break;
-                }
-                if (t[2])
-                  _.ops.pop();
-                _.trys.pop();
-                continue;
-            }
-            op = body.call(thisArg, _);
-          } catch (e) {
-            op = [6, e];
-            y = 0;
-          } finally {
-            f = t = 0;
+      addRow(row) {
+        this.rows.push(row);
+      }
+      addFields(fieldDescriptions) {
+        this.fields = fieldDescriptions;
+        if (this.fields.length) {
+          this._parsers = new Array(fieldDescriptions.length);
+        }
+        for (var i = 0; i < fieldDescriptions.length; i++) {
+          var desc = fieldDescriptions[i];
+          if (this._types) {
+            this._parsers[i] = this._types.getTypeParser(desc.dataTypeID, desc.format || "text");
+          } else {
+            this._parsers[i] = types.getTypeParser(desc.dataTypeID, desc.format || "text");
           }
-        if (op[0] & 5)
-          throw op[1];
-        return { value: op[0] ? op[1] : void 0, done: true };
+        }
       }
     };
-    var __spreadArray = exports && exports.__spreadArray || function(to, from, pack) {
-      if (pack || arguments.length === 2)
-        for (var i = 0, l = from.length, ar; i < l; i++) {
-          if (ar || !(i in from)) {
-            if (!ar)
-              ar = Array.prototype.slice.call(from, 0, i);
-            ar[i] = from[i];
-          }
+    module2.exports = Result;
+  }
+});
+
+// node_modules/pg/lib/query.js
+var require_query2 = __commonJS({
+  "node_modules/pg/lib/query.js"(exports, module2) {
+    "use strict";
+    var { EventEmitter: EventEmitter2 } = require("events");
+    var Result = require_result();
+    var utils = require_utils6();
+    var Query = class extends EventEmitter2 {
+      constructor(config, values, callback2) {
+        super();
+        config = utils.normalizeQueryConfig(config, values, callback2);
+        this.text = config.text;
+        this.values = config.values;
+        this.rows = config.rows;
+        this.types = config.types;
+        this.name = config.name;
+        this.binary = config.binary;
+        this.portal = config.portal || "";
+        this.callback = config.callback;
+        this._rowMode = config.rowMode;
+        if (process.domain && config.callback) {
+          this.callback = process.domain.bind(config.callback);
         }
-      return to.concat(ar || Array.prototype.slice.call(from));
-    };
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.Container = void 0;
-    var binding_1 = require_binding();
-    var ERROR_MSGS = __importStar(require_error_msgs());
-    var literal_types_1 = require_literal_types();
-    var METADATA_KEY = __importStar(require_metadata_keys());
-    var metadata_reader_1 = require_metadata_reader();
-    var planner_1 = require_planner();
-    var resolver_1 = require_resolver();
-    var binding_to_syntax_1 = require_binding_to_syntax();
-    var async_1 = require_async();
-    var id_1 = require_id();
-    var serialization_1 = require_serialization();
-    var container_snapshot_1 = require_container_snapshot();
-    var lookup_1 = require_lookup();
-    var module_activation_store_1 = require_module_activation_store();
-    var Container2 = function() {
-      function Container3(containerOptions) {
-        var options = containerOptions || {};
-        if (typeof options !== "object") {
-          throw new Error("" + ERROR_MSGS.CONTAINER_OPTIONS_MUST_BE_AN_OBJECT);
-        }
-        if (options.defaultScope === void 0) {
-          options.defaultScope = literal_types_1.BindingScopeEnum.Transient;
-        } else if (options.defaultScope !== literal_types_1.BindingScopeEnum.Singleton && options.defaultScope !== literal_types_1.BindingScopeEnum.Transient && options.defaultScope !== literal_types_1.BindingScopeEnum.Request) {
-          throw new Error("" + ERROR_MSGS.CONTAINER_OPTIONS_INVALID_DEFAULT_SCOPE);
-        }
-        if (options.autoBindInjectable === void 0) {
-          options.autoBindInjectable = false;
-        } else if (typeof options.autoBindInjectable !== "boolean") {
-          throw new Error("" + ERROR_MSGS.CONTAINER_OPTIONS_INVALID_AUTO_BIND_INJECTABLE);
-        }
-        if (options.skipBaseClassChecks === void 0) {
-          options.skipBaseClassChecks = false;
-        } else if (typeof options.skipBaseClassChecks !== "boolean") {
-          throw new Error("" + ERROR_MSGS.CONTAINER_OPTIONS_INVALID_SKIP_BASE_CHECK);
-        }
-        this.options = {
-          autoBindInjectable: options.autoBindInjectable,
-          defaultScope: options.defaultScope,
-          skipBaseClassChecks: options.skipBaseClassChecks
-        };
-        this.id = (0, id_1.id)();
-        this._bindingDictionary = new lookup_1.Lookup();
-        this._snapshots = [];
-        this._middleware = null;
-        this._activations = new lookup_1.Lookup();
-        this._deactivations = new lookup_1.Lookup();
-        this.parent = null;
-        this._metadataReader = new metadata_reader_1.MetadataReader();
-        this._moduleActivationStore = new module_activation_store_1.ModuleActivationStore();
+        this._result = new Result(this._rowMode, this.types);
+        this._results = this._result;
+        this.isPreparedStatement = false;
+        this._canceledDueToError = false;
+        this._promise = null;
       }
-      Container3.merge = function(container1, container2) {
-        var containers = [];
-        for (var _i = 2; _i < arguments.length; _i++) {
-          containers[_i - 2] = arguments[_i];
+      requiresPreparation() {
+        if (this.name) {
+          return true;
         }
-        var container3 = new Container3();
-        var targetContainers = __spreadArray([container1, container2], containers, true).map(function(targetContainer) {
-          return (0, planner_1.getBindingDictionary)(targetContainer);
-        });
-        var bindingDictionary = (0, planner_1.getBindingDictionary)(container3);
-        function copyDictionary(origin, destination) {
-          origin.traverse(function(_key, value) {
-            value.forEach(function(binding) {
-              destination.add(binding.serviceIdentifier, binding.clone());
-            });
-          });
+        if (this.rows) {
+          return true;
         }
-        targetContainers.forEach(function(targetBindingDictionary) {
-          copyDictionary(targetBindingDictionary, bindingDictionary);
-        });
-        return container3;
-      };
-      Container3.prototype.load = function() {
-        var modules = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-          modules[_i] = arguments[_i];
+        if (!this.text) {
+          return false;
         }
-        var getHelpers = this._getContainerModuleHelpersFactory();
-        for (var _a = 0, modules_1 = modules; _a < modules_1.length; _a++) {
-          var currentModule = modules_1[_a];
-          var containerModuleHelpers = getHelpers(currentModule.id);
-          currentModule.registry(containerModuleHelpers.bindFunction, containerModuleHelpers.unbindFunction, containerModuleHelpers.isboundFunction, containerModuleHelpers.rebindFunction, containerModuleHelpers.unbindAsyncFunction, containerModuleHelpers.onActivationFunction, containerModuleHelpers.onDeactivationFunction);
+        if (!this.values) {
+          return false;
         }
-      };
-      Container3.prototype.loadAsync = function() {
-        var modules = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-          modules[_i] = arguments[_i];
-        }
-        return __awaiter(this, void 0, void 0, function() {
-          var getHelpers, _a, modules_2, currentModule, containerModuleHelpers;
-          return __generator(this, function(_b) {
-            switch (_b.label) {
-              case 0:
-                getHelpers = this._getContainerModuleHelpersFactory();
-                _a = 0, modules_2 = modules;
-                _b.label = 1;
-              case 1:
-                if (!(_a < modules_2.length))
-                  return [3, 4];
-                currentModule = modules_2[_a];
-                containerModuleHelpers = getHelpers(currentModule.id);
-                return [4, currentModule.registry(containerModuleHelpers.bindFunction, containerModuleHelpers.unbindFunction, containerModuleHelpers.isboundFunction, containerModuleHelpers.rebindFunction, containerModuleHelpers.unbindAsyncFunction, containerModuleHelpers.onActivationFunction, containerModuleHelpers.onDeactivationFunction)];
-              case 2:
-                _b.sent();
-                _b.label = 3;
-              case 3:
-                _a++;
-                return [3, 1];
-              case 4:
-                return [2];
-            }
-          });
-        });
-      };
-      Container3.prototype.unload = function() {
-        var _this = this;
-        var modules = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-          modules[_i] = arguments[_i];
-        }
-        modules.forEach(function(module3) {
-          var deactivations = _this._removeModuleBindings(module3.id);
-          _this._deactivateSingletons(deactivations);
-          _this._removeModuleHandlers(module3.id);
-        });
-      };
-      Container3.prototype.unloadAsync = function() {
-        var modules = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-          modules[_i] = arguments[_i];
-        }
-        return __awaiter(this, void 0, void 0, function() {
-          var _a, modules_3, module_1, deactivations;
-          return __generator(this, function(_b) {
-            switch (_b.label) {
-              case 0:
-                _a = 0, modules_3 = modules;
-                _b.label = 1;
-              case 1:
-                if (!(_a < modules_3.length))
-                  return [3, 4];
-                module_1 = modules_3[_a];
-                deactivations = this._removeModuleBindings(module_1.id);
-                return [4, this._deactivateSingletonsAsync(deactivations)];
-              case 2:
-                _b.sent();
-                this._removeModuleHandlers(module_1.id);
-                _b.label = 3;
-              case 3:
-                _a++;
-                return [3, 1];
-              case 4:
-                return [2];
-            }
-          });
-        });
-      };
-      Container3.prototype.bind = function(serviceIdentifier) {
-        var scope = this.options.defaultScope || literal_types_1.BindingScopeEnum.Transient;
-        var binding = new binding_1.Binding(serviceIdentifier, scope);
-        this._bindingDictionary.add(serviceIdentifier, binding);
-        return new binding_to_syntax_1.BindingToSyntax(binding);
-      };
-      Container3.prototype.rebind = function(serviceIdentifier) {
-        this.unbind(serviceIdentifier);
-        return this.bind(serviceIdentifier);
-      };
-      Container3.prototype.rebindAsync = function(serviceIdentifier) {
-        return __awaiter(this, void 0, void 0, function() {
-          return __generator(this, function(_a) {
-            switch (_a.label) {
-              case 0:
-                return [4, this.unbindAsync(serviceIdentifier)];
-              case 1:
-                _a.sent();
-                return [2, this.bind(serviceIdentifier)];
-            }
-          });
-        });
-      };
-      Container3.prototype.unbind = function(serviceIdentifier) {
-        if (this._bindingDictionary.hasKey(serviceIdentifier)) {
-          var bindings = this._bindingDictionary.get(serviceIdentifier);
-          this._deactivateSingletons(bindings);
-        }
-        this._removeServiceFromDictionary(serviceIdentifier);
-      };
-      Container3.prototype.unbindAsync = function(serviceIdentifier) {
-        return __awaiter(this, void 0, void 0, function() {
-          var bindings;
-          return __generator(this, function(_a) {
-            switch (_a.label) {
-              case 0:
-                if (!this._bindingDictionary.hasKey(serviceIdentifier))
-                  return [3, 2];
-                bindings = this._bindingDictionary.get(serviceIdentifier);
-                return [4, this._deactivateSingletonsAsync(bindings)];
-              case 1:
-                _a.sent();
-                _a.label = 2;
-              case 2:
-                this._removeServiceFromDictionary(serviceIdentifier);
-                return [2];
-            }
-          });
-        });
-      };
-      Container3.prototype.unbindAll = function() {
-        var _this = this;
-        this._bindingDictionary.traverse(function(_key, value) {
-          _this._deactivateSingletons(value);
-        });
-        this._bindingDictionary = new lookup_1.Lookup();
-      };
-      Container3.prototype.unbindAllAsync = function() {
-        return __awaiter(this, void 0, void 0, function() {
-          var promises;
-          var _this = this;
-          return __generator(this, function(_a) {
-            switch (_a.label) {
-              case 0:
-                promises = [];
-                this._bindingDictionary.traverse(function(_key, value) {
-                  promises.push(_this._deactivateSingletonsAsync(value));
-                });
-                return [4, Promise.all(promises)];
-              case 1:
-                _a.sent();
-                this._bindingDictionary = new lookup_1.Lookup();
-                return [2];
-            }
-          });
-        });
-      };
-      Container3.prototype.onActivation = function(serviceIdentifier, onActivation) {
-        this._activations.add(serviceIdentifier, onActivation);
-      };
-      Container3.prototype.onDeactivation = function(serviceIdentifier, onDeactivation) {
-        this._deactivations.add(serviceIdentifier, onDeactivation);
-      };
-      Container3.prototype.isBound = function(serviceIdentifier) {
-        var bound = this._bindingDictionary.hasKey(serviceIdentifier);
-        if (!bound && this.parent) {
-          bound = this.parent.isBound(serviceIdentifier);
-        }
-        return bound;
-      };
-      Container3.prototype.isCurrentBound = function(serviceIdentifier) {
-        return this._bindingDictionary.hasKey(serviceIdentifier);
-      };
-      Container3.prototype.isBoundNamed = function(serviceIdentifier, named) {
-        return this.isBoundTagged(serviceIdentifier, METADATA_KEY.NAMED_TAG, named);
-      };
-      Container3.prototype.isBoundTagged = function(serviceIdentifier, key, value) {
-        var bound = false;
-        if (this._bindingDictionary.hasKey(serviceIdentifier)) {
-          var bindings = this._bindingDictionary.get(serviceIdentifier);
-          var request_1 = (0, planner_1.createMockRequest)(this, serviceIdentifier, key, value);
-          bound = bindings.some(function(b) {
-            return b.constraint(request_1);
-          });
-        }
-        if (!bound && this.parent) {
-          bound = this.parent.isBoundTagged(serviceIdentifier, key, value);
-        }
-        return bound;
-      };
-      Container3.prototype.snapshot = function() {
-        this._snapshots.push(container_snapshot_1.ContainerSnapshot.of(this._bindingDictionary.clone(), this._middleware, this._activations.clone(), this._deactivations.clone(), this._moduleActivationStore.clone()));
-      };
-      Container3.prototype.restore = function() {
-        var snapshot = this._snapshots.pop();
-        if (snapshot === void 0) {
-          throw new Error(ERROR_MSGS.NO_MORE_SNAPSHOTS_AVAILABLE);
-        }
-        this._bindingDictionary = snapshot.bindings;
-        this._activations = snapshot.activations;
-        this._deactivations = snapshot.deactivations;
-        this._middleware = snapshot.middleware;
-        this._moduleActivationStore = snapshot.moduleActivationStore;
-      };
-      Container3.prototype.createChild = function(containerOptions) {
-        var child = new Container3(containerOptions || this.options);
-        child.parent = this;
-        return child;
-      };
-      Container3.prototype.applyMiddleware = function() {
-        var middlewares = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-          middlewares[_i] = arguments[_i];
-        }
-        var initial = this._middleware ? this._middleware : this._planAndResolve();
-        this._middleware = middlewares.reduce(function(prev, curr) {
-          return curr(prev);
-        }, initial);
-      };
-      Container3.prototype.applyCustomMetadataReader = function(metadataReader) {
-        this._metadataReader = metadataReader;
-      };
-      Container3.prototype.get = function(serviceIdentifier) {
-        var getArgs = this._getNotAllArgs(serviceIdentifier, false);
-        return this._getButThrowIfAsync(getArgs);
-      };
-      Container3.prototype.getAsync = function(serviceIdentifier) {
-        return __awaiter(this, void 0, void 0, function() {
-          var getArgs;
-          return __generator(this, function(_a) {
-            getArgs = this._getNotAllArgs(serviceIdentifier, false);
-            return [2, this._get(getArgs)];
-          });
-        });
-      };
-      Container3.prototype.getTagged = function(serviceIdentifier, key, value) {
-        var getArgs = this._getNotAllArgs(serviceIdentifier, false, key, value);
-        return this._getButThrowIfAsync(getArgs);
-      };
-      Container3.prototype.getTaggedAsync = function(serviceIdentifier, key, value) {
-        return __awaiter(this, void 0, void 0, function() {
-          var getArgs;
-          return __generator(this, function(_a) {
-            getArgs = this._getNotAllArgs(serviceIdentifier, false, key, value);
-            return [2, this._get(getArgs)];
-          });
-        });
-      };
-      Container3.prototype.getNamed = function(serviceIdentifier, named) {
-        return this.getTagged(serviceIdentifier, METADATA_KEY.NAMED_TAG, named);
-      };
-      Container3.prototype.getNamedAsync = function(serviceIdentifier, named) {
-        return this.getTaggedAsync(serviceIdentifier, METADATA_KEY.NAMED_TAG, named);
-      };
-      Container3.prototype.getAll = function(serviceIdentifier) {
-        var getArgs = this._getAllArgs(serviceIdentifier);
-        return this._getButThrowIfAsync(getArgs);
-      };
-      Container3.prototype.getAllAsync = function(serviceIdentifier) {
-        var getArgs = this._getAllArgs(serviceIdentifier);
-        return this._getAll(getArgs);
-      };
-      Container3.prototype.getAllTagged = function(serviceIdentifier, key, value) {
-        var getArgs = this._getNotAllArgs(serviceIdentifier, true, key, value);
-        return this._getButThrowIfAsync(getArgs);
-      };
-      Container3.prototype.getAllTaggedAsync = function(serviceIdentifier, key, value) {
-        var getArgs = this._getNotAllArgs(serviceIdentifier, true, key, value);
-        return this._getAll(getArgs);
-      };
-      Container3.prototype.getAllNamed = function(serviceIdentifier, named) {
-        return this.getAllTagged(serviceIdentifier, METADATA_KEY.NAMED_TAG, named);
-      };
-      Container3.prototype.getAllNamedAsync = function(serviceIdentifier, named) {
-        return this.getAllTaggedAsync(serviceIdentifier, METADATA_KEY.NAMED_TAG, named);
-      };
-      Container3.prototype.resolve = function(constructorFunction) {
-        var isBound = this.isBound(constructorFunction);
-        if (!isBound) {
-          this.bind(constructorFunction).toSelf();
-        }
-        var resolved = this.get(constructorFunction);
-        if (!isBound) {
-          this.unbind(constructorFunction);
-        }
-        return resolved;
-      };
-      Container3.prototype._preDestroy = function(constructor, instance) {
-        if (Reflect.hasMetadata(METADATA_KEY.PRE_DESTROY, constructor)) {
-          var data = Reflect.getMetadata(METADATA_KEY.PRE_DESTROY, constructor);
-          return instance[data.value]();
-        }
-      };
-      Container3.prototype._removeModuleHandlers = function(moduleId) {
-        var moduleActivationsHandlers = this._moduleActivationStore.remove(moduleId);
-        this._activations.removeIntersection(moduleActivationsHandlers.onActivations);
-        this._deactivations.removeIntersection(moduleActivationsHandlers.onDeactivations);
-      };
-      Container3.prototype._removeModuleBindings = function(moduleId) {
-        return this._bindingDictionary.removeByCondition(function(binding) {
-          return binding.moduleId === moduleId;
-        });
-      };
-      Container3.prototype._deactivate = function(binding, instance) {
-        var _this = this;
-        var constructor = Object.getPrototypeOf(instance).constructor;
-        try {
-          if (this._deactivations.hasKey(binding.serviceIdentifier)) {
-            var result = this._deactivateContainer(instance, this._deactivations.get(binding.serviceIdentifier).values());
-            if ((0, async_1.isPromise)(result)) {
-              return this._handleDeactivationError(result.then(function() {
-                return _this._propagateContainerDeactivationThenBindingAndPreDestroyAsync(binding, instance, constructor);
-              }), constructor);
-            }
+        return this.values.length > 0;
+      }
+      _checkForMultirow() {
+        if (this._result.command) {
+          if (!Array.isArray(this._results)) {
+            this._results = [this._result];
           }
-          var propagateDeactivationResult = this._propagateContainerDeactivationThenBindingAndPreDestroy(binding, instance, constructor);
-          if ((0, async_1.isPromise)(propagateDeactivationResult)) {
-            return this._handleDeactivationError(propagateDeactivationResult, constructor);
-          }
-        } catch (ex) {
-          throw new Error(ERROR_MSGS.ON_DEACTIVATION_ERROR(constructor.name, ex.message));
+          this._result = new Result(this._rowMode, this.types);
+          this._results.push(this._result);
         }
-      };
-      Container3.prototype._handleDeactivationError = function(asyncResult, constructor) {
-        return __awaiter(this, void 0, void 0, function() {
-          var ex_1;
-          return __generator(this, function(_a) {
-            switch (_a.label) {
-              case 0:
-                _a.trys.push([0, 2, , 3]);
-                return [4, asyncResult];
-              case 1:
-                _a.sent();
-                return [3, 3];
-              case 2:
-                ex_1 = _a.sent();
-                throw new Error(ERROR_MSGS.ON_DEACTIVATION_ERROR(constructor.name, ex_1.message));
-              case 3:
-                return [2];
-            }
-          });
-        });
-      };
-      Container3.prototype._deactivateContainer = function(instance, deactivationsIterator) {
-        var _this = this;
-        var deactivation = deactivationsIterator.next();
-        while (deactivation.value) {
-          var result = deactivation.value(instance);
-          if ((0, async_1.isPromise)(result)) {
-            return result.then(function() {
-              return _this._deactivateContainerAsync(instance, deactivationsIterator);
-            });
-          }
-          deactivation = deactivationsIterator.next();
-        }
-      };
-      Container3.prototype._deactivateContainerAsync = function(instance, deactivationsIterator) {
-        return __awaiter(this, void 0, void 0, function() {
-          var deactivation;
-          return __generator(this, function(_a) {
-            switch (_a.label) {
-              case 0:
-                deactivation = deactivationsIterator.next();
-                _a.label = 1;
-              case 1:
-                if (!deactivation.value)
-                  return [3, 3];
-                return [4, deactivation.value(instance)];
-              case 2:
-                _a.sent();
-                deactivation = deactivationsIterator.next();
-                return [3, 1];
-              case 3:
-                return [2];
-            }
-          });
-        });
-      };
-      Container3.prototype._getContainerModuleHelpersFactory = function() {
-        var _this = this;
-        var setModuleId = function(bindingToSyntax, moduleId) {
-          bindingToSyntax._binding.moduleId = moduleId;
-        };
-        var getBindFunction = function(moduleId) {
-          return function(serviceIdentifier) {
-            var bindingToSyntax = _this.bind(serviceIdentifier);
-            setModuleId(bindingToSyntax, moduleId);
-            return bindingToSyntax;
-          };
-        };
-        var getUnbindFunction = function() {
-          return function(serviceIdentifier) {
-            return _this.unbind(serviceIdentifier);
-          };
-        };
-        var getUnbindAsyncFunction = function() {
-          return function(serviceIdentifier) {
-            return _this.unbindAsync(serviceIdentifier);
-          };
-        };
-        var getIsboundFunction = function() {
-          return function(serviceIdentifier) {
-            return _this.isBound(serviceIdentifier);
-          };
-        };
-        var getRebindFunction = function(moduleId) {
-          return function(serviceIdentifier) {
-            var bindingToSyntax = _this.rebind(serviceIdentifier);
-            setModuleId(bindingToSyntax, moduleId);
-            return bindingToSyntax;
-          };
-        };
-        var getOnActivationFunction = function(moduleId) {
-          return function(serviceIdentifier, onActivation) {
-            _this._moduleActivationStore.addActivation(moduleId, serviceIdentifier, onActivation);
-            _this.onActivation(serviceIdentifier, onActivation);
-          };
-        };
-        var getOnDeactivationFunction = function(moduleId) {
-          return function(serviceIdentifier, onDeactivation) {
-            _this._moduleActivationStore.addDeactivation(moduleId, serviceIdentifier, onDeactivation);
-            _this.onDeactivation(serviceIdentifier, onDeactivation);
-          };
-        };
-        return function(mId) {
-          return {
-            bindFunction: getBindFunction(mId),
-            isboundFunction: getIsboundFunction(),
-            onActivationFunction: getOnActivationFunction(mId),
-            onDeactivationFunction: getOnDeactivationFunction(mId),
-            rebindFunction: getRebindFunction(mId),
-            unbindFunction: getUnbindFunction(),
-            unbindAsyncFunction: getUnbindAsyncFunction()
-          };
-        };
-      };
-      Container3.prototype._getAll = function(getArgs) {
-        return Promise.all(this._get(getArgs));
-      };
-      Container3.prototype._get = function(getArgs) {
-        var planAndResolveArgs = __assign(__assign({}, getArgs), { contextInterceptor: function(context) {
-          return context;
-        }, targetType: literal_types_1.TargetTypeEnum.Variable });
-        if (this._middleware) {
-          var middlewareResult = this._middleware(planAndResolveArgs);
-          if (middlewareResult === void 0 || middlewareResult === null) {
-            throw new Error(ERROR_MSGS.INVALID_MIDDLEWARE_RETURN);
-          }
-          return middlewareResult;
-        }
-        return this._planAndResolve()(planAndResolveArgs);
-      };
-      Container3.prototype._getButThrowIfAsync = function(getArgs) {
-        var result = this._get(getArgs);
-        if ((0, async_1.isPromiseOrContainsPromise)(result)) {
-          throw new Error(ERROR_MSGS.LAZY_IN_SYNC(getArgs.serviceIdentifier));
-        }
-        return result;
-      };
-      Container3.prototype._getAllArgs = function(serviceIdentifier) {
-        var getAllArgs = {
-          avoidConstraints: true,
-          isMultiInject: true,
-          serviceIdentifier
-        };
-        return getAllArgs;
-      };
-      Container3.prototype._getNotAllArgs = function(serviceIdentifier, isMultiInject, key, value) {
-        var getNotAllArgs = {
-          avoidConstraints: false,
-          isMultiInject,
-          serviceIdentifier,
-          key,
-          value
-        };
-        return getNotAllArgs;
-      };
-      Container3.prototype._planAndResolve = function() {
-        var _this = this;
-        return function(args) {
-          var context = (0, planner_1.plan)(_this._metadataReader, _this, args.isMultiInject, args.targetType, args.serviceIdentifier, args.key, args.value, args.avoidConstraints);
-          context = args.contextInterceptor(context);
-          var result = (0, resolver_1.resolve)(context);
-          return result;
-        };
-      };
-      Container3.prototype._deactivateIfSingleton = function(binding) {
-        var _this = this;
-        if (!binding.activated) {
+      }
+      // associates row metadata from the supplied
+      // message with this query object
+      // metadata used when parsing row results
+      handleRowDescription(msg) {
+        this._checkForMultirow();
+        this._result.addFields(msg.fields);
+        this._accumulateRows = this.callback || !this.listeners("row").length;
+      }
+      handleDataRow(msg) {
+        let row;
+        if (this._canceledDueToError) {
           return;
         }
-        if ((0, async_1.isPromise)(binding.cache)) {
-          return binding.cache.then(function(resolved) {
-            return _this._deactivate(binding, resolved);
-          });
-        }
-        return this._deactivate(binding, binding.cache);
-      };
-      Container3.prototype._deactivateSingletons = function(bindings) {
-        for (var _i = 0, bindings_1 = bindings; _i < bindings_1.length; _i++) {
-          var binding = bindings_1[_i];
-          var result = this._deactivateIfSingleton(binding);
-          if ((0, async_1.isPromise)(result)) {
-            throw new Error(ERROR_MSGS.ASYNC_UNBIND_REQUIRED);
-          }
-        }
-      };
-      Container3.prototype._deactivateSingletonsAsync = function(bindings) {
-        return __awaiter(this, void 0, void 0, function() {
-          var _this = this;
-          return __generator(this, function(_a) {
-            switch (_a.label) {
-              case 0:
-                return [4, Promise.all(bindings.map(function(b) {
-                  return _this._deactivateIfSingleton(b);
-                }))];
-              case 1:
-                _a.sent();
-                return [2];
-            }
-          });
-        });
-      };
-      Container3.prototype._propagateContainerDeactivationThenBindingAndPreDestroy = function(binding, instance, constructor) {
-        if (this.parent) {
-          return this._deactivate.bind(this.parent)(binding, instance);
-        } else {
-          return this._bindingDeactivationAndPreDestroy(binding, instance, constructor);
-        }
-      };
-      Container3.prototype._propagateContainerDeactivationThenBindingAndPreDestroyAsync = function(binding, instance, constructor) {
-        return __awaiter(this, void 0, void 0, function() {
-          return __generator(this, function(_a) {
-            switch (_a.label) {
-              case 0:
-                if (!this.parent)
-                  return [3, 2];
-                return [4, this._deactivate.bind(this.parent)(binding, instance)];
-              case 1:
-                _a.sent();
-                return [3, 4];
-              case 2:
-                return [4, this._bindingDeactivationAndPreDestroyAsync(binding, instance, constructor)];
-              case 3:
-                _a.sent();
-                _a.label = 4;
-              case 4:
-                return [2];
-            }
-          });
-        });
-      };
-      Container3.prototype._removeServiceFromDictionary = function(serviceIdentifier) {
         try {
-          this._bindingDictionary.remove(serviceIdentifier);
-        } catch (e) {
-          throw new Error(ERROR_MSGS.CANNOT_UNBIND + " " + (0, serialization_1.getServiceIdentifierAsString)(serviceIdentifier));
+          row = this._result.parseRow(msg.fields);
+        } catch (err) {
+          this._canceledDueToError = err;
+          return;
         }
-      };
-      Container3.prototype._bindingDeactivationAndPreDestroy = function(binding, instance, constructor) {
-        var _this = this;
-        if (typeof binding.onDeactivation === "function") {
-          var result = binding.onDeactivation(instance);
-          if ((0, async_1.isPromise)(result)) {
-            return result.then(function() {
-              return _this._preDestroy(constructor, instance);
+        this.emit("row", row, this._result);
+        if (this._accumulateRows) {
+          this._result.addRow(row);
+        }
+      }
+      handleCommandComplete(msg, connection) {
+        this._checkForMultirow();
+        this._result.addCommandComplete(msg);
+        if (this.rows) {
+          connection.sync();
+        }
+      }
+      // if a named prepared statement is created with empty query text
+      // the backend will send an emptyQuery message but *not* a command complete message
+      // since we pipeline sync immediately after execute we don't need to do anything here
+      // unless we have rows specified, in which case we did not pipeline the intial sync call
+      handleEmptyQuery(connection) {
+        if (this.rows) {
+          connection.sync();
+        }
+      }
+      handleError(err, connection) {
+        if (this._canceledDueToError) {
+          err = this._canceledDueToError;
+          this._canceledDueToError = false;
+        }
+        if (this.callback) {
+          return this.callback(err);
+        }
+        this.emit("error", err);
+      }
+      handleReadyForQuery(con) {
+        if (this._canceledDueToError) {
+          return this.handleError(this._canceledDueToError, con);
+        }
+        if (this.callback) {
+          try {
+            this.callback(null, this._results);
+          } catch (err) {
+            process.nextTick(() => {
+              throw err;
             });
           }
         }
-        return this._preDestroy(constructor, instance);
+        this.emit("end", this._results);
+      }
+      submit(connection) {
+        if (typeof this.text !== "string" && typeof this.name !== "string") {
+          return new Error("A query must have either text or a name. Supplying neither is unsupported.");
+        }
+        const previous = connection.parsedStatements[this.name];
+        if (this.text && previous && this.text !== previous) {
+          return new Error(`Prepared statements must be unique - '${this.name}' was used for a different statement`);
+        }
+        if (this.values && !Array.isArray(this.values)) {
+          return new Error("Query values must be an array");
+        }
+        if (this.requiresPreparation()) {
+          this.prepare(connection);
+        } else {
+          connection.query(this.text);
+        }
+        return null;
+      }
+      hasBeenParsed(connection) {
+        return this.name && connection.parsedStatements[this.name];
+      }
+      handlePortalSuspended(connection) {
+        this._getRows(connection, this.rows);
+      }
+      _getRows(connection, rows) {
+        connection.execute({
+          portal: this.portal,
+          rows
+        });
+        if (!rows) {
+          connection.sync();
+        } else {
+          connection.flush();
+        }
+      }
+      // http://developer.postgresql.org/pgdocs/postgres/protocol-flow.html#PROTOCOL-FLOW-EXT-QUERY
+      prepare(connection) {
+        this.isPreparedStatement = true;
+        if (!this.hasBeenParsed(connection)) {
+          connection.parse({
+            text: this.text,
+            name: this.name,
+            types: this.types
+          });
+        }
+        try {
+          connection.bind({
+            portal: this.portal,
+            statement: this.name,
+            values: this.values,
+            binary: this.binary,
+            valueMapper: utils.prepareValue
+          });
+        } catch (err) {
+          this.handleError(err, connection);
+          return;
+        }
+        connection.describe({
+          type: "P",
+          name: this.portal || ""
+        });
+        this._getRows(connection, this.rows);
+      }
+      handleCopyInResponse(connection) {
+        connection.sendCopyFail("No source stream defined");
+      }
+      // eslint-disable-next-line no-unused-vars
+      handleCopyData(msg, connection) {
+      }
+    };
+    module2.exports = Query;
+  }
+});
+
+// node_modules/pg-protocol/dist/messages.js
+var require_messages2 = __commonJS({
+  "node_modules/pg-protocol/dist/messages.js"(exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.NoticeMessage = exports.DataRowMessage = exports.CommandCompleteMessage = exports.ReadyForQueryMessage = exports.NotificationResponseMessage = exports.BackendKeyDataMessage = exports.AuthenticationMD5Password = exports.ParameterStatusMessage = exports.ParameterDescriptionMessage = exports.RowDescriptionMessage = exports.Field = exports.CopyResponse = exports.CopyDataMessage = exports.DatabaseError = exports.copyDone = exports.emptyQuery = exports.replicationStart = exports.portalSuspended = exports.noData = exports.closeComplete = exports.bindComplete = exports.parseComplete = void 0;
+    exports.parseComplete = {
+      name: "parseComplete",
+      length: 5
+    };
+    exports.bindComplete = {
+      name: "bindComplete",
+      length: 5
+    };
+    exports.closeComplete = {
+      name: "closeComplete",
+      length: 5
+    };
+    exports.noData = {
+      name: "noData",
+      length: 5
+    };
+    exports.portalSuspended = {
+      name: "portalSuspended",
+      length: 5
+    };
+    exports.replicationStart = {
+      name: "replicationStart",
+      length: 4
+    };
+    exports.emptyQuery = {
+      name: "emptyQuery",
+      length: 4
+    };
+    exports.copyDone = {
+      name: "copyDone",
+      length: 4
+    };
+    var DatabaseError = class extends Error {
+      constructor(message, length, name) {
+        super(message);
+        this.length = length;
+        this.name = name;
+      }
+    };
+    exports.DatabaseError = DatabaseError;
+    var CopyDataMessage = class {
+      constructor(length, chunk) {
+        this.length = length;
+        this.chunk = chunk;
+        this.name = "copyData";
+      }
+    };
+    exports.CopyDataMessage = CopyDataMessage;
+    var CopyResponse = class {
+      constructor(length, name, binary, columnCount) {
+        this.length = length;
+        this.name = name;
+        this.binary = binary;
+        this.columnTypes = new Array(columnCount);
+      }
+    };
+    exports.CopyResponse = CopyResponse;
+    var Field2 = class {
+      constructor(name, tableID, columnID, dataTypeID, dataTypeSize, dataTypeModifier, format) {
+        this.name = name;
+        this.tableID = tableID;
+        this.columnID = columnID;
+        this.dataTypeID = dataTypeID;
+        this.dataTypeSize = dataTypeSize;
+        this.dataTypeModifier = dataTypeModifier;
+        this.format = format;
+      }
+    };
+    exports.Field = Field2;
+    var RowDescriptionMessage = class {
+      constructor(length, fieldCount) {
+        this.length = length;
+        this.fieldCount = fieldCount;
+        this.name = "rowDescription";
+        this.fields = new Array(this.fieldCount);
+      }
+    };
+    exports.RowDescriptionMessage = RowDescriptionMessage;
+    var ParameterDescriptionMessage = class {
+      constructor(length, parameterCount) {
+        this.length = length;
+        this.parameterCount = parameterCount;
+        this.name = "parameterDescription";
+        this.dataTypeIDs = new Array(this.parameterCount);
+      }
+    };
+    exports.ParameterDescriptionMessage = ParameterDescriptionMessage;
+    var ParameterStatusMessage = class {
+      constructor(length, parameterName, parameterValue) {
+        this.length = length;
+        this.parameterName = parameterName;
+        this.parameterValue = parameterValue;
+        this.name = "parameterStatus";
+      }
+    };
+    exports.ParameterStatusMessage = ParameterStatusMessage;
+    var AuthenticationMD5Password = class {
+      constructor(length, salt) {
+        this.length = length;
+        this.salt = salt;
+        this.name = "authenticationMD5Password";
+      }
+    };
+    exports.AuthenticationMD5Password = AuthenticationMD5Password;
+    var BackendKeyDataMessage = class {
+      constructor(length, processID, secretKey) {
+        this.length = length;
+        this.processID = processID;
+        this.secretKey = secretKey;
+        this.name = "backendKeyData";
+      }
+    };
+    exports.BackendKeyDataMessage = BackendKeyDataMessage;
+    var NotificationResponseMessage = class {
+      constructor(length, processId, channel, payload) {
+        this.length = length;
+        this.processId = processId;
+        this.channel = channel;
+        this.payload = payload;
+        this.name = "notification";
+      }
+    };
+    exports.NotificationResponseMessage = NotificationResponseMessage;
+    var ReadyForQueryMessage = class {
+      constructor(length, status) {
+        this.length = length;
+        this.status = status;
+        this.name = "readyForQuery";
+      }
+    };
+    exports.ReadyForQueryMessage = ReadyForQueryMessage;
+    var CommandCompleteMessage = class {
+      constructor(length, text) {
+        this.length = length;
+        this.text = text;
+        this.name = "commandComplete";
+      }
+    };
+    exports.CommandCompleteMessage = CommandCompleteMessage;
+    var DataRowMessage = class {
+      constructor(length, fields) {
+        this.length = length;
+        this.fields = fields;
+        this.name = "dataRow";
+        this.fieldCount = fields.length;
+      }
+    };
+    exports.DataRowMessage = DataRowMessage;
+    var NoticeMessage = class {
+      constructor(length, message) {
+        this.length = length;
+        this.message = message;
+        this.name = "notice";
+      }
+    };
+    exports.NoticeMessage = NoticeMessage;
+  }
+});
+
+// node_modules/pg-protocol/dist/buffer-writer.js
+var require_buffer_writer = __commonJS({
+  "node_modules/pg-protocol/dist/buffer-writer.js"(exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.Writer = void 0;
+    var Writer = class {
+      constructor(size = 256) {
+        this.size = size;
+        this.offset = 5;
+        this.headerPosition = 0;
+        this.buffer = Buffer.allocUnsafe(size);
+      }
+      ensure(size) {
+        var remaining = this.buffer.length - this.offset;
+        if (remaining < size) {
+          var oldBuffer = this.buffer;
+          var newSize = oldBuffer.length + (oldBuffer.length >> 1) + size;
+          this.buffer = Buffer.allocUnsafe(newSize);
+          oldBuffer.copy(this.buffer);
+        }
+      }
+      addInt32(num) {
+        this.ensure(4);
+        this.buffer[this.offset++] = num >>> 24 & 255;
+        this.buffer[this.offset++] = num >>> 16 & 255;
+        this.buffer[this.offset++] = num >>> 8 & 255;
+        this.buffer[this.offset++] = num >>> 0 & 255;
+        return this;
+      }
+      addInt16(num) {
+        this.ensure(2);
+        this.buffer[this.offset++] = num >>> 8 & 255;
+        this.buffer[this.offset++] = num >>> 0 & 255;
+        return this;
+      }
+      addCString(string) {
+        if (!string) {
+          this.ensure(1);
+        } else {
+          var len = Buffer.byteLength(string);
+          this.ensure(len + 1);
+          this.buffer.write(string, this.offset, "utf-8");
+          this.offset += len;
+        }
+        this.buffer[this.offset++] = 0;
+        return this;
+      }
+      addString(string = "") {
+        var len = Buffer.byteLength(string);
+        this.ensure(len);
+        this.buffer.write(string, this.offset);
+        this.offset += len;
+        return this;
+      }
+      add(otherBuffer) {
+        this.ensure(otherBuffer.length);
+        otherBuffer.copy(this.buffer, this.offset);
+        this.offset += otherBuffer.length;
+        return this;
+      }
+      join(code) {
+        if (code) {
+          this.buffer[this.headerPosition] = code;
+          const length = this.offset - (this.headerPosition + 1);
+          this.buffer.writeInt32BE(length, this.headerPosition + 1);
+        }
+        return this.buffer.slice(code ? 0 : 5, this.offset);
+      }
+      flush(code) {
+        var result = this.join(code);
+        this.offset = 5;
+        this.headerPosition = 0;
+        this.buffer = Buffer.allocUnsafe(this.size);
+        return result;
+      }
+    };
+    exports.Writer = Writer;
+  }
+});
+
+// node_modules/pg-protocol/dist/serializer.js
+var require_serializer = __commonJS({
+  "node_modules/pg-protocol/dist/serializer.js"(exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.serialize = void 0;
+    var buffer_writer_1 = require_buffer_writer();
+    var writer = new buffer_writer_1.Writer();
+    var startup = (opts) => {
+      writer.addInt16(3).addInt16(0);
+      for (const key of Object.keys(opts)) {
+        writer.addCString(key).addCString(opts[key]);
+      }
+      writer.addCString("client_encoding").addCString("UTF8");
+      var bodyBuffer = writer.addCString("").flush();
+      var length = bodyBuffer.length + 4;
+      return new buffer_writer_1.Writer().addInt32(length).add(bodyBuffer).flush();
+    };
+    var requestSsl = () => {
+      const response = Buffer.allocUnsafe(8);
+      response.writeInt32BE(8, 0);
+      response.writeInt32BE(80877103, 4);
+      return response;
+    };
+    var password = (password2) => {
+      return writer.addCString(password2).flush(
+        112
+        /* startup */
+      );
+    };
+    var sendSASLInitialResponseMessage = function(mechanism, initialResponse) {
+      writer.addCString(mechanism).addInt32(Buffer.byteLength(initialResponse)).addString(initialResponse);
+      return writer.flush(
+        112
+        /* startup */
+      );
+    };
+    var sendSCRAMClientFinalMessage = function(additionalData) {
+      return writer.addString(additionalData).flush(
+        112
+        /* startup */
+      );
+    };
+    var query = (text) => {
+      return writer.addCString(text).flush(
+        81
+        /* query */
+      );
+    };
+    var emptyArray = [];
+    var parse = (query2) => {
+      const name = query2.name || "";
+      if (name.length > 63) {
+        console.error("Warning! Postgres only supports 63 characters for query names.");
+        console.error("You supplied %s (%s)", name, name.length);
+        console.error("This can cause conflicts and silent errors executing queries");
+      }
+      const types = query2.types || emptyArray;
+      var len = types.length;
+      var buffer = writer.addCString(name).addCString(query2.text).addInt16(len);
+      for (var i = 0; i < len; i++) {
+        buffer.addInt32(types[i]);
+      }
+      return writer.flush(
+        80
+        /* parse */
+      );
+    };
+    var paramWriter = new buffer_writer_1.Writer();
+    var writeValues = function(values, valueMapper) {
+      for (let i = 0; i < values.length; i++) {
+        const mappedVal = valueMapper ? valueMapper(values[i], i) : values[i];
+        if (mappedVal == null) {
+          writer.addInt16(
+            0
+            /* STRING */
+          );
+          paramWriter.addInt32(-1);
+        } else if (mappedVal instanceof Buffer) {
+          writer.addInt16(
+            1
+            /* BINARY */
+          );
+          paramWriter.addInt32(mappedVal.length);
+          paramWriter.add(mappedVal);
+        } else {
+          writer.addInt16(
+            0
+            /* STRING */
+          );
+          paramWriter.addInt32(Buffer.byteLength(mappedVal));
+          paramWriter.addString(mappedVal);
+        }
+      }
+    };
+    var bind = (config = {}) => {
+      const portal = config.portal || "";
+      const statement = config.statement || "";
+      const binary = config.binary || false;
+      const values = config.values || emptyArray;
+      const len = values.length;
+      writer.addCString(portal).addCString(statement);
+      writer.addInt16(len);
+      writeValues(values, config.valueMapper);
+      writer.addInt16(len);
+      writer.add(paramWriter.flush());
+      writer.addInt16(
+        binary ? 1 : 0
+        /* STRING */
+      );
+      return writer.flush(
+        66
+        /* bind */
+      );
+    };
+    var emptyExecute = Buffer.from([69, 0, 0, 0, 9, 0, 0, 0, 0, 0]);
+    var execute = (config) => {
+      if (!config || !config.portal && !config.rows) {
+        return emptyExecute;
+      }
+      const portal = config.portal || "";
+      const rows = config.rows || 0;
+      const portalLength = Buffer.byteLength(portal);
+      const len = 4 + portalLength + 1 + 4;
+      const buff = Buffer.allocUnsafe(1 + len);
+      buff[0] = 69;
+      buff.writeInt32BE(len, 1);
+      buff.write(portal, 5, "utf-8");
+      buff[portalLength + 5] = 0;
+      buff.writeUInt32BE(rows, buff.length - 4);
+      return buff;
+    };
+    var cancel = (processID, secretKey) => {
+      const buffer = Buffer.allocUnsafe(16);
+      buffer.writeInt32BE(16, 0);
+      buffer.writeInt16BE(1234, 4);
+      buffer.writeInt16BE(5678, 6);
+      buffer.writeInt32BE(processID, 8);
+      buffer.writeInt32BE(secretKey, 12);
+      return buffer;
+    };
+    var cstringMessage = (code, string) => {
+      const stringLen = Buffer.byteLength(string);
+      const len = 4 + stringLen + 1;
+      const buffer = Buffer.allocUnsafe(1 + len);
+      buffer[0] = code;
+      buffer.writeInt32BE(len, 1);
+      buffer.write(string, 5, "utf-8");
+      buffer[len] = 0;
+      return buffer;
+    };
+    var emptyDescribePortal = writer.addCString("P").flush(
+      68
+      /* describe */
+    );
+    var emptyDescribeStatement = writer.addCString("S").flush(
+      68
+      /* describe */
+    );
+    var describe = (msg) => {
+      return msg.name ? cstringMessage(68, `${msg.type}${msg.name || ""}`) : msg.type === "P" ? emptyDescribePortal : emptyDescribeStatement;
+    };
+    var close = (msg) => {
+      const text = `${msg.type}${msg.name || ""}`;
+      return cstringMessage(67, text);
+    };
+    var copyData = (chunk) => {
+      return writer.add(chunk).flush(
+        100
+        /* copyFromChunk */
+      );
+    };
+    var copyFail = (message) => {
+      return cstringMessage(102, message);
+    };
+    var codeOnlyBuffer = (code) => Buffer.from([code, 0, 0, 0, 4]);
+    var flushBuffer = codeOnlyBuffer(
+      72
+      /* flush */
+    );
+    var syncBuffer = codeOnlyBuffer(
+      83
+      /* sync */
+    );
+    var endBuffer = codeOnlyBuffer(
+      88
+      /* end */
+    );
+    var copyDoneBuffer = codeOnlyBuffer(
+      99
+      /* copyDone */
+    );
+    var serialize = {
+      startup,
+      password,
+      requestSsl,
+      sendSASLInitialResponseMessage,
+      sendSCRAMClientFinalMessage,
+      query,
+      parse,
+      bind,
+      execute,
+      describe,
+      close,
+      flush: () => flushBuffer,
+      sync: () => syncBuffer,
+      end: () => endBuffer,
+      copyData,
+      copyDone: () => copyDoneBuffer,
+      copyFail,
+      cancel
+    };
+    exports.serialize = serialize;
+  }
+});
+
+// node_modules/pg-protocol/dist/buffer-reader.js
+var require_buffer_reader = __commonJS({
+  "node_modules/pg-protocol/dist/buffer-reader.js"(exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.BufferReader = void 0;
+    var emptyBuffer = Buffer.allocUnsafe(0);
+    var BufferReader = class {
+      constructor(offset = 0) {
+        this.offset = offset;
+        this.buffer = emptyBuffer;
+        this.encoding = "utf-8";
+      }
+      setBuffer(offset, buffer) {
+        this.offset = offset;
+        this.buffer = buffer;
+      }
+      int16() {
+        const result = this.buffer.readInt16BE(this.offset);
+        this.offset += 2;
+        return result;
+      }
+      byte() {
+        const result = this.buffer[this.offset];
+        this.offset++;
+        return result;
+      }
+      int32() {
+        const result = this.buffer.readInt32BE(this.offset);
+        this.offset += 4;
+        return result;
+      }
+      string(length) {
+        const result = this.buffer.toString(this.encoding, this.offset, this.offset + length);
+        this.offset += length;
+        return result;
+      }
+      cstring() {
+        const start = this.offset;
+        let end = start;
+        while (this.buffer[end++] !== 0) {
+        }
+        this.offset = end;
+        return this.buffer.toString(this.encoding, start, end - 1);
+      }
+      bytes(length) {
+        const result = this.buffer.slice(this.offset, this.offset + length);
+        this.offset += length;
+        return result;
+      }
+    };
+    exports.BufferReader = BufferReader;
+  }
+});
+
+// node_modules/pg-protocol/dist/parser.js
+var require_parser = __commonJS({
+  "node_modules/pg-protocol/dist/parser.js"(exports) {
+    "use strict";
+    var __importDefault = exports && exports.__importDefault || function(mod) {
+      return mod && mod.__esModule ? mod : { "default": mod };
+    };
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.Parser = void 0;
+    var messages_1 = require_messages2();
+    var buffer_reader_1 = require_buffer_reader();
+    var assert_1 = __importDefault(require("assert"));
+    var CODE_LENGTH = 1;
+    var LEN_LENGTH = 4;
+    var HEADER_LENGTH = CODE_LENGTH + LEN_LENGTH;
+    var emptyBuffer = Buffer.allocUnsafe(0);
+    var Parser = class {
+      constructor(opts) {
+        this.buffer = emptyBuffer;
+        this.bufferLength = 0;
+        this.bufferOffset = 0;
+        this.reader = new buffer_reader_1.BufferReader();
+        if ((opts === null || opts === void 0 ? void 0 : opts.mode) === "binary") {
+          throw new Error("Binary mode not supported yet");
+        }
+        this.mode = (opts === null || opts === void 0 ? void 0 : opts.mode) || "text";
+      }
+      parse(buffer, callback2) {
+        this.mergeBuffer(buffer);
+        const bufferFullLength = this.bufferOffset + this.bufferLength;
+        let offset = this.bufferOffset;
+        while (offset + HEADER_LENGTH <= bufferFullLength) {
+          const code = this.buffer[offset];
+          const length = this.buffer.readUInt32BE(offset + CODE_LENGTH);
+          const fullMessageLength = CODE_LENGTH + length;
+          if (fullMessageLength + offset <= bufferFullLength) {
+            const message = this.handlePacket(offset + HEADER_LENGTH, code, length, this.buffer);
+            callback2(message);
+            offset += fullMessageLength;
+          } else {
+            break;
+          }
+        }
+        if (offset === bufferFullLength) {
+          this.buffer = emptyBuffer;
+          this.bufferLength = 0;
+          this.bufferOffset = 0;
+        } else {
+          this.bufferLength = bufferFullLength - offset;
+          this.bufferOffset = offset;
+        }
+      }
+      mergeBuffer(buffer) {
+        if (this.bufferLength > 0) {
+          const newLength = this.bufferLength + buffer.byteLength;
+          const newFullLength = newLength + this.bufferOffset;
+          if (newFullLength > this.buffer.byteLength) {
+            let newBuffer;
+            if (newLength <= this.buffer.byteLength && this.bufferOffset >= this.bufferLength) {
+              newBuffer = this.buffer;
+            } else {
+              let newBufferLength = this.buffer.byteLength * 2;
+              while (newLength >= newBufferLength) {
+                newBufferLength *= 2;
+              }
+              newBuffer = Buffer.allocUnsafe(newBufferLength);
+            }
+            this.buffer.copy(newBuffer, 0, this.bufferOffset, this.bufferOffset + this.bufferLength);
+            this.buffer = newBuffer;
+            this.bufferOffset = 0;
+          }
+          buffer.copy(this.buffer, this.bufferOffset + this.bufferLength);
+          this.bufferLength = newLength;
+        } else {
+          this.buffer = buffer;
+          this.bufferOffset = 0;
+          this.bufferLength = buffer.byteLength;
+        }
+      }
+      handlePacket(offset, code, length, bytes) {
+        switch (code) {
+          case 50:
+            return messages_1.bindComplete;
+          case 49:
+            return messages_1.parseComplete;
+          case 51:
+            return messages_1.closeComplete;
+          case 110:
+            return messages_1.noData;
+          case 115:
+            return messages_1.portalSuspended;
+          case 99:
+            return messages_1.copyDone;
+          case 87:
+            return messages_1.replicationStart;
+          case 73:
+            return messages_1.emptyQuery;
+          case 68:
+            return this.parseDataRowMessage(offset, length, bytes);
+          case 67:
+            return this.parseCommandCompleteMessage(offset, length, bytes);
+          case 90:
+            return this.parseReadyForQueryMessage(offset, length, bytes);
+          case 65:
+            return this.parseNotificationMessage(offset, length, bytes);
+          case 82:
+            return this.parseAuthenticationResponse(offset, length, bytes);
+          case 83:
+            return this.parseParameterStatusMessage(offset, length, bytes);
+          case 75:
+            return this.parseBackendKeyData(offset, length, bytes);
+          case 69:
+            return this.parseErrorMessage(offset, length, bytes, "error");
+          case 78:
+            return this.parseErrorMessage(offset, length, bytes, "notice");
+          case 84:
+            return this.parseRowDescriptionMessage(offset, length, bytes);
+          case 116:
+            return this.parseParameterDescriptionMessage(offset, length, bytes);
+          case 71:
+            return this.parseCopyInMessage(offset, length, bytes);
+          case 72:
+            return this.parseCopyOutMessage(offset, length, bytes);
+          case 100:
+            return this.parseCopyData(offset, length, bytes);
+          default:
+            assert_1.default.fail(`unknown message code: ${code.toString(16)}`);
+        }
+      }
+      parseReadyForQueryMessage(offset, length, bytes) {
+        this.reader.setBuffer(offset, bytes);
+        const status = this.reader.string(1);
+        return new messages_1.ReadyForQueryMessage(length, status);
+      }
+      parseCommandCompleteMessage(offset, length, bytes) {
+        this.reader.setBuffer(offset, bytes);
+        const text = this.reader.cstring();
+        return new messages_1.CommandCompleteMessage(length, text);
+      }
+      parseCopyData(offset, length, bytes) {
+        const chunk = bytes.slice(offset, offset + (length - 4));
+        return new messages_1.CopyDataMessage(length, chunk);
+      }
+      parseCopyInMessage(offset, length, bytes) {
+        return this.parseCopyMessage(offset, length, bytes, "copyInResponse");
+      }
+      parseCopyOutMessage(offset, length, bytes) {
+        return this.parseCopyMessage(offset, length, bytes, "copyOutResponse");
+      }
+      parseCopyMessage(offset, length, bytes, messageName) {
+        this.reader.setBuffer(offset, bytes);
+        const isBinary = this.reader.byte() !== 0;
+        const columnCount = this.reader.int16();
+        const message = new messages_1.CopyResponse(length, messageName, isBinary, columnCount);
+        for (let i = 0; i < columnCount; i++) {
+          message.columnTypes[i] = this.reader.int16();
+        }
+        return message;
+      }
+      parseNotificationMessage(offset, length, bytes) {
+        this.reader.setBuffer(offset, bytes);
+        const processId = this.reader.int32();
+        const channel = this.reader.cstring();
+        const payload = this.reader.cstring();
+        return new messages_1.NotificationResponseMessage(length, processId, channel, payload);
+      }
+      parseRowDescriptionMessage(offset, length, bytes) {
+        this.reader.setBuffer(offset, bytes);
+        const fieldCount = this.reader.int16();
+        const message = new messages_1.RowDescriptionMessage(length, fieldCount);
+        for (let i = 0; i < fieldCount; i++) {
+          message.fields[i] = this.parseField();
+        }
+        return message;
+      }
+      parseField() {
+        const name = this.reader.cstring();
+        const tableID = this.reader.int32();
+        const columnID = this.reader.int16();
+        const dataTypeID = this.reader.int32();
+        const dataTypeSize = this.reader.int16();
+        const dataTypeModifier = this.reader.int32();
+        const mode = this.reader.int16() === 0 ? "text" : "binary";
+        return new messages_1.Field(name, tableID, columnID, dataTypeID, dataTypeSize, dataTypeModifier, mode);
+      }
+      parseParameterDescriptionMessage(offset, length, bytes) {
+        this.reader.setBuffer(offset, bytes);
+        const parameterCount = this.reader.int16();
+        const message = new messages_1.ParameterDescriptionMessage(length, parameterCount);
+        for (let i = 0; i < parameterCount; i++) {
+          message.dataTypeIDs[i] = this.reader.int32();
+        }
+        return message;
+      }
+      parseDataRowMessage(offset, length, bytes) {
+        this.reader.setBuffer(offset, bytes);
+        const fieldCount = this.reader.int16();
+        const fields = new Array(fieldCount);
+        for (let i = 0; i < fieldCount; i++) {
+          const len = this.reader.int32();
+          fields[i] = len === -1 ? null : this.reader.string(len);
+        }
+        return new messages_1.DataRowMessage(length, fields);
+      }
+      parseParameterStatusMessage(offset, length, bytes) {
+        this.reader.setBuffer(offset, bytes);
+        const name = this.reader.cstring();
+        const value = this.reader.cstring();
+        return new messages_1.ParameterStatusMessage(length, name, value);
+      }
+      parseBackendKeyData(offset, length, bytes) {
+        this.reader.setBuffer(offset, bytes);
+        const processID = this.reader.int32();
+        const secretKey = this.reader.int32();
+        return new messages_1.BackendKeyDataMessage(length, processID, secretKey);
+      }
+      parseAuthenticationResponse(offset, length, bytes) {
+        this.reader.setBuffer(offset, bytes);
+        const code = this.reader.int32();
+        const message = {
+          name: "authenticationOk",
+          length
+        };
+        switch (code) {
+          case 0:
+            break;
+          case 3:
+            if (message.length === 8) {
+              message.name = "authenticationCleartextPassword";
+            }
+            break;
+          case 5:
+            if (message.length === 12) {
+              message.name = "authenticationMD5Password";
+              const salt = this.reader.bytes(4);
+              return new messages_1.AuthenticationMD5Password(length, salt);
+            }
+            break;
+          case 10:
+            message.name = "authenticationSASL";
+            message.mechanisms = [];
+            let mechanism;
+            do {
+              mechanism = this.reader.cstring();
+              if (mechanism) {
+                message.mechanisms.push(mechanism);
+              }
+            } while (mechanism);
+            break;
+          case 11:
+            message.name = "authenticationSASLContinue";
+            message.data = this.reader.string(length - 8);
+            break;
+          case 12:
+            message.name = "authenticationSASLFinal";
+            message.data = this.reader.string(length - 8);
+            break;
+          default:
+            throw new Error("Unknown authenticationOk message type " + code);
+        }
+        return message;
+      }
+      parseErrorMessage(offset, length, bytes, name) {
+        this.reader.setBuffer(offset, bytes);
+        const fields = {};
+        let fieldType = this.reader.string(1);
+        while (fieldType !== "\0") {
+          fields[fieldType] = this.reader.cstring();
+          fieldType = this.reader.string(1);
+        }
+        const messageValue = fields.M;
+        const message = name === "notice" ? new messages_1.NoticeMessage(length, messageValue) : new messages_1.DatabaseError(messageValue, length, name);
+        message.severity = fields.S;
+        message.code = fields.C;
+        message.detail = fields.D;
+        message.hint = fields.H;
+        message.position = fields.P;
+        message.internalPosition = fields.p;
+        message.internalQuery = fields.q;
+        message.where = fields.W;
+        message.schema = fields.s;
+        message.table = fields.t;
+        message.column = fields.c;
+        message.dataType = fields.d;
+        message.constraint = fields.n;
+        message.file = fields.F;
+        message.line = fields.L;
+        message.routine = fields.R;
+        return message;
+      }
+    };
+    exports.Parser = Parser;
+  }
+});
+
+// node_modules/pg-protocol/dist/index.js
+var require_dist = __commonJS({
+  "node_modules/pg-protocol/dist/index.js"(exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.DatabaseError = exports.serialize = exports.parse = void 0;
+    var messages_1 = require_messages2();
+    Object.defineProperty(exports, "DatabaseError", { enumerable: true, get: function() {
+      return messages_1.DatabaseError;
+    } });
+    var serializer_1 = require_serializer();
+    Object.defineProperty(exports, "serialize", { enumerable: true, get: function() {
+      return serializer_1.serialize;
+    } });
+    var parser_1 = require_parser();
+    function parse(stream, callback2) {
+      const parser = new parser_1.Parser();
+      stream.on("data", (buffer) => parser.parse(buffer, callback2));
+      return new Promise((resolve) => stream.on("end", () => resolve()));
+    }
+    exports.parse = parse;
+  }
+});
+
+// node_modules/pg-cloudflare/dist/empty.js
+var empty_exports = {};
+__export(empty_exports, {
+  default: () => empty_default
+});
+var empty_default;
+var init_empty = __esm({
+  "node_modules/pg-cloudflare/dist/empty.js"() {
+    empty_default = {};
+  }
+});
+
+// node_modules/pg/lib/stream.js
+var require_stream = __commonJS({
+  "node_modules/pg/lib/stream.js"(exports, module2) {
+    module2.exports.getStream = function getStream(ssl) {
+      const net = require("net");
+      if (typeof net.Socket === "function") {
+        return new net.Socket();
+      } else {
+        const { CloudflareSocket } = (init_empty(), __toCommonJS(empty_exports));
+        return new CloudflareSocket(ssl);
+      }
+    };
+    module2.exports.getSecureStream = function getSecureStream(options) {
+      var tls = require("tls");
+      if (tls.connect) {
+        return tls.connect(options);
+      } else {
+        options.socket.startTls(options);
+        return options.socket;
+      }
+    };
+  }
+});
+
+// node_modules/pg/lib/connection.js
+var require_connection4 = __commonJS({
+  "node_modules/pg/lib/connection.js"(exports, module2) {
+    "use strict";
+    var net = require("net");
+    var EventEmitter2 = require("events").EventEmitter;
+    var { parse, serialize } = require_dist();
+    var { getStream, getSecureStream } = require_stream();
+    var flushBuffer = serialize.flush();
+    var syncBuffer = serialize.sync();
+    var endBuffer = serialize.end();
+    var Connection = class extends EventEmitter2 {
+      constructor(config) {
+        super();
+        config = config || {};
+        this.stream = config.stream || getStream(config.ssl);
+        if (typeof this.stream === "function") {
+          this.stream = this.stream(config);
+        }
+        this._keepAlive = config.keepAlive;
+        this._keepAliveInitialDelayMillis = config.keepAliveInitialDelayMillis;
+        this.lastBuffer = false;
+        this.parsedStatements = {};
+        this.ssl = config.ssl || false;
+        this._ending = false;
+        this._emitMessage = false;
+        var self2 = this;
+        this.on("newListener", function(eventName) {
+          if (eventName === "message") {
+            self2._emitMessage = true;
+          }
+        });
+      }
+      connect(port, host) {
+        var self2 = this;
+        this._connecting = true;
+        this.stream.setNoDelay(true);
+        this.stream.connect(port, host);
+        this.stream.once("connect", function() {
+          if (self2._keepAlive) {
+            self2.stream.setKeepAlive(true, self2._keepAliveInitialDelayMillis);
+          }
+          self2.emit("connect");
+        });
+        const reportStreamError = function(error) {
+          if (self2._ending && (error.code === "ECONNRESET" || error.code === "EPIPE")) {
+            return;
+          }
+          self2.emit("error", error);
+        };
+        this.stream.on("error", reportStreamError);
+        this.stream.on("close", function() {
+          self2.emit("end");
+        });
+        if (!this.ssl) {
+          return this.attachListeners(this.stream);
+        }
+        this.stream.once("data", function(buffer) {
+          var responseCode = buffer.toString("utf8");
+          switch (responseCode) {
+            case "S":
+              break;
+            case "N":
+              self2.stream.end();
+              return self2.emit("error", new Error("The server does not support SSL connections"));
+            default:
+              self2.stream.end();
+              return self2.emit("error", new Error("There was an error establishing an SSL connection"));
+          }
+          const options = {
+            socket: self2.stream
+          };
+          if (self2.ssl !== true) {
+            Object.assign(options, self2.ssl);
+            if ("key" in self2.ssl) {
+              options.key = self2.ssl.key;
+            }
+          }
+          var net2 = require("net");
+          if (net2.isIP && net2.isIP(host) === 0) {
+            options.servername = host;
+          }
+          try {
+            self2.stream = getSecureStream(options);
+          } catch (err) {
+            return self2.emit("error", err);
+          }
+          self2.attachListeners(self2.stream);
+          self2.stream.on("error", reportStreamError);
+          self2.emit("sslconnect");
+        });
+      }
+      attachListeners(stream) {
+        parse(stream, (msg) => {
+          var eventName = msg.name === "error" ? "errorMessage" : msg.name;
+          if (this._emitMessage) {
+            this.emit("message", msg);
+          }
+          this.emit(eventName, msg);
+        });
+      }
+      requestSsl() {
+        this.stream.write(serialize.requestSsl());
+      }
+      startup(config) {
+        this.stream.write(serialize.startup(config));
+      }
+      cancel(processID, secretKey) {
+        this._send(serialize.cancel(processID, secretKey));
+      }
+      password(password) {
+        this._send(serialize.password(password));
+      }
+      sendSASLInitialResponseMessage(mechanism, initialResponse) {
+        this._send(serialize.sendSASLInitialResponseMessage(mechanism, initialResponse));
+      }
+      sendSCRAMClientFinalMessage(additionalData) {
+        this._send(serialize.sendSCRAMClientFinalMessage(additionalData));
+      }
+      _send(buffer) {
+        if (!this.stream.writable) {
+          return false;
+        }
+        return this.stream.write(buffer);
+      }
+      query(text) {
+        this._send(serialize.query(text));
+      }
+      // send parse message
+      parse(query) {
+        this._send(serialize.parse(query));
+      }
+      // send bind message
+      bind(config) {
+        this._send(serialize.bind(config));
+      }
+      // send execute message
+      execute(config) {
+        this._send(serialize.execute(config));
+      }
+      flush() {
+        if (this.stream.writable) {
+          this.stream.write(flushBuffer);
+        }
+      }
+      sync() {
+        this._ending = true;
+        this._send(syncBuffer);
+      }
+      ref() {
+        this.stream.ref();
+      }
+      unref() {
+        this.stream.unref();
+      }
+      end() {
+        this._ending = true;
+        if (!this._connecting || !this.stream.writable) {
+          this.stream.end();
+          return;
+        }
+        return this.stream.write(endBuffer, () => {
+          this.stream.end();
+        });
+      }
+      close(msg) {
+        this._send(serialize.close(msg));
+      }
+      describe(msg) {
+        this._send(serialize.describe(msg));
+      }
+      sendCopyFromChunk(chunk) {
+        this._send(serialize.copyData(chunk));
+      }
+      endCopyFrom() {
+        this._send(serialize.copyDone());
+      }
+      sendCopyFail(msg) {
+        this._send(serialize.copyFail(msg));
+      }
+    };
+    module2.exports = Connection;
+  }
+});
+
+// node_modules/pgpass/node_modules/split2/index.js
+var require_split2 = __commonJS({
+  "node_modules/pgpass/node_modules/split2/index.js"(exports, module2) {
+    "use strict";
+    var { Transform } = require("stream");
+    var { StringDecoder } = require("string_decoder");
+    var kLast = Symbol("last");
+    var kDecoder = Symbol("decoder");
+    function transform(chunk, enc, cb) {
+      let list;
+      if (this.overflow) {
+        const buf = this[kDecoder].write(chunk);
+        list = buf.split(this.matcher);
+        if (list.length === 1)
+          return cb();
+        list.shift();
+        this.overflow = false;
+      } else {
+        this[kLast] += this[kDecoder].write(chunk);
+        list = this[kLast].split(this.matcher);
+      }
+      this[kLast] = list.pop();
+      for (let i = 0; i < list.length; i++) {
+        try {
+          push(this, this.mapper(list[i]));
+        } catch (error) {
+          return cb(error);
+        }
+      }
+      this.overflow = this[kLast].length > this.maxLength;
+      if (this.overflow && !this.skipOverflow) {
+        cb(new Error("maximum buffer reached"));
+        return;
+      }
+      cb();
+    }
+    function flush(cb) {
+      this[kLast] += this[kDecoder].end();
+      if (this[kLast]) {
+        try {
+          push(this, this.mapper(this[kLast]));
+        } catch (error) {
+          return cb(error);
+        }
+      }
+      cb();
+    }
+    function push(self2, val) {
+      if (val !== void 0) {
+        self2.push(val);
+      }
+    }
+    function noop(incoming) {
+      return incoming;
+    }
+    function split(matcher, mapper, options) {
+      matcher = matcher || /\r?\n/;
+      mapper = mapper || noop;
+      options = options || {};
+      switch (arguments.length) {
+        case 1:
+          if (typeof matcher === "function") {
+            mapper = matcher;
+            matcher = /\r?\n/;
+          } else if (typeof matcher === "object" && !(matcher instanceof RegExp) && !matcher[Symbol.split]) {
+            options = matcher;
+            matcher = /\r?\n/;
+          }
+          break;
+        case 2:
+          if (typeof matcher === "function") {
+            options = mapper;
+            mapper = matcher;
+            matcher = /\r?\n/;
+          } else if (typeof mapper === "object") {
+            options = mapper;
+            mapper = noop;
+          }
+      }
+      options = Object.assign({}, options);
+      options.autoDestroy = true;
+      options.transform = transform;
+      options.flush = flush;
+      options.readableObjectMode = true;
+      const stream = new Transform(options);
+      stream[kLast] = "";
+      stream[kDecoder] = new StringDecoder("utf8");
+      stream.matcher = matcher;
+      stream.mapper = mapper;
+      stream.maxLength = options.maxLength;
+      stream.skipOverflow = options.skipOverflow || false;
+      stream.overflow = false;
+      stream._destroy = function(err, cb) {
+        this._writableState.errorEmitted = false;
+        cb(err);
       };
-      Container3.prototype._bindingDeactivationAndPreDestroyAsync = function(binding, instance, constructor) {
-        return __awaiter(this, void 0, void 0, function() {
-          return __generator(this, function(_a) {
-            switch (_a.label) {
-              case 0:
-                if (!(typeof binding.onDeactivation === "function"))
-                  return [3, 2];
-                return [4, binding.onDeactivation(instance)];
-              case 1:
-                _a.sent();
-                _a.label = 2;
-              case 2:
-                return [4, this._preDestroy(constructor, instance)];
-              case 3:
-                _a.sent();
-                return [2];
+      return stream;
+    }
+    module2.exports = split;
+  }
+});
+
+// node_modules/pgpass/lib/helper.js
+var require_helper = __commonJS({
+  "node_modules/pgpass/lib/helper.js"(exports, module2) {
+    "use strict";
+    var path = require("path");
+    var Stream = require("stream").Stream;
+    var split = require_split2();
+    var util = require("util");
+    var defaultPort = 5432;
+    var isWin = process.platform === "win32";
+    var warnStream = process.stderr;
+    var S_IRWXG = 56;
+    var S_IRWXO = 7;
+    var S_IFMT = 61440;
+    var S_IFREG = 32768;
+    function isRegFile(mode) {
+      return (mode & S_IFMT) == S_IFREG;
+    }
+    var fieldNames = ["host", "port", "database", "user", "password"];
+    var nrOfFields = fieldNames.length;
+    var passKey = fieldNames[nrOfFields - 1];
+    function warn() {
+      var isWritable = warnStream instanceof Stream && true === warnStream.writable;
+      if (isWritable) {
+        var args = Array.prototype.slice.call(arguments).concat("\n");
+        warnStream.write(util.format.apply(util, args));
+      }
+    }
+    Object.defineProperty(module2.exports, "isWin", {
+      get: function() {
+        return isWin;
+      },
+      set: function(val) {
+        isWin = val;
+      }
+    });
+    module2.exports.warnTo = function(stream) {
+      var old = warnStream;
+      warnStream = stream;
+      return old;
+    };
+    module2.exports.getFileName = function(rawEnv) {
+      var env = rawEnv || process.env;
+      var file = env.PGPASSFILE || (isWin ? path.join(env.APPDATA || "./", "postgresql", "pgpass.conf") : path.join(env.HOME || "./", ".pgpass"));
+      return file;
+    };
+    module2.exports.usePgPass = function(stats, fname) {
+      if (Object.prototype.hasOwnProperty.call(process.env, "PGPASSWORD")) {
+        return false;
+      }
+      if (isWin) {
+        return true;
+      }
+      fname = fname || "<unkn>";
+      if (!isRegFile(stats.mode)) {
+        warn('WARNING: password file "%s" is not a plain file', fname);
+        return false;
+      }
+      if (stats.mode & (S_IRWXG | S_IRWXO)) {
+        warn('WARNING: password file "%s" has group or world access; permissions should be u=rw (0600) or less', fname);
+        return false;
+      }
+      return true;
+    };
+    var matcher = module2.exports.match = function(connInfo, entry) {
+      return fieldNames.slice(0, -1).reduce(function(prev, field, idx) {
+        if (idx == 1) {
+          if (Number(connInfo[field] || defaultPort) === Number(entry[field])) {
+            return prev && true;
+          }
+        }
+        return prev && (entry[field] === "*" || entry[field] === connInfo[field]);
+      }, true);
+    };
+    module2.exports.getPassword = function(connInfo, stream, cb) {
+      var pass;
+      var lineStream = stream.pipe(split());
+      function onLine(line) {
+        var entry = parseLine(line);
+        if (entry && isValidEntry(entry) && matcher(connInfo, entry)) {
+          pass = entry[passKey];
+          lineStream.end();
+        }
+      }
+      var onEnd = function() {
+        stream.destroy();
+        cb(pass);
+      };
+      var onErr = function(err) {
+        stream.destroy();
+        warn("WARNING: error on reading file: %s", err);
+        cb(void 0);
+      };
+      stream.on("error", onErr);
+      lineStream.on("data", onLine).on("end", onEnd).on("error", onErr);
+    };
+    var parseLine = module2.exports.parseLine = function(line) {
+      if (line.length < 11 || line.match(/^\s+#/)) {
+        return null;
+      }
+      var curChar = "";
+      var prevChar = "";
+      var fieldIdx = 0;
+      var startIdx = 0;
+      var endIdx = 0;
+      var obj = {};
+      var isLastField = false;
+      var addToObj = function(idx, i0, i1) {
+        var field = line.substring(i0, i1);
+        if (!Object.hasOwnProperty.call(process.env, "PGPASS_NO_DEESCAPE")) {
+          field = field.replace(/\\([:\\])/g, "$1");
+        }
+        obj[fieldNames[idx]] = field;
+      };
+      for (var i = 0; i < line.length - 1; i += 1) {
+        curChar = line.charAt(i + 1);
+        prevChar = line.charAt(i);
+        isLastField = fieldIdx == nrOfFields - 1;
+        if (isLastField) {
+          addToObj(fieldIdx, startIdx);
+          break;
+        }
+        if (i >= 0 && curChar == ":" && prevChar !== "\\") {
+          addToObj(fieldIdx, startIdx, i + 1);
+          startIdx = i + 2;
+          fieldIdx += 1;
+        }
+      }
+      obj = Object.keys(obj).length === nrOfFields ? obj : null;
+      return obj;
+    };
+    var isValidEntry = module2.exports.isValidEntry = function(entry) {
+      var rules = {
+        // host
+        0: function(x) {
+          return x.length > 0;
+        },
+        // port
+        1: function(x) {
+          if (x === "*") {
+            return true;
+          }
+          x = Number(x);
+          return isFinite(x) && x > 0 && x < 9007199254740992 && Math.floor(x) === x;
+        },
+        // database
+        2: function(x) {
+          return x.length > 0;
+        },
+        // username
+        3: function(x) {
+          return x.length > 0;
+        },
+        // password
+        4: function(x) {
+          return x.length > 0;
+        }
+      };
+      for (var idx = 0; idx < fieldNames.length; idx += 1) {
+        var rule = rules[idx];
+        var value = entry[fieldNames[idx]] || "";
+        var res = rule(value);
+        if (!res) {
+          return false;
+        }
+      }
+      return true;
+    };
+  }
+});
+
+// node_modules/pgpass/lib/index.js
+var require_lib7 = __commonJS({
+  "node_modules/pgpass/lib/index.js"(exports, module2) {
+    "use strict";
+    var path = require("path");
+    var fs = require("fs");
+    var helper = require_helper();
+    module2.exports = function(connInfo, cb) {
+      var file = helper.getFileName();
+      fs.stat(file, function(err, stat) {
+        if (err || !helper.usePgPass(stat, file)) {
+          return cb(void 0);
+        }
+        var st = fs.createReadStream(file);
+        helper.getPassword(connInfo, st, cb);
+      });
+    };
+    module2.exports.warnTo = helper.warnTo;
+  }
+});
+
+// node_modules/pg/lib/client.js
+var require_client = __commonJS({
+  "node_modules/pg/lib/client.js"(exports, module2) {
+    "use strict";
+    var EventEmitter2 = require("events").EventEmitter;
+    var utils = require_utils6();
+    var sasl = require_sasl();
+    var TypeOverrides = require_type_overrides();
+    var ConnectionParameters = require_connection_parameters();
+    var Query = require_query2();
+    var defaults2 = require_defaults();
+    var Connection = require_connection4();
+    var crypto3 = require_utils7();
+    var Client2 = class extends EventEmitter2 {
+      constructor(config) {
+        super();
+        this.connectionParameters = new ConnectionParameters(config);
+        this.user = this.connectionParameters.user;
+        this.database = this.connectionParameters.database;
+        this.port = this.connectionParameters.port;
+        this.host = this.connectionParameters.host;
+        Object.defineProperty(this, "password", {
+          configurable: true,
+          enumerable: false,
+          writable: true,
+          value: this.connectionParameters.password
+        });
+        this.replication = this.connectionParameters.replication;
+        var c = config || {};
+        this._Promise = c.Promise || global.Promise;
+        this._types = new TypeOverrides(c.types);
+        this._ending = false;
+        this._ended = false;
+        this._connecting = false;
+        this._connected = false;
+        this._connectionError = false;
+        this._queryable = true;
+        this.connection = c.connection || new Connection({
+          stream: c.stream,
+          ssl: this.connectionParameters.ssl,
+          keepAlive: c.keepAlive || false,
+          keepAliveInitialDelayMillis: c.keepAliveInitialDelayMillis || 0,
+          encoding: this.connectionParameters.client_encoding || "utf8"
+        });
+        this.queryQueue = [];
+        this.binary = c.binary || defaults2.binary;
+        this.processID = null;
+        this.secretKey = null;
+        this.ssl = this.connectionParameters.ssl || false;
+        if (this.ssl && this.ssl.key) {
+          Object.defineProperty(this.ssl, "key", {
+            enumerable: false
+          });
+        }
+        this._connectionTimeoutMillis = c.connectionTimeoutMillis || 0;
+      }
+      _errorAllQueries(err) {
+        const enqueueError = (query) => {
+          process.nextTick(() => {
+            query.handleError(err, this.connection);
+          });
+        };
+        if (this.activeQuery) {
+          enqueueError(this.activeQuery);
+          this.activeQuery = null;
+        }
+        this.queryQueue.forEach(enqueueError);
+        this.queryQueue.length = 0;
+      }
+      _connect(callback2) {
+        var self2 = this;
+        var con = this.connection;
+        this._connectionCallback = callback2;
+        if (this._connecting || this._connected) {
+          const err = new Error("Client has already been connected. You cannot reuse a client.");
+          process.nextTick(() => {
+            callback2(err);
+          });
+          return;
+        }
+        this._connecting = true;
+        this.connectionTimeoutHandle;
+        if (this._connectionTimeoutMillis > 0) {
+          this.connectionTimeoutHandle = setTimeout(() => {
+            con._ending = true;
+            con.stream.destroy(new Error("timeout expired"));
+          }, this._connectionTimeoutMillis);
+        }
+        if (this.host && this.host.indexOf("/") === 0) {
+          con.connect(this.host + "/.s.PGSQL." + this.port);
+        } else {
+          con.connect(this.port, this.host);
+        }
+        con.on("connect", function() {
+          if (self2.ssl) {
+            con.requestSsl();
+          } else {
+            con.startup(self2.getStartupConf());
+          }
+        });
+        con.on("sslconnect", function() {
+          con.startup(self2.getStartupConf());
+        });
+        this._attachListeners(con);
+        con.once("end", () => {
+          const error = this._ending ? new Error("Connection terminated") : new Error("Connection terminated unexpectedly");
+          clearTimeout(this.connectionTimeoutHandle);
+          this._errorAllQueries(error);
+          this._ended = true;
+          if (!this._ending) {
+            if (this._connecting && !this._connectionError) {
+              if (this._connectionCallback) {
+                this._connectionCallback(error);
+              } else {
+                this._handleErrorEvent(error);
+              }
+            } else if (!this._connectionError) {
+              this._handleErrorEvent(error);
+            }
+          }
+          process.nextTick(() => {
+            this.emit("end");
+          });
+        });
+      }
+      connect(callback2) {
+        if (callback2) {
+          this._connect(callback2);
+          return;
+        }
+        return new this._Promise((resolve, reject) => {
+          this._connect((error) => {
+            if (error) {
+              reject(error);
+            } else {
+              resolve();
             }
           });
         });
-      };
-      return Container3;
-    }();
-    exports.Container = Container2;
-  }
-});
-
-// node_modules/inversify/lib/container/container_module.js
-var require_container_module = __commonJS({
-  "node_modules/inversify/lib/container/container_module.js"(exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.AsyncContainerModule = exports.ContainerModule = void 0;
-    var id_1 = require_id();
-    var ContainerModule = function() {
-      function ContainerModule2(registry) {
-        this.id = (0, id_1.id)();
-        this.registry = registry;
       }
-      return ContainerModule2;
-    }();
-    exports.ContainerModule = ContainerModule;
-    var AsyncContainerModule = function() {
-      function AsyncContainerModule2(registry) {
-        this.id = (0, id_1.id)();
-        this.registry = registry;
+      _attachListeners(con) {
+        con.on("authenticationCleartextPassword", this._handleAuthCleartextPassword.bind(this));
+        con.on("authenticationMD5Password", this._handleAuthMD5Password.bind(this));
+        con.on("authenticationSASL", this._handleAuthSASL.bind(this));
+        con.on("authenticationSASLContinue", this._handleAuthSASLContinue.bind(this));
+        con.on("authenticationSASLFinal", this._handleAuthSASLFinal.bind(this));
+        con.on("backendKeyData", this._handleBackendKeyData.bind(this));
+        con.on("error", this._handleErrorEvent.bind(this));
+        con.on("errorMessage", this._handleErrorMessage.bind(this));
+        con.on("readyForQuery", this._handleReadyForQuery.bind(this));
+        con.on("notice", this._handleNotice.bind(this));
+        con.on("rowDescription", this._handleRowDescription.bind(this));
+        con.on("dataRow", this._handleDataRow.bind(this));
+        con.on("portalSuspended", this._handlePortalSuspended.bind(this));
+        con.on("emptyQuery", this._handleEmptyQuery.bind(this));
+        con.on("commandComplete", this._handleCommandComplete.bind(this));
+        con.on("parseComplete", this._handleParseComplete.bind(this));
+        con.on("copyInResponse", this._handleCopyInResponse.bind(this));
+        con.on("copyData", this._handleCopyData.bind(this));
+        con.on("notification", this._handleNotification.bind(this));
       }
-      return AsyncContainerModule2;
-    }();
-    exports.AsyncContainerModule = AsyncContainerModule;
-  }
-});
-
-// node_modules/inversify/lib/utils/js.js
-var require_js = __commonJS({
-  "node_modules/inversify/lib/utils/js.js"(exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.getFirstArrayDuplicate = void 0;
-    function getFirstArrayDuplicate(array) {
-      var seenValues = /* @__PURE__ */ new Set();
-      for (var _i = 0, array_1 = array; _i < array_1.length; _i++) {
-        var entry = array_1[_i];
-        if (seenValues.has(entry)) {
-          return entry;
+      // TODO(bmc): deprecate pgpass "built in" integration since this.password can be a function
+      // it can be supplied by the user if required - this is a breaking change!
+      _checkPgPass(cb) {
+        const con = this.connection;
+        if (typeof this.password === "function") {
+          this._Promise.resolve().then(() => this.password()).then((pass) => {
+            if (pass !== void 0) {
+              if (typeof pass !== "string") {
+                con.emit("error", new TypeError("Password must be a string"));
+                return;
+              }
+              this.connectionParameters.password = this.password = pass;
+            } else {
+              this.connectionParameters.password = this.password = null;
+            }
+            cb();
+          }).catch((err) => {
+            con.emit("error", err);
+          });
+        } else if (this.password !== null) {
+          cb();
         } else {
-          seenValues.add(entry);
-        }
-      }
-      return void 0;
-    }
-    exports.getFirstArrayDuplicate = getFirstArrayDuplicate;
-  }
-});
-
-// node_modules/inversify/lib/annotation/decorator_utils.js
-var require_decorator_utils = __commonJS({
-  "node_modules/inversify/lib/annotation/decorator_utils.js"(exports) {
-    "use strict";
-    var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
-      if (k2 === void 0)
-        k2 = k;
-      Object.defineProperty(o, k2, { enumerable: true, get: function() {
-        return m[k];
-      } });
-    } : function(o, m, k, k2) {
-      if (k2 === void 0)
-        k2 = k;
-      o[k2] = m[k];
-    });
-    var __setModuleDefault = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
-      Object.defineProperty(o, "default", { enumerable: true, value: v });
-    } : function(o, v) {
-      o["default"] = v;
-    });
-    var __importStar = exports && exports.__importStar || function(mod) {
-      if (mod && mod.__esModule)
-        return mod;
-      var result = {};
-      if (mod != null) {
-        for (var k in mod)
-          if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
-            __createBinding(result, mod, k);
-      }
-      __setModuleDefault(result, mod);
-      return result;
-    };
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.createTaggedDecorator = exports.tagProperty = exports.tagParameter = exports.decorate = void 0;
-    var ERROR_MSGS = __importStar(require_error_msgs());
-    var METADATA_KEY = __importStar(require_metadata_keys());
-    var js_1 = require_js();
-    function targetIsConstructorFunction(target) {
-      return target.prototype !== void 0;
-    }
-    function _throwIfMethodParameter(parameterName) {
-      if (parameterName !== void 0) {
-        throw new Error(ERROR_MSGS.INVALID_DECORATOR_OPERATION);
-      }
-    }
-    function tagParameter(annotationTarget, parameterName, parameterIndex, metadata) {
-      _throwIfMethodParameter(parameterName);
-      _tagParameterOrProperty(METADATA_KEY.TAGGED, annotationTarget, parameterIndex.toString(), metadata);
-    }
-    exports.tagParameter = tagParameter;
-    function tagProperty(annotationTarget, propertyName, metadata) {
-      if (targetIsConstructorFunction(annotationTarget)) {
-        throw new Error(ERROR_MSGS.INVALID_DECORATOR_OPERATION);
-      }
-      _tagParameterOrProperty(METADATA_KEY.TAGGED_PROP, annotationTarget.constructor, propertyName, metadata);
-    }
-    exports.tagProperty = tagProperty;
-    function _ensureNoMetadataKeyDuplicates(metadata) {
-      var metadatas = [];
-      if (Array.isArray(metadata)) {
-        metadatas = metadata;
-        var duplicate = (0, js_1.getFirstArrayDuplicate)(metadatas.map(function(md) {
-          return md.key;
-        }));
-        if (duplicate !== void 0) {
-          throw new Error(ERROR_MSGS.DUPLICATED_METADATA + " " + duplicate.toString());
-        }
-      } else {
-        metadatas = [metadata];
-      }
-      return metadatas;
-    }
-    function _tagParameterOrProperty(metadataKey, annotationTarget, key, metadata) {
-      var metadatas = _ensureNoMetadataKeyDuplicates(metadata);
-      var paramsOrPropertiesMetadata = {};
-      if (Reflect.hasOwnMetadata(metadataKey, annotationTarget)) {
-        paramsOrPropertiesMetadata = Reflect.getMetadata(metadataKey, annotationTarget);
-      }
-      var paramOrPropertyMetadata = paramsOrPropertiesMetadata[key];
-      if (paramOrPropertyMetadata === void 0) {
-        paramOrPropertyMetadata = [];
-      } else {
-        var _loop_1 = function(m2) {
-          if (metadatas.some(function(md) {
-            return md.key === m2.key;
-          })) {
-            throw new Error(ERROR_MSGS.DUPLICATED_METADATA + " " + m2.key.toString());
+          try {
+            const pgPass = require_lib7();
+            pgPass(this.connectionParameters, (pass) => {
+              if (void 0 !== pass) {
+                this.connectionParameters.password = this.password = pass;
+              }
+              cb();
+            });
+          } catch (e) {
+            this.emit("error", e);
           }
-        };
-        for (var _i = 0, paramOrPropertyMetadata_1 = paramOrPropertyMetadata; _i < paramOrPropertyMetadata_1.length; _i++) {
-          var m = paramOrPropertyMetadata_1[_i];
-          _loop_1(m);
         }
       }
-      paramOrPropertyMetadata.push.apply(paramOrPropertyMetadata, metadatas);
-      paramsOrPropertiesMetadata[key] = paramOrPropertyMetadata;
-      Reflect.defineMetadata(metadataKey, paramsOrPropertiesMetadata, annotationTarget);
-    }
-    function createTaggedDecorator(metadata) {
-      return function(target, targetKey, indexOrPropertyDescriptor) {
-        if (typeof indexOrPropertyDescriptor === "number") {
-          tagParameter(target, targetKey, indexOrPropertyDescriptor, metadata);
+      _handleAuthCleartextPassword(msg) {
+        this._checkPgPass(() => {
+          this.connection.password(this.password);
+        });
+      }
+      _handleAuthMD5Password(msg) {
+        this._checkPgPass(async () => {
+          try {
+            const hashedPassword = await crypto3.postgresMd5PasswordHash(this.user, this.password, msg.salt);
+            this.connection.password(hashedPassword);
+          } catch (e) {
+            this.emit("error", e);
+          }
+        });
+      }
+      _handleAuthSASL(msg) {
+        this._checkPgPass(() => {
+          try {
+            this.saslSession = sasl.startSession(msg.mechanisms);
+            this.connection.sendSASLInitialResponseMessage(this.saslSession.mechanism, this.saslSession.response);
+          } catch (err) {
+            this.connection.emit("error", err);
+          }
+        });
+      }
+      async _handleAuthSASLContinue(msg) {
+        try {
+          await sasl.continueSession(this.saslSession, this.password, msg.data);
+          this.connection.sendSCRAMClientFinalMessage(this.saslSession.response);
+        } catch (err) {
+          this.connection.emit("error", err);
+        }
+      }
+      _handleAuthSASLFinal(msg) {
+        try {
+          sasl.finalizeSession(this.saslSession, msg.data);
+          this.saslSession = null;
+        } catch (err) {
+          this.connection.emit("error", err);
+        }
+      }
+      _handleBackendKeyData(msg) {
+        this.processID = msg.processID;
+        this.secretKey = msg.secretKey;
+      }
+      _handleReadyForQuery(msg) {
+        if (this._connecting) {
+          this._connecting = false;
+          this._connected = true;
+          clearTimeout(this.connectionTimeoutHandle);
+          if (this._connectionCallback) {
+            this._connectionCallback(null, this);
+            this._connectionCallback = null;
+          }
+          this.emit("connect");
+        }
+        const { activeQuery } = this;
+        this.activeQuery = null;
+        this.readyForQuery = true;
+        if (activeQuery) {
+          activeQuery.handleReadyForQuery(this.connection);
+        }
+        this._pulseQueryQueue();
+      }
+      // if we receieve an error event or error message
+      // during the connection process we handle it here
+      _handleErrorWhileConnecting(err) {
+        if (this._connectionError) {
+          return;
+        }
+        this._connectionError = true;
+        clearTimeout(this.connectionTimeoutHandle);
+        if (this._connectionCallback) {
+          return this._connectionCallback(err);
+        }
+        this.emit("error", err);
+      }
+      // if we're connected and we receive an error event from the connection
+      // this means the socket is dead - do a hard abort of all queries and emit
+      // the socket error on the client as well
+      _handleErrorEvent(err) {
+        if (this._connecting) {
+          return this._handleErrorWhileConnecting(err);
+        }
+        this._queryable = false;
+        this._errorAllQueries(err);
+        this.emit("error", err);
+      }
+      // handle error messages from the postgres backend
+      _handleErrorMessage(msg) {
+        if (this._connecting) {
+          return this._handleErrorWhileConnecting(msg);
+        }
+        const activeQuery = this.activeQuery;
+        if (!activeQuery) {
+          this._handleErrorEvent(msg);
+          return;
+        }
+        this.activeQuery = null;
+        activeQuery.handleError(msg, this.connection);
+      }
+      _handleRowDescription(msg) {
+        this.activeQuery.handleRowDescription(msg);
+      }
+      _handleDataRow(msg) {
+        this.activeQuery.handleDataRow(msg);
+      }
+      _handlePortalSuspended(msg) {
+        this.activeQuery.handlePortalSuspended(this.connection);
+      }
+      _handleEmptyQuery(msg) {
+        this.activeQuery.handleEmptyQuery(this.connection);
+      }
+      _handleCommandComplete(msg) {
+        this.activeQuery.handleCommandComplete(msg, this.connection);
+      }
+      _handleParseComplete(msg) {
+        if (this.activeQuery.name) {
+          this.connection.parsedStatements[this.activeQuery.name] = this.activeQuery.text;
+        }
+      }
+      _handleCopyInResponse(msg) {
+        this.activeQuery.handleCopyInResponse(this.connection);
+      }
+      _handleCopyData(msg) {
+        this.activeQuery.handleCopyData(msg, this.connection);
+      }
+      _handleNotification(msg) {
+        this.emit("notification", msg);
+      }
+      _handleNotice(msg) {
+        this.emit("notice", msg);
+      }
+      getStartupConf() {
+        var params = this.connectionParameters;
+        var data = {
+          user: params.user,
+          database: params.database
+        };
+        var appName = params.application_name || params.fallback_application_name;
+        if (appName) {
+          data.application_name = appName;
+        }
+        if (params.replication) {
+          data.replication = "" + params.replication;
+        }
+        if (params.statement_timeout) {
+          data.statement_timeout = String(parseInt(params.statement_timeout, 10));
+        }
+        if (params.lock_timeout) {
+          data.lock_timeout = String(parseInt(params.lock_timeout, 10));
+        }
+        if (params.idle_in_transaction_session_timeout) {
+          data.idle_in_transaction_session_timeout = String(parseInt(params.idle_in_transaction_session_timeout, 10));
+        }
+        if (params.options) {
+          data.options = params.options;
+        }
+        return data;
+      }
+      cancel(client, query) {
+        if (client.activeQuery === query) {
+          var con = this.connection;
+          if (this.host && this.host.indexOf("/") === 0) {
+            con.connect(this.host + "/.s.PGSQL." + this.port);
+          } else {
+            con.connect(this.port, this.host);
+          }
+          con.on("connect", function() {
+            con.cancel(client.processID, client.secretKey);
+          });
+        } else if (client.queryQueue.indexOf(query) !== -1) {
+          client.queryQueue.splice(client.queryQueue.indexOf(query), 1);
+        }
+      }
+      setTypeParser(oid, format, parseFn) {
+        return this._types.setTypeParser(oid, format, parseFn);
+      }
+      getTypeParser(oid, format) {
+        return this._types.getTypeParser(oid, format);
+      }
+      // escapeIdentifier and escapeLiteral moved to utility functions & exported
+      // on PG
+      // re-exported here for backwards compatibility
+      escapeIdentifier(str) {
+        return utils.escapeIdentifier(str);
+      }
+      escapeLiteral(str) {
+        return utils.escapeLiteral(str);
+      }
+      _pulseQueryQueue() {
+        if (this.readyForQuery === true) {
+          this.activeQuery = this.queryQueue.shift();
+          if (this.activeQuery) {
+            this.readyForQuery = false;
+            this.hasExecuted = true;
+            const queryError = this.activeQuery.submit(this.connection);
+            if (queryError) {
+              process.nextTick(() => {
+                this.activeQuery.handleError(queryError, this.connection);
+                this.readyForQuery = true;
+                this._pulseQueryQueue();
+              });
+            }
+          } else if (this.hasExecuted) {
+            this.activeQuery = null;
+            this.emit("drain");
+          }
+        }
+      }
+      query(config, values, callback2) {
+        var query;
+        var result;
+        var readTimeout;
+        var readTimeoutTimer;
+        var queryCallback;
+        if (config === null || config === void 0) {
+          throw new TypeError("Client was passed a null or undefined query");
+        } else if (typeof config.submit === "function") {
+          readTimeout = config.query_timeout || this.connectionParameters.query_timeout;
+          result = query = config;
+          if (typeof values === "function") {
+            query.callback = query.callback || values;
+          }
         } else {
-          tagProperty(target, targetKey, metadata);
+          readTimeout = this.connectionParameters.query_timeout;
+          query = new Query(config, values, callback2);
+          if (!query.callback) {
+            result = new this._Promise((resolve, reject) => {
+              query.callback = (err, res) => err ? reject(err) : resolve(res);
+            }).catch((err) => {
+              Error.captureStackTrace(err);
+              throw err;
+            });
+          }
         }
+        if (readTimeout) {
+          queryCallback = query.callback;
+          readTimeoutTimer = setTimeout(() => {
+            var error = new Error("Query read timeout");
+            process.nextTick(() => {
+              query.handleError(error, this.connection);
+            });
+            queryCallback(error);
+            query.callback = () => {
+            };
+            var index = this.queryQueue.indexOf(query);
+            if (index > -1) {
+              this.queryQueue.splice(index, 1);
+            }
+            this._pulseQueryQueue();
+          }, readTimeout);
+          query.callback = (err, res) => {
+            clearTimeout(readTimeoutTimer);
+            queryCallback(err, res);
+          };
+        }
+        if (this.binary && !query.binary) {
+          query.binary = true;
+        }
+        if (query._result && !query._result._types) {
+          query._result._types = this._types;
+        }
+        if (!this._queryable) {
+          process.nextTick(() => {
+            query.handleError(new Error("Client has encountered a connection error and is not queryable"), this.connection);
+          });
+          return result;
+        }
+        if (this._ending) {
+          process.nextTick(() => {
+            query.handleError(new Error("Client was closed and is not queryable"), this.connection);
+          });
+          return result;
+        }
+        this.queryQueue.push(query);
+        this._pulseQueryQueue();
+        return result;
+      }
+      ref() {
+        this.connection.ref();
+      }
+      unref() {
+        this.connection.unref();
+      }
+      end(cb) {
+        this._ending = true;
+        if (!this.connection._connecting || this._ended) {
+          if (cb) {
+            cb();
+          } else {
+            return this._Promise.resolve();
+          }
+        }
+        if (this.activeQuery || !this._queryable) {
+          this.connection.stream.destroy();
+        } else {
+          this.connection.end();
+        }
+        if (cb) {
+          this.connection.once("end", cb);
+        } else {
+          return new this._Promise((resolve) => {
+            this.connection.once("end", resolve);
+          });
+        }
+      }
+    };
+    Client2.Query = Query;
+    module2.exports = Client2;
+  }
+});
+
+// node_modules/pg-pool/index.js
+var require_pg_pool = __commonJS({
+  "node_modules/pg-pool/index.js"(exports, module2) {
+    "use strict";
+    var EventEmitter2 = require("events").EventEmitter;
+    var NOOP = function() {
+    };
+    var removeWhere = (list, predicate) => {
+      const i = list.findIndex(predicate);
+      return i === -1 ? void 0 : list.splice(i, 1)[0];
+    };
+    var IdleItem = class {
+      constructor(client, idleListener, timeoutId) {
+        this.client = client;
+        this.idleListener = idleListener;
+        this.timeoutId = timeoutId;
+      }
+    };
+    var PendingItem = class {
+      constructor(callback2) {
+        this.callback = callback2;
+      }
+    };
+    function throwOnDoubleRelease() {
+      throw new Error("Release called on client which has already been released to the pool.");
+    }
+    function promisify(Promise2, callback2) {
+      if (callback2) {
+        return { callback: callback2, result: void 0 };
+      }
+      let rej;
+      let res;
+      const cb = function(err, client) {
+        err ? rej(err) : res(client);
+      };
+      const result = new Promise2(function(resolve, reject) {
+        res = resolve;
+        rej = reject;
+      }).catch((err) => {
+        Error.captureStackTrace(err);
+        throw err;
+      });
+      return { callback: cb, result };
+    }
+    function makeIdleListener(pool, client) {
+      return function idleListener(err) {
+        err.client = client;
+        client.removeListener("error", idleListener);
+        client.on("error", () => {
+          pool.log("additional client error after disconnection due to error", err);
+        });
+        pool._remove(client);
+        pool.emit("error", err, client);
       };
     }
-    exports.createTaggedDecorator = createTaggedDecorator;
-    function _decorate(decorators, target) {
-      Reflect.decorate(decorators, target);
-    }
-    function _param(paramIndex, decorator) {
-      return function(target, key) {
-        decorator(target, key, paramIndex);
-      };
-    }
-    function decorate(decorator, target, parameterIndexOrProperty) {
-      if (typeof parameterIndexOrProperty === "number") {
-        _decorate([_param(parameterIndexOrProperty, decorator)], target);
-      } else if (typeof parameterIndexOrProperty === "string") {
-        Reflect.decorate([decorator], target, parameterIndexOrProperty);
+    var Pool = class extends EventEmitter2 {
+      constructor(options, Client2) {
+        super();
+        this.options = Object.assign({}, options);
+        if (options != null && "password" in options) {
+          Object.defineProperty(this.options, "password", {
+            configurable: true,
+            enumerable: false,
+            writable: true,
+            value: options.password
+          });
+        }
+        if (options != null && options.ssl && options.ssl.key) {
+          Object.defineProperty(this.options.ssl, "key", {
+            enumerable: false
+          });
+        }
+        this.options.max = this.options.max || this.options.poolSize || 10;
+        this.options.maxUses = this.options.maxUses || Infinity;
+        this.options.allowExitOnIdle = this.options.allowExitOnIdle || false;
+        this.options.maxLifetimeSeconds = this.options.maxLifetimeSeconds || 0;
+        this.log = this.options.log || function() {
+        };
+        this.Client = this.options.Client || Client2 || require_lib8().Client;
+        this.Promise = this.options.Promise || global.Promise;
+        if (typeof this.options.idleTimeoutMillis === "undefined") {
+          this.options.idleTimeoutMillis = 1e4;
+        }
+        this._clients = [];
+        this._idle = [];
+        this._expired = /* @__PURE__ */ new WeakSet();
+        this._pendingQueue = [];
+        this._endCallback = void 0;
+        this.ending = false;
+        this.ended = false;
+      }
+      _isFull() {
+        return this._clients.length >= this.options.max;
+      }
+      _pulseQueue() {
+        this.log("pulse queue");
+        if (this.ended) {
+          this.log("pulse queue ended");
+          return;
+        }
+        if (this.ending) {
+          this.log("pulse queue on ending");
+          if (this._idle.length) {
+            this._idle.slice().map((item) => {
+              this._remove(item.client);
+            });
+          }
+          if (!this._clients.length) {
+            this.ended = true;
+            this._endCallback();
+          }
+          return;
+        }
+        if (!this._pendingQueue.length) {
+          this.log("no queued requests");
+          return;
+        }
+        if (!this._idle.length && this._isFull()) {
+          return;
+        }
+        const pendingItem = this._pendingQueue.shift();
+        if (this._idle.length) {
+          const idleItem = this._idle.pop();
+          clearTimeout(idleItem.timeoutId);
+          const client = idleItem.client;
+          client.ref && client.ref();
+          const idleListener = idleItem.idleListener;
+          return this._acquireClient(client, pendingItem, idleListener, false);
+        }
+        if (!this._isFull()) {
+          return this.newClient(pendingItem);
+        }
+        throw new Error("unexpected condition");
+      }
+      _remove(client) {
+        const removed = removeWhere(this._idle, (item) => item.client === client);
+        if (removed !== void 0) {
+          clearTimeout(removed.timeoutId);
+        }
+        this._clients = this._clients.filter((c) => c !== client);
+        client.end();
+        this.emit("remove", client);
+      }
+      connect(cb) {
+        if (this.ending) {
+          const err = new Error("Cannot use a pool after calling end on the pool");
+          return cb ? cb(err) : this.Promise.reject(err);
+        }
+        const response = promisify(this.Promise, cb);
+        const result = response.result;
+        if (this._isFull() || this._idle.length) {
+          if (this._idle.length) {
+            process.nextTick(() => this._pulseQueue());
+          }
+          if (!this.options.connectionTimeoutMillis) {
+            this._pendingQueue.push(new PendingItem(response.callback));
+            return result;
+          }
+          const queueCallback = (err, res, done) => {
+            clearTimeout(tid);
+            response.callback(err, res, done);
+          };
+          const pendingItem = new PendingItem(queueCallback);
+          const tid = setTimeout(() => {
+            removeWhere(this._pendingQueue, (i) => i.callback === queueCallback);
+            pendingItem.timedOut = true;
+            response.callback(new Error("timeout exceeded when trying to connect"));
+          }, this.options.connectionTimeoutMillis);
+          this._pendingQueue.push(pendingItem);
+          return result;
+        }
+        this.newClient(new PendingItem(response.callback));
+        return result;
+      }
+      newClient(pendingItem) {
+        const client = new this.Client(this.options);
+        this._clients.push(client);
+        const idleListener = makeIdleListener(this, client);
+        this.log("checking client timeout");
+        let tid;
+        let timeoutHit = false;
+        if (this.options.connectionTimeoutMillis) {
+          tid = setTimeout(() => {
+            this.log("ending client due to timeout");
+            timeoutHit = true;
+            client.connection ? client.connection.stream.destroy() : client.end();
+          }, this.options.connectionTimeoutMillis);
+        }
+        this.log("connecting new client");
+        client.connect((err) => {
+          if (tid) {
+            clearTimeout(tid);
+          }
+          client.on("error", idleListener);
+          if (err) {
+            this.log("client failed to connect", err);
+            this._clients = this._clients.filter((c) => c !== client);
+            if (timeoutHit) {
+              err.message = "Connection terminated due to connection timeout";
+            }
+            this._pulseQueue();
+            if (!pendingItem.timedOut) {
+              pendingItem.callback(err, void 0, NOOP);
+            }
+          } else {
+            this.log("new client connected");
+            if (this.options.maxLifetimeSeconds !== 0) {
+              const maxLifetimeTimeout = setTimeout(() => {
+                this.log("ending client due to expired lifetime");
+                this._expired.add(client);
+                const idleIndex = this._idle.findIndex((idleItem) => idleItem.client === client);
+                if (idleIndex !== -1) {
+                  this._acquireClient(
+                    client,
+                    new PendingItem((err2, client2, clientRelease) => clientRelease()),
+                    idleListener,
+                    false
+                  );
+                }
+              }, this.options.maxLifetimeSeconds * 1e3);
+              maxLifetimeTimeout.unref();
+              client.once("end", () => clearTimeout(maxLifetimeTimeout));
+            }
+            return this._acquireClient(client, pendingItem, idleListener, true);
+          }
+        });
+      }
+      // acquire a client for a pending work item
+      _acquireClient(client, pendingItem, idleListener, isNew) {
+        if (isNew) {
+          this.emit("connect", client);
+        }
+        this.emit("acquire", client);
+        client.release = this._releaseOnce(client, idleListener);
+        client.removeListener("error", idleListener);
+        if (!pendingItem.timedOut) {
+          if (isNew && this.options.verify) {
+            this.options.verify(client, (err) => {
+              if (err) {
+                client.release(err);
+                return pendingItem.callback(err, void 0, NOOP);
+              }
+              pendingItem.callback(void 0, client, client.release);
+            });
+          } else {
+            pendingItem.callback(void 0, client, client.release);
+          }
+        } else {
+          if (isNew && this.options.verify) {
+            this.options.verify(client, client.release);
+          } else {
+            client.release();
+          }
+        }
+      }
+      // returns a function that wraps _release and throws if called more than once
+      _releaseOnce(client, idleListener) {
+        let released = false;
+        return (err) => {
+          if (released) {
+            throwOnDoubleRelease();
+          }
+          released = true;
+          this._release(client, idleListener, err);
+        };
+      }
+      // release a client back to the poll, include an error
+      // to remove it from the pool
+      _release(client, idleListener, err) {
+        client.on("error", idleListener);
+        client._poolUseCount = (client._poolUseCount || 0) + 1;
+        this.emit("release", err, client);
+        if (err || this.ending || !client._queryable || client._ending || client._poolUseCount >= this.options.maxUses) {
+          if (client._poolUseCount >= this.options.maxUses) {
+            this.log("remove expended client");
+          }
+          this._remove(client);
+          this._pulseQueue();
+          return;
+        }
+        const isExpired = this._expired.has(client);
+        if (isExpired) {
+          this.log("remove expired client");
+          this._expired.delete(client);
+          this._remove(client);
+          this._pulseQueue();
+          return;
+        }
+        let tid;
+        if (this.options.idleTimeoutMillis) {
+          tid = setTimeout(() => {
+            this.log("remove idle client");
+            this._remove(client);
+          }, this.options.idleTimeoutMillis);
+          if (this.options.allowExitOnIdle) {
+            tid.unref();
+          }
+        }
+        if (this.options.allowExitOnIdle) {
+          client.unref();
+        }
+        this._idle.push(new IdleItem(client, idleListener, tid));
+        this._pulseQueue();
+      }
+      query(text, values, cb) {
+        if (typeof text === "function") {
+          const response2 = promisify(this.Promise, text);
+          setImmediate(function() {
+            return response2.callback(new Error("Passing a function as the first parameter to pool.query is not supported"));
+          });
+          return response2.result;
+        }
+        if (typeof values === "function") {
+          cb = values;
+          values = void 0;
+        }
+        const response = promisify(this.Promise, cb);
+        cb = response.callback;
+        this.connect((err, client) => {
+          if (err) {
+            return cb(err);
+          }
+          let clientReleased = false;
+          const onError = (err2) => {
+            if (clientReleased) {
+              return;
+            }
+            clientReleased = true;
+            client.release(err2);
+            cb(err2);
+          };
+          client.once("error", onError);
+          this.log("dispatching query");
+          try {
+            client.query(text, values, (err2, res) => {
+              this.log("query dispatched");
+              client.removeListener("error", onError);
+              if (clientReleased) {
+                return;
+              }
+              clientReleased = true;
+              client.release(err2);
+              if (err2) {
+                return cb(err2);
+              }
+              return cb(void 0, res);
+            });
+          } catch (err2) {
+            client.release(err2);
+            return cb(err2);
+          }
+        });
+        return response.result;
+      }
+      end(cb) {
+        this.log("ending");
+        if (this.ending) {
+          const err = new Error("Called end on pool more than once");
+          return cb ? cb(err) : this.Promise.reject(err);
+        }
+        this.ending = true;
+        const promised = promisify(this.Promise, cb);
+        this._endCallback = promised.callback;
+        this._pulseQueue();
+        return promised.result;
+      }
+      get waitingCount() {
+        return this._pendingQueue.length;
+      }
+      get idleCount() {
+        return this._idle.length;
+      }
+      get expiredCount() {
+        return this._clients.reduce((acc, client) => acc + (this._expired.has(client) ? 1 : 0), 0);
+      }
+      get totalCount() {
+        return this._clients.length;
+      }
+    };
+    module2.exports = Pool;
+  }
+});
+
+// node_modules/pg/lib/native/query.js
+var require_query3 = __commonJS({
+  "node_modules/pg/lib/native/query.js"(exports, module2) {
+    "use strict";
+    var EventEmitter2 = require("events").EventEmitter;
+    var util = require("util");
+    var utils = require_utils6();
+    var NativeQuery = module2.exports = function(config, values, callback2) {
+      EventEmitter2.call(this);
+      config = utils.normalizeQueryConfig(config, values, callback2);
+      this.text = config.text;
+      this.values = config.values;
+      this.name = config.name;
+      this.callback = config.callback;
+      this.state = "new";
+      this._arrayMode = config.rowMode === "array";
+      this._emitRowEvents = false;
+      this.on(
+        "newListener",
+        function(event) {
+          if (event === "row")
+            this._emitRowEvents = true;
+        }.bind(this)
+      );
+    };
+    util.inherits(NativeQuery, EventEmitter2);
+    var errorFieldMap = {
+      /* eslint-disable quote-props */
+      sqlState: "code",
+      statementPosition: "position",
+      messagePrimary: "message",
+      context: "where",
+      schemaName: "schema",
+      tableName: "table",
+      columnName: "column",
+      dataTypeName: "dataType",
+      constraintName: "constraint",
+      sourceFile: "file",
+      sourceLine: "line",
+      sourceFunction: "routine"
+    };
+    NativeQuery.prototype.handleError = function(err) {
+      var fields = this.native.pq.resultErrorFields();
+      if (fields) {
+        for (var key in fields) {
+          var normalizedFieldName = errorFieldMap[key] || key;
+          err[normalizedFieldName] = fields[key];
+        }
+      }
+      if (this.callback) {
+        this.callback(err);
       } else {
-        _decorate([decorator], target);
+        this.emit("error", err);
       }
-    }
-    exports.decorate = decorate;
-  }
-});
-
-// node_modules/inversify/lib/annotation/injectable.js
-var require_injectable = __commonJS({
-  "node_modules/inversify/lib/annotation/injectable.js"(exports) {
-    "use strict";
-    var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
-      if (k2 === void 0)
-        k2 = k;
-      Object.defineProperty(o, k2, { enumerable: true, get: function() {
-        return m[k];
-      } });
-    } : function(o, m, k, k2) {
-      if (k2 === void 0)
-        k2 = k;
-      o[k2] = m[k];
-    });
-    var __setModuleDefault = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
-      Object.defineProperty(o, "default", { enumerable: true, value: v });
-    } : function(o, v) {
-      o["default"] = v;
-    });
-    var __importStar = exports && exports.__importStar || function(mod) {
-      if (mod && mod.__esModule)
-        return mod;
-      var result = {};
-      if (mod != null) {
-        for (var k in mod)
-          if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
-            __createBinding(result, mod, k);
-      }
-      __setModuleDefault(result, mod);
-      return result;
+      this.state = "error";
     };
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.injectable = void 0;
-    var ERRORS_MSGS = __importStar(require_error_msgs());
-    var METADATA_KEY = __importStar(require_metadata_keys());
-    function injectable8() {
-      return function(target) {
-        if (Reflect.hasOwnMetadata(METADATA_KEY.PARAM_TYPES, target)) {
-          throw new Error(ERRORS_MSGS.DUPLICATED_INJECTABLE_DECORATOR);
+    NativeQuery.prototype.then = function(onSuccess, onFailure) {
+      return this._getPromise().then(onSuccess, onFailure);
+    };
+    NativeQuery.prototype.catch = function(callback2) {
+      return this._getPromise().catch(callback2);
+    };
+    NativeQuery.prototype._getPromise = function() {
+      if (this._promise)
+        return this._promise;
+      this._promise = new Promise(
+        function(resolve, reject) {
+          this._once("end", resolve);
+          this._once("error", reject);
+        }.bind(this)
+      );
+      return this._promise;
+    };
+    NativeQuery.prototype.submit = function(client) {
+      this.state = "running";
+      var self2 = this;
+      this.native = client.native;
+      client.native.arrayMode = this._arrayMode;
+      var after = function(err, rows, results) {
+        client.native.arrayMode = false;
+        setImmediate(function() {
+          self2.emit("_done");
+        });
+        if (err) {
+          return self2.handleError(err);
         }
-        var types = Reflect.getMetadata(METADATA_KEY.DESIGN_PARAM_TYPES, target) || [];
-        Reflect.defineMetadata(METADATA_KEY.PARAM_TYPES, types, target);
-        return target;
-      };
-    }
-    exports.injectable = injectable8;
-  }
-});
-
-// node_modules/inversify/lib/annotation/tagged.js
-var require_tagged = __commonJS({
-  "node_modules/inversify/lib/annotation/tagged.js"(exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.tagged = void 0;
-    var metadata_1 = require_metadata();
-    var decorator_utils_1 = require_decorator_utils();
-    function tagged(metadataKey, metadataValue) {
-      return (0, decorator_utils_1.createTaggedDecorator)(new metadata_1.Metadata(metadataKey, metadataValue));
-    }
-    exports.tagged = tagged;
-  }
-});
-
-// node_modules/inversify/lib/annotation/named.js
-var require_named = __commonJS({
-  "node_modules/inversify/lib/annotation/named.js"(exports) {
-    "use strict";
-    var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
-      if (k2 === void 0)
-        k2 = k;
-      Object.defineProperty(o, k2, { enumerable: true, get: function() {
-        return m[k];
-      } });
-    } : function(o, m, k, k2) {
-      if (k2 === void 0)
-        k2 = k;
-      o[k2] = m[k];
-    });
-    var __setModuleDefault = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
-      Object.defineProperty(o, "default", { enumerable: true, value: v });
-    } : function(o, v) {
-      o["default"] = v;
-    });
-    var __importStar = exports && exports.__importStar || function(mod) {
-      if (mod && mod.__esModule)
-        return mod;
-      var result = {};
-      if (mod != null) {
-        for (var k in mod)
-          if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
-            __createBinding(result, mod, k);
-      }
-      __setModuleDefault(result, mod);
-      return result;
-    };
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.named = void 0;
-    var METADATA_KEY = __importStar(require_metadata_keys());
-    var metadata_1 = require_metadata();
-    var decorator_utils_1 = require_decorator_utils();
-    function named(name) {
-      return (0, decorator_utils_1.createTaggedDecorator)(new metadata_1.Metadata(METADATA_KEY.NAMED_TAG, name));
-    }
-    exports.named = named;
-  }
-});
-
-// node_modules/inversify/lib/annotation/inject_base.js
-var require_inject_base = __commonJS({
-  "node_modules/inversify/lib/annotation/inject_base.js"(exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.injectBase = void 0;
-    var error_msgs_1 = require_error_msgs();
-    var metadata_1 = require_metadata();
-    var decorator_utils_1 = require_decorator_utils();
-    function injectBase(metadataKey) {
-      return function(serviceIdentifier) {
-        return function(target, targetKey, indexOrPropertyDescriptor) {
-          if (serviceIdentifier === void 0) {
-            var className = typeof target === "function" ? target.name : target.constructor.name;
-            throw new Error((0, error_msgs_1.UNDEFINED_INJECT_ANNOTATION)(className));
+        if (self2._emitRowEvents) {
+          if (results.length > 1) {
+            rows.forEach((rowOfRows, i) => {
+              rowOfRows.forEach((row) => {
+                self2.emit("row", row, results[i]);
+              });
+            });
+          } else {
+            rows.forEach(function(row) {
+              self2.emit("row", row, results);
+            });
           }
-          return (0, decorator_utils_1.createTaggedDecorator)(new metadata_1.Metadata(metadataKey, serviceIdentifier))(target, targetKey, indexOrPropertyDescriptor);
-        };
+        }
+        self2.state = "end";
+        self2.emit("end", results);
+        if (self2.callback) {
+          self2.callback(null, results);
+        }
       };
-    }
-    exports.injectBase = injectBase;
-  }
-});
-
-// node_modules/inversify/lib/annotation/inject.js
-var require_inject = __commonJS({
-  "node_modules/inversify/lib/annotation/inject.js"(exports) {
-    "use strict";
-    var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
-      if (k2 === void 0)
-        k2 = k;
-      Object.defineProperty(o, k2, { enumerable: true, get: function() {
-        return m[k];
-      } });
-    } : function(o, m, k, k2) {
-      if (k2 === void 0)
-        k2 = k;
-      o[k2] = m[k];
-    });
-    var __setModuleDefault = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
-      Object.defineProperty(o, "default", { enumerable: true, value: v });
-    } : function(o, v) {
-      o["default"] = v;
-    });
-    var __importStar = exports && exports.__importStar || function(mod) {
-      if (mod && mod.__esModule)
-        return mod;
-      var result = {};
-      if (mod != null) {
-        for (var k in mod)
-          if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
-            __createBinding(result, mod, k);
+      if (process.domain) {
+        after = process.domain.bind(after);
       }
-      __setModuleDefault(result, mod);
-      return result;
-    };
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.inject = void 0;
-    var METADATA_KEY = __importStar(require_metadata_keys());
-    var inject_base_1 = require_inject_base();
-    var inject6 = (0, inject_base_1.injectBase)(METADATA_KEY.INJECT_TAG);
-    exports.inject = inject6;
-  }
-});
-
-// node_modules/inversify/lib/annotation/optional.js
-var require_optional = __commonJS({
-  "node_modules/inversify/lib/annotation/optional.js"(exports) {
-    "use strict";
-    var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
-      if (k2 === void 0)
-        k2 = k;
-      Object.defineProperty(o, k2, { enumerable: true, get: function() {
-        return m[k];
-      } });
-    } : function(o, m, k, k2) {
-      if (k2 === void 0)
-        k2 = k;
-      o[k2] = m[k];
-    });
-    var __setModuleDefault = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
-      Object.defineProperty(o, "default", { enumerable: true, value: v });
-    } : function(o, v) {
-      o["default"] = v;
-    });
-    var __importStar = exports && exports.__importStar || function(mod) {
-      if (mod && mod.__esModule)
-        return mod;
-      var result = {};
-      if (mod != null) {
-        for (var k in mod)
-          if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
-            __createBinding(result, mod, k);
-      }
-      __setModuleDefault(result, mod);
-      return result;
-    };
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.optional = void 0;
-    var METADATA_KEY = __importStar(require_metadata_keys());
-    var metadata_1 = require_metadata();
-    var decorator_utils_1 = require_decorator_utils();
-    function optional() {
-      return (0, decorator_utils_1.createTaggedDecorator)(new metadata_1.Metadata(METADATA_KEY.OPTIONAL_TAG, true));
-    }
-    exports.optional = optional;
-  }
-});
-
-// node_modules/inversify/lib/annotation/unmanaged.js
-var require_unmanaged = __commonJS({
-  "node_modules/inversify/lib/annotation/unmanaged.js"(exports) {
-    "use strict";
-    var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
-      if (k2 === void 0)
-        k2 = k;
-      Object.defineProperty(o, k2, { enumerable: true, get: function() {
-        return m[k];
-      } });
-    } : function(o, m, k, k2) {
-      if (k2 === void 0)
-        k2 = k;
-      o[k2] = m[k];
-    });
-    var __setModuleDefault = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
-      Object.defineProperty(o, "default", { enumerable: true, value: v });
-    } : function(o, v) {
-      o["default"] = v;
-    });
-    var __importStar = exports && exports.__importStar || function(mod) {
-      if (mod && mod.__esModule)
-        return mod;
-      var result = {};
-      if (mod != null) {
-        for (var k in mod)
-          if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
-            __createBinding(result, mod, k);
-      }
-      __setModuleDefault(result, mod);
-      return result;
-    };
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.unmanaged = void 0;
-    var METADATA_KEY = __importStar(require_metadata_keys());
-    var metadata_1 = require_metadata();
-    var decorator_utils_1 = require_decorator_utils();
-    function unmanaged() {
-      return function(target, targetKey, index) {
-        var metadata = new metadata_1.Metadata(METADATA_KEY.UNMANAGED_TAG, true);
-        (0, decorator_utils_1.tagParameter)(target, targetKey, index, metadata);
-      };
-    }
-    exports.unmanaged = unmanaged;
-  }
-});
-
-// node_modules/inversify/lib/annotation/multi_inject.js
-var require_multi_inject = __commonJS({
-  "node_modules/inversify/lib/annotation/multi_inject.js"(exports) {
-    "use strict";
-    var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
-      if (k2 === void 0)
-        k2 = k;
-      Object.defineProperty(o, k2, { enumerable: true, get: function() {
-        return m[k];
-      } });
-    } : function(o, m, k, k2) {
-      if (k2 === void 0)
-        k2 = k;
-      o[k2] = m[k];
-    });
-    var __setModuleDefault = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
-      Object.defineProperty(o, "default", { enumerable: true, value: v });
-    } : function(o, v) {
-      o["default"] = v;
-    });
-    var __importStar = exports && exports.__importStar || function(mod) {
-      if (mod && mod.__esModule)
-        return mod;
-      var result = {};
-      if (mod != null) {
-        for (var k in mod)
-          if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
-            __createBinding(result, mod, k);
-      }
-      __setModuleDefault(result, mod);
-      return result;
-    };
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.multiInject = void 0;
-    var METADATA_KEY = __importStar(require_metadata_keys());
-    var inject_base_1 = require_inject_base();
-    var multiInject = (0, inject_base_1.injectBase)(METADATA_KEY.MULTI_INJECT_TAG);
-    exports.multiInject = multiInject;
-  }
-});
-
-// node_modules/inversify/lib/annotation/target_name.js
-var require_target_name = __commonJS({
-  "node_modules/inversify/lib/annotation/target_name.js"(exports) {
-    "use strict";
-    var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
-      if (k2 === void 0)
-        k2 = k;
-      Object.defineProperty(o, k2, { enumerable: true, get: function() {
-        return m[k];
-      } });
-    } : function(o, m, k, k2) {
-      if (k2 === void 0)
-        k2 = k;
-      o[k2] = m[k];
-    });
-    var __setModuleDefault = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
-      Object.defineProperty(o, "default", { enumerable: true, value: v });
-    } : function(o, v) {
-      o["default"] = v;
-    });
-    var __importStar = exports && exports.__importStar || function(mod) {
-      if (mod && mod.__esModule)
-        return mod;
-      var result = {};
-      if (mod != null) {
-        for (var k in mod)
-          if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
-            __createBinding(result, mod, k);
-      }
-      __setModuleDefault(result, mod);
-      return result;
-    };
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.targetName = void 0;
-    var METADATA_KEY = __importStar(require_metadata_keys());
-    var metadata_1 = require_metadata();
-    var decorator_utils_1 = require_decorator_utils();
-    function targetName(name) {
-      return function(target, targetKey, index) {
-        var metadata = new metadata_1.Metadata(METADATA_KEY.NAME_TAG, name);
-        (0, decorator_utils_1.tagParameter)(target, targetKey, index, metadata);
-      };
-    }
-    exports.targetName = targetName;
-  }
-});
-
-// node_modules/inversify/lib/annotation/property_event_decorator.js
-var require_property_event_decorator = __commonJS({
-  "node_modules/inversify/lib/annotation/property_event_decorator.js"(exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.propertyEventDecorator = void 0;
-    var metadata_1 = require_metadata();
-    function propertyEventDecorator(eventKey, errorMessage) {
-      return function() {
-        return function(target, propertyKey) {
-          var metadata = new metadata_1.Metadata(eventKey, propertyKey);
-          if (Reflect.hasOwnMetadata(eventKey, target.constructor)) {
-            throw new Error(errorMessage);
+      if (this.name) {
+        if (this.name.length > 63) {
+          console.error("Warning! Postgres only supports 63 characters for query names.");
+          console.error("You supplied %s (%s)", this.name, this.name.length);
+          console.error("This can cause conflicts and silent errors executing queries");
+        }
+        var values = (this.values || []).map(utils.prepareValue);
+        if (client.namedQueries[this.name]) {
+          if (this.text && client.namedQueries[this.name] !== this.text) {
+            const err = new Error(`Prepared statements must be unique - '${this.name}' was used for a different statement`);
+            return after(err);
           }
-          Reflect.defineMetadata(eventKey, metadata, target.constructor);
-        };
-      };
+          return client.native.execute(this.name, values, after);
+        }
+        return client.native.prepare(this.name, this.text, values.length, function(err) {
+          if (err)
+            return after(err);
+          client.namedQueries[self2.name] = self2.text;
+          return self2.native.execute(self2.name, values, after);
+        });
+      } else if (this.values) {
+        if (!Array.isArray(this.values)) {
+          const err = new Error("Query values must be an array");
+          return after(err);
+        }
+        var vals = this.values.map(utils.prepareValue);
+        client.native.query(this.text, vals, after);
+      } else {
+        client.native.query(this.text, after);
+      }
+    };
+  }
+});
+
+// node_modules/pg/lib/native/client.js
+var require_client2 = __commonJS({
+  "node_modules/pg/lib/native/client.js"(exports, module2) {
+    "use strict";
+    var Native;
+    try {
+      Native = require("pg-native");
+    } catch (e) {
+      throw e;
     }
-    exports.propertyEventDecorator = propertyEventDecorator;
-  }
-});
-
-// node_modules/inversify/lib/annotation/post_construct.js
-var require_post_construct = __commonJS({
-  "node_modules/inversify/lib/annotation/post_construct.js"(exports) {
-    "use strict";
-    var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
-      if (k2 === void 0)
-        k2 = k;
-      Object.defineProperty(o, k2, { enumerable: true, get: function() {
-        return m[k];
-      } });
-    } : function(o, m, k, k2) {
-      if (k2 === void 0)
-        k2 = k;
-      o[k2] = m[k];
-    });
-    var __setModuleDefault = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
-      Object.defineProperty(o, "default", { enumerable: true, value: v });
-    } : function(o, v) {
-      o["default"] = v;
-    });
-    var __importStar = exports && exports.__importStar || function(mod) {
-      if (mod && mod.__esModule)
-        return mod;
-      var result = {};
-      if (mod != null) {
-        for (var k in mod)
-          if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
-            __createBinding(result, mod, k);
+    var TypeOverrides = require_type_overrides();
+    var EventEmitter2 = require("events").EventEmitter;
+    var util = require("util");
+    var ConnectionParameters = require_connection_parameters();
+    var NativeQuery = require_query3();
+    var Client2 = module2.exports = function(config) {
+      EventEmitter2.call(this);
+      config = config || {};
+      this._Promise = config.Promise || global.Promise;
+      this._types = new TypeOverrides(config.types);
+      this.native = new Native({
+        types: this._types
+      });
+      this._queryQueue = [];
+      this._ending = false;
+      this._connecting = false;
+      this._connected = false;
+      this._queryable = true;
+      var cp = this.connectionParameters = new ConnectionParameters(config);
+      if (config.nativeConnectionString)
+        cp.nativeConnectionString = config.nativeConnectionString;
+      this.user = cp.user;
+      Object.defineProperty(this, "password", {
+        configurable: true,
+        enumerable: false,
+        writable: true,
+        value: cp.password
+      });
+      this.database = cp.database;
+      this.host = cp.host;
+      this.port = cp.port;
+      this.namedQueries = {};
+    };
+    Client2.Query = NativeQuery;
+    util.inherits(Client2, EventEmitter2);
+    Client2.prototype._errorAllQueries = function(err) {
+      const enqueueError = (query) => {
+        process.nextTick(() => {
+          query.native = this.native;
+          query.handleError(err);
+        });
+      };
+      if (this._hasActiveQuery()) {
+        enqueueError(this._activeQuery);
+        this._activeQuery = null;
       }
-      __setModuleDefault(result, mod);
+      this._queryQueue.forEach(enqueueError);
+      this._queryQueue.length = 0;
+    };
+    Client2.prototype._connect = function(cb) {
+      var self2 = this;
+      if (this._connecting) {
+        process.nextTick(() => cb(new Error("Client has already been connected. You cannot reuse a client.")));
+        return;
+      }
+      this._connecting = true;
+      this.connectionParameters.getLibpqConnectionString(function(err, conString) {
+        if (self2.connectionParameters.nativeConnectionString)
+          conString = self2.connectionParameters.nativeConnectionString;
+        if (err)
+          return cb(err);
+        self2.native.connect(conString, function(err2) {
+          if (err2) {
+            self2.native.end();
+            return cb(err2);
+          }
+          self2._connected = true;
+          self2.native.on("error", function(err3) {
+            self2._queryable = false;
+            self2._errorAllQueries(err3);
+            self2.emit("error", err3);
+          });
+          self2.native.on("notification", function(msg) {
+            self2.emit("notification", {
+              channel: msg.relname,
+              payload: msg.extra
+            });
+          });
+          self2.emit("connect");
+          self2._pulseQueryQueue(true);
+          cb();
+        });
+      });
+    };
+    Client2.prototype.connect = function(callback2) {
+      if (callback2) {
+        this._connect(callback2);
+        return;
+      }
+      return new this._Promise((resolve, reject) => {
+        this._connect((error) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve();
+          }
+        });
+      });
+    };
+    Client2.prototype.query = function(config, values, callback2) {
+      var query;
+      var result;
+      var readTimeout;
+      var readTimeoutTimer;
+      var queryCallback;
+      if (config === null || config === void 0) {
+        throw new TypeError("Client was passed a null or undefined query");
+      } else if (typeof config.submit === "function") {
+        readTimeout = config.query_timeout || this.connectionParameters.query_timeout;
+        result = query = config;
+        if (typeof values === "function") {
+          config.callback = values;
+        }
+      } else {
+        readTimeout = this.connectionParameters.query_timeout;
+        query = new NativeQuery(config, values, callback2);
+        if (!query.callback) {
+          let resolveOut, rejectOut;
+          result = new this._Promise((resolve, reject) => {
+            resolveOut = resolve;
+            rejectOut = reject;
+          }).catch((err) => {
+            Error.captureStackTrace(err);
+            throw err;
+          });
+          query.callback = (err, res) => err ? rejectOut(err) : resolveOut(res);
+        }
+      }
+      if (readTimeout) {
+        queryCallback = query.callback;
+        readTimeoutTimer = setTimeout(() => {
+          var error = new Error("Query read timeout");
+          process.nextTick(() => {
+            query.handleError(error, this.connection);
+          });
+          queryCallback(error);
+          query.callback = () => {
+          };
+          var index = this._queryQueue.indexOf(query);
+          if (index > -1) {
+            this._queryQueue.splice(index, 1);
+          }
+          this._pulseQueryQueue();
+        }, readTimeout);
+        query.callback = (err, res) => {
+          clearTimeout(readTimeoutTimer);
+          queryCallback(err, res);
+        };
+      }
+      if (!this._queryable) {
+        query.native = this.native;
+        process.nextTick(() => {
+          query.handleError(new Error("Client has encountered a connection error and is not queryable"));
+        });
+        return result;
+      }
+      if (this._ending) {
+        query.native = this.native;
+        process.nextTick(() => {
+          query.handleError(new Error("Client was closed and is not queryable"));
+        });
+        return result;
+      }
+      this._queryQueue.push(query);
+      this._pulseQueryQueue();
       return result;
     };
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.postConstruct = void 0;
-    var ERRORS_MSGS = __importStar(require_error_msgs());
-    var METADATA_KEY = __importStar(require_metadata_keys());
-    var property_event_decorator_1 = require_property_event_decorator();
-    var postConstruct = (0, property_event_decorator_1.propertyEventDecorator)(METADATA_KEY.POST_CONSTRUCT, ERRORS_MSGS.MULTIPLE_POST_CONSTRUCT_METHODS);
-    exports.postConstruct = postConstruct;
-  }
-});
-
-// node_modules/inversify/lib/annotation/pre_destroy.js
-var require_pre_destroy = __commonJS({
-  "node_modules/inversify/lib/annotation/pre_destroy.js"(exports) {
-    "use strict";
-    var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
-      if (k2 === void 0)
-        k2 = k;
-      Object.defineProperty(o, k2, { enumerable: true, get: function() {
-        return m[k];
-      } });
-    } : function(o, m, k, k2) {
-      if (k2 === void 0)
-        k2 = k;
-      o[k2] = m[k];
-    });
-    var __setModuleDefault = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
-      Object.defineProperty(o, "default", { enumerable: true, value: v });
-    } : function(o, v) {
-      o["default"] = v;
-    });
-    var __importStar = exports && exports.__importStar || function(mod) {
-      if (mod && mod.__esModule)
-        return mod;
-      var result = {};
-      if (mod != null) {
-        for (var k in mod)
-          if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
-            __createBinding(result, mod, k);
+    Client2.prototype.end = function(cb) {
+      var self2 = this;
+      this._ending = true;
+      if (!this._connected) {
+        this.once("connect", this.end.bind(this, cb));
       }
-      __setModuleDefault(result, mod);
+      var result;
+      if (!cb) {
+        result = new this._Promise(function(resolve, reject) {
+          cb = (err) => err ? reject(err) : resolve();
+        });
+      }
+      this.native.end(function() {
+        self2._errorAllQueries(new Error("Connection terminated"));
+        process.nextTick(() => {
+          self2.emit("end");
+          if (cb)
+            cb();
+        });
+      });
       return result;
     };
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.preDestroy = void 0;
-    var ERRORS_MSGS = __importStar(require_error_msgs());
-    var METADATA_KEY = __importStar(require_metadata_keys());
-    var property_event_decorator_1 = require_property_event_decorator();
-    var preDestroy = (0, property_event_decorator_1.propertyEventDecorator)(METADATA_KEY.PRE_DESTROY, ERRORS_MSGS.MULTIPLE_PRE_DESTROY_METHODS);
-    exports.preDestroy = preDestroy;
-  }
-});
-
-// node_modules/inversify/lib/interfaces/interfaces.js
-var require_interfaces = __commonJS({
-  "node_modules/inversify/lib/interfaces/interfaces.js"(exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.interfaces = void 0;
-    var interfaces;
-    (function(interfaces2) {
-      ;
-    })(interfaces || (interfaces = {}));
-    exports.interfaces = interfaces;
-  }
-});
-
-// node_modules/inversify/lib/inversify.js
-var require_inversify = __commonJS({
-  "node_modules/inversify/lib/inversify.js"(exports) {
-    "use strict";
-    var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
-      if (k2 === void 0)
-        k2 = k;
-      Object.defineProperty(o, k2, { enumerable: true, get: function() {
-        return m[k];
-      } });
-    } : function(o, m, k, k2) {
-      if (k2 === void 0)
-        k2 = k;
-      o[k2] = m[k];
-    });
-    var __setModuleDefault = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
-      Object.defineProperty(o, "default", { enumerable: true, value: v });
-    } : function(o, v) {
-      o["default"] = v;
-    });
-    var __importStar = exports && exports.__importStar || function(mod) {
-      if (mod && mod.__esModule)
-        return mod;
-      var result = {};
-      if (mod != null) {
-        for (var k in mod)
-          if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
-            __createBinding(result, mod, k);
-      }
-      __setModuleDefault(result, mod);
-      return result;
+    Client2.prototype._hasActiveQuery = function() {
+      return this._activeQuery && this._activeQuery.state !== "error" && this._activeQuery.state !== "end";
     };
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.multiBindToService = exports.getServiceIdentifierAsString = exports.typeConstraint = exports.namedConstraint = exports.taggedConstraint = exports.traverseAncerstors = exports.decorate = exports.interfaces = exports.id = exports.MetadataReader = exports.preDestroy = exports.postConstruct = exports.targetName = exports.multiInject = exports.unmanaged = exports.optional = exports.LazyServiceIdentifer = exports.inject = exports.named = exports.tagged = exports.injectable = exports.createTaggedDecorator = exports.ContainerModule = exports.AsyncContainerModule = exports.TargetTypeEnum = exports.BindingTypeEnum = exports.BindingScopeEnum = exports.Container = exports.METADATA_KEY = void 0;
-    var keys = __importStar(require_metadata_keys());
-    exports.METADATA_KEY = keys;
-    var container_1 = require_container();
-    Object.defineProperty(exports, "Container", { enumerable: true, get: function() {
-      return container_1.Container;
-    } });
-    var literal_types_1 = require_literal_types();
-    Object.defineProperty(exports, "BindingScopeEnum", { enumerable: true, get: function() {
-      return literal_types_1.BindingScopeEnum;
-    } });
-    Object.defineProperty(exports, "BindingTypeEnum", { enumerable: true, get: function() {
-      return literal_types_1.BindingTypeEnum;
-    } });
-    Object.defineProperty(exports, "TargetTypeEnum", { enumerable: true, get: function() {
-      return literal_types_1.TargetTypeEnum;
-    } });
-    var container_module_1 = require_container_module();
-    Object.defineProperty(exports, "AsyncContainerModule", { enumerable: true, get: function() {
-      return container_module_1.AsyncContainerModule;
-    } });
-    Object.defineProperty(exports, "ContainerModule", { enumerable: true, get: function() {
-      return container_module_1.ContainerModule;
-    } });
-    var decorator_utils_1 = require_decorator_utils();
-    Object.defineProperty(exports, "createTaggedDecorator", { enumerable: true, get: function() {
-      return decorator_utils_1.createTaggedDecorator;
-    } });
-    var injectable_1 = require_injectable();
-    Object.defineProperty(exports, "injectable", { enumerable: true, get: function() {
-      return injectable_1.injectable;
-    } });
-    var tagged_1 = require_tagged();
-    Object.defineProperty(exports, "tagged", { enumerable: true, get: function() {
-      return tagged_1.tagged;
-    } });
-    var named_1 = require_named();
-    Object.defineProperty(exports, "named", { enumerable: true, get: function() {
-      return named_1.named;
-    } });
-    var inject_1 = require_inject();
-    Object.defineProperty(exports, "inject", { enumerable: true, get: function() {
-      return inject_1.inject;
-    } });
-    var lazy_service_identifier_1 = require_lazy_service_identifier();
-    Object.defineProperty(exports, "LazyServiceIdentifer", { enumerable: true, get: function() {
-      return lazy_service_identifier_1.LazyServiceIdentifer;
-    } });
-    var optional_1 = require_optional();
-    Object.defineProperty(exports, "optional", { enumerable: true, get: function() {
-      return optional_1.optional;
-    } });
-    var unmanaged_1 = require_unmanaged();
-    Object.defineProperty(exports, "unmanaged", { enumerable: true, get: function() {
-      return unmanaged_1.unmanaged;
-    } });
-    var multi_inject_1 = require_multi_inject();
-    Object.defineProperty(exports, "multiInject", { enumerable: true, get: function() {
-      return multi_inject_1.multiInject;
-    } });
-    var target_name_1 = require_target_name();
-    Object.defineProperty(exports, "targetName", { enumerable: true, get: function() {
-      return target_name_1.targetName;
-    } });
-    var post_construct_1 = require_post_construct();
-    Object.defineProperty(exports, "postConstruct", { enumerable: true, get: function() {
-      return post_construct_1.postConstruct;
-    } });
-    var pre_destroy_1 = require_pre_destroy();
-    Object.defineProperty(exports, "preDestroy", { enumerable: true, get: function() {
-      return pre_destroy_1.preDestroy;
-    } });
-    var metadata_reader_1 = require_metadata_reader();
-    Object.defineProperty(exports, "MetadataReader", { enumerable: true, get: function() {
-      return metadata_reader_1.MetadataReader;
-    } });
-    var id_1 = require_id();
-    Object.defineProperty(exports, "id", { enumerable: true, get: function() {
-      return id_1.id;
-    } });
-    var interfaces_1 = require_interfaces();
-    Object.defineProperty(exports, "interfaces", { enumerable: true, get: function() {
-      return interfaces_1.interfaces;
-    } });
-    var decorator_utils_2 = require_decorator_utils();
-    Object.defineProperty(exports, "decorate", { enumerable: true, get: function() {
-      return decorator_utils_2.decorate;
-    } });
-    var constraint_helpers_1 = require_constraint_helpers();
-    Object.defineProperty(exports, "traverseAncerstors", { enumerable: true, get: function() {
-      return constraint_helpers_1.traverseAncerstors;
-    } });
-    Object.defineProperty(exports, "taggedConstraint", { enumerable: true, get: function() {
-      return constraint_helpers_1.taggedConstraint;
-    } });
-    Object.defineProperty(exports, "namedConstraint", { enumerable: true, get: function() {
-      return constraint_helpers_1.namedConstraint;
-    } });
-    Object.defineProperty(exports, "typeConstraint", { enumerable: true, get: function() {
-      return constraint_helpers_1.typeConstraint;
-    } });
-    var serialization_1 = require_serialization();
-    Object.defineProperty(exports, "getServiceIdentifierAsString", { enumerable: true, get: function() {
-      return serialization_1.getServiceIdentifierAsString;
-    } });
-    var binding_utils_1 = require_binding_utils();
-    Object.defineProperty(exports, "multiBindToService", { enumerable: true, get: function() {
-      return binding_utils_1.multiBindToService;
-    } });
+    Client2.prototype._pulseQueryQueue = function(initialConnection) {
+      if (!this._connected) {
+        return;
+      }
+      if (this._hasActiveQuery()) {
+        return;
+      }
+      var query = this._queryQueue.shift();
+      if (!query) {
+        if (!initialConnection) {
+          this.emit("drain");
+        }
+        return;
+      }
+      this._activeQuery = query;
+      query.submit(this);
+      var self2 = this;
+      query.once("_done", function() {
+        self2._pulseQueryQueue();
+      });
+    };
+    Client2.prototype.cancel = function(query) {
+      if (this._activeQuery === query) {
+        this.native.cancel(function() {
+        });
+      } else if (this._queryQueue.indexOf(query) !== -1) {
+        this._queryQueue.splice(this._queryQueue.indexOf(query), 1);
+      }
+    };
+    Client2.prototype.ref = function() {
+    };
+    Client2.prototype.unref = function() {
+    };
+    Client2.prototype.setTypeParser = function(oid, format, parseFn) {
+      return this._types.setTypeParser(oid, format, parseFn);
+    };
+    Client2.prototype.getTypeParser = function(oid, format) {
+      return this._types.getTypeParser(oid, format);
+    };
+  }
+});
+
+// node_modules/pg/lib/native/index.js
+var require_native = __commonJS({
+  "node_modules/pg/lib/native/index.js"(exports, module2) {
+    "use strict";
+    module2.exports = require_client2();
+  }
+});
+
+// node_modules/pg/lib/index.js
+var require_lib8 = __commonJS({
+  "node_modules/pg/lib/index.js"(exports, module2) {
+    "use strict";
+    var Client2 = require_client();
+    var defaults2 = require_defaults();
+    var Connection = require_connection4();
+    var Pool = require_pg_pool();
+    var { DatabaseError } = require_dist();
+    var { escapeIdentifier, escapeLiteral } = require_utils6();
+    var poolFactory = (Client3) => {
+      return class BoundPool extends Pool {
+        constructor(options) {
+          super(options, Client3);
+        }
+      };
+    };
+    var PG = function(clientConstructor) {
+      this.defaults = defaults2;
+      this.Client = clientConstructor;
+      this.Query = this.Client.Query;
+      this.Pool = poolFactory(this.Client);
+      this._pools = [];
+      this.Connection = Connection;
+      this.types = require_pg_types();
+      this.DatabaseError = DatabaseError;
+      this.escapeIdentifier = escapeIdentifier;
+      this.escapeLiteral = escapeLiteral;
+    };
+    if (typeof process.env.NODE_PG_FORCE_NATIVE !== "undefined") {
+      module2.exports = new PG(require_native());
+    } else {
+      module2.exports = new PG(Client2);
+      Object.defineProperty(module2.exports, "native", {
+        configurable: true,
+        enumerable: false,
+        get() {
+          var native = null;
+          try {
+            native = new PG(require_native());
+          } catch (err) {
+            if (err.code !== "MODULE_NOT_FOUND") {
+              throw err;
+            }
+          }
+          Object.defineProperty(module2.exports, "native", {
+            value: native
+          });
+          return native;
+        }
+      });
+    }
   }
 });
 
@@ -63374,7 +68000,7 @@ var require_types2 = __commonJS({
 });
 
 // node_modules/joi/node_modules/@hapi/hoek/lib/utils.js
-var require_utils6 = __commonJS({
+var require_utils8 = __commonJS({
   "node_modules/joi/node_modules/@hapi/hoek/lib/utils.js"(exports) {
     "use strict";
     exports.keys = function(obj, options = {}) {
@@ -63389,7 +68015,7 @@ var require_clone2 = __commonJS({
     "use strict";
     var Reach = require_reach();
     var Types = require_types2();
-    var Utils = require_utils6();
+    var Utils = require_utils8();
     var internals = {
       needsProtoHack: /* @__PURE__ */ new Set([Types.set, Types.map, Types.weakSet, Types.weakMap])
     };
@@ -63558,7 +68184,7 @@ var require_package3 = __commonJS({
 var require_schemas = __commonJS({
   "node_modules/joi/lib/schemas.js"(exports) {
     "use strict";
-    var Joi6 = require_lib10();
+    var Joi6 = require_lib12();
     var internals = {};
     internals.wrap = Joi6.string().min(1).max(2).allow(false);
     exports.preferences = Joi6.object({
@@ -63870,7 +68496,7 @@ var require_escapeHtml = __commonJS({
 });
 
 // node_modules/@sideway/formula/lib/index.js
-var require_lib7 = __commonJS({
+var require_lib9 = __commonJS({
   "node_modules/@sideway/formula/lib/index.js"(exports) {
     "use strict";
     var internals = {
@@ -64795,7 +69421,7 @@ var require_template = __commonJS({
     var Assert = require_assert();
     var Clone = require_clone2();
     var EscapeHtml = require_escapeHtml();
-    var Formula = require_lib7();
+    var Formula = require_lib9();
     var Common = require_common5();
     var Errors = require_errors2();
     var Ref = require_ref();
@@ -65109,7 +69735,7 @@ var require_template = __commonJS({
 });
 
 // node_modules/joi/lib/messages.js
-var require_messages2 = __commonJS({
+var require_messages3 = __commonJS({
   "node_modules/joi/lib/messages.js"(exports) {
     "use strict";
     var Assert = require_assert();
@@ -65329,7 +69955,7 @@ var require_common5 = __commonJS({
       return Number.isSafeInteger(value) && value >= 0;
     };
     exports.preferences = function(target, source) {
-      Messages = Messages || require_messages2();
+      Messages = Messages || require_messages3();
       target = target || {};
       source = source || {};
       const merged = Object.assign({}, target, source);
@@ -65672,7 +70298,7 @@ var require_extend = __commonJS({
     var Assert = require_assert();
     var Clone = require_clone2();
     var Common = require_common5();
-    var Messages = require_messages2();
+    var Messages = require_messages3();
     var internals = {};
     exports.type = function(from, options) {
       const base = Object.getPrototypeOf(from);
@@ -65865,7 +70491,7 @@ var require_manifest = __commonJS({
     var Assert = require_assert();
     var Clone = require_clone2();
     var Common = require_common5();
-    var Messages = require_messages2();
+    var Messages = require_messages3();
     var Ref = require_ref();
     var Template = require_template();
     var Schemas;
@@ -66408,7 +71034,7 @@ var require_deepEqual = __commonJS({
 });
 
 // node_modules/@sideway/pinpoint/lib/index.js
-var require_lib8 = __commonJS({
+var require_lib10 = __commonJS({
   "node_modules/@sideway/pinpoint/lib/index.js"(exports) {
     "use strict";
     exports.location = function(depth = 0) {
@@ -66431,7 +71057,7 @@ var require_trace = __commonJS({
   "node_modules/joi/lib/trace.js"(exports) {
     "use strict";
     var DeepEqual = require_deepEqual();
-    var Pinpoint = require_lib8();
+    var Pinpoint = require_lib10();
     var Errors = require_errors2();
     var internals = {
       codes: {
@@ -66672,7 +71298,7 @@ var require_merge2 = __commonJS({
     "use strict";
     var Assert = require_assert();
     var Clone = require_clone2();
-    var Utils = require_utils6();
+    var Utils = require_utils8();
     var internals = {};
     module2.exports = internals.merge = function(target, source, options) {
       Assert(target && typeof target === "object", "Invalid target value: must be an object");
@@ -67720,7 +72346,7 @@ var require_base = __commonJS({
     var Errors = require_errors2();
     var Extend = require_extend();
     var Manifest = require_manifest();
-    var Messages = require_messages2();
+    var Messages = require_messages3();
     var Modify = require_modify();
     var Ref = require_ref();
     var Trace = require_trace();
@@ -68428,7 +73054,7 @@ var require_any = __commonJS({
     var Assert = require_assert();
     var Base = require_base();
     var Common = require_common5();
-    var Messages = require_messages2();
+    var Messages = require_messages3();
     module2.exports = Base.extend({
       type: "any",
       flags: {
@@ -69723,7 +74349,7 @@ var require_applyToDefaults = __commonJS({
 });
 
 // node_modules/joi/node_modules/@hapi/topo/lib/index.js
-var require_lib9 = __commonJS({
+var require_lib11 = __commonJS({
   "node_modules/joi/node_modules/@hapi/topo/lib/index.js"(exports) {
     "use strict";
     var Assert = require_assert();
@@ -69887,7 +74513,7 @@ var require_keys = __commonJS({
     var ApplyToDefaults = require_applyToDefaults();
     var Assert = require_assert();
     var Clone = require_clone2();
-    var Topo = require_lib9();
+    var Topo = require_lib11();
     var Any = require_any();
     var Common = require_common5();
     var Compile = require_compile2();
@@ -73784,7 +78410,7 @@ var require_binary = __commonJS({
 });
 
 // node_modules/joi/lib/index.js
-var require_lib10 = __commonJS({
+var require_lib12 = __commonJS({
   "node_modules/joi/lib/index.js"(exports, module2) {
     "use strict";
     var Assert = require_assert();
@@ -74212,7 +78838,7 @@ var require_symbol2 = __commonJS({
 });
 
 // node_modules/joi-translation-pt-br/dist/messages/index.js
-var require_messages3 = __commonJS({
+var require_messages4 = __commonJS({
   "node_modules/joi-translation-pt-br/dist/messages/index.js"(exports) {
     "use strict";
     var __assign = exports && exports.__assign || function() {
@@ -74248,7 +78874,7 @@ var require_messages3 = __commonJS({
 });
 
 // node_modules/joi-translation-pt-br/dist/index.js
-var require_dist = __commonJS({
+var require_dist2 = __commonJS({
   "node_modules/joi-translation-pt-br/dist/index.js"(exports) {
     "use strict";
     var __importDefault = exports && exports.__importDefault || function(mod) {
@@ -74256,7 +78882,7 @@ var require_dist = __commonJS({
     };
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.messages = void 0;
-    var messages_1 = require_messages3();
+    var messages_1 = require_messages4();
     Object.defineProperty(exports, "messages", { enumerable: true, get: function() {
       return __importDefault(messages_1).default;
     } });
@@ -75439,9 +80065,6 @@ var middyfy = (handler) => {
   return core_default(handler).use(http_json_body_parser_default());
 };
 
-// src/infrastructure/adapter/database/mongodb/scheme/user-scheme.ts
-var import_mongoose = __toESM(require_mongoose());
-
 // node_modules/uuid/dist/esm-node/rng.js
 var import_crypto = __toESM(require("crypto"));
 var rnds8Pool = new Uint8Array(256);
@@ -75494,41 +80117,6 @@ function v4(options, buf, offset) {
 }
 var v4_default = v4;
 
-// src/infrastructure/adapter/database/mongodb/scheme/user-scheme.ts
-var AddressSchema = new import_mongoose.default.Schema({
-  street: String,
-  streetLine2: String,
-  number: String,
-  city: String,
-  state: String,
-  country: String,
-  postalCode: String,
-  complement: String
-}, { _id: false });
-var UserMongoSchema = new import_mongoose.default.Schema({
-  _id: { type: String, default: v4_default },
-  username: String,
-  pass: String,
-  name: String,
-  lastName: String,
-  cpf: String,
-  phone: String,
-  email: String,
-  address: AddressSchema,
-  status: { type: String, enum: ["ACTIVE", "INACTIVE"], default: "ACTIVE" }
-}, { versionKey: false });
-UserMongoSchema.virtual("id").get(function() {
-  return this._id.toString();
-});
-UserMongoSchema.set("toJSON", {
-  virtuals: true,
-  transform: function(doc, ret, options) {
-    delete ret._id;
-    return ret;
-  }
-});
-var user_scheme_default = UserMongoSchema;
-
 // src/domain/enums/user-status-enum.ts
 var UserStatusEnum = /* @__PURE__ */ ((UserStatusEnum2) => {
   UserStatusEnum2["ACTIVE"] = "ACTIVE";
@@ -75536,9 +80124,28 @@ var UserStatusEnum = /* @__PURE__ */ ((UserStatusEnum2) => {
   return UserStatusEnum2;
 })(UserStatusEnum || {});
 
+// src/infrastructure/config/decorator.ts
+function Field(type) {
+  return (target, propertyKey) => {
+    let metadata = Reflect.getMetadata("field", target);
+    if (metadata) {
+      metadata[propertyKey] = type;
+    } else {
+      metadata = { [propertyKey]: type };
+    }
+    Reflect.defineMetadata("field", metadata, target);
+  };
+}
+function Entity() {
+  return (constructor) => {
+    Reflect.defineMetadata("entity", {}, constructor);
+  };
+}
+
 // src/domain/entities/user-entity.ts
 var UserEntity = class {
   constructor() {
+    JSON.stringify;
   }
   static create(id, username, pass, name, lastName, cpf, phone, email, address, status = "ACTIVE" /* ACTIVE */) {
     const model = new UserEntity();
@@ -75569,17 +80176,51 @@ var UserEntity = class {
   changeAddress(address) {
     this.address = address;
   }
+  get metadata() {
+    return Reflect.getMetadata("field", this);
+  }
 };
+__decorateClass([
+  Field("uuid")
+], UserEntity.prototype, "id", 2);
+__decorateClass([
+  Field("string")
+], UserEntity.prototype, "username", 2);
+__decorateClass([
+  Field("string")
+], UserEntity.prototype, "pass", 2);
+__decorateClass([
+  Field("string")
+], UserEntity.prototype, "name", 2);
+__decorateClass([
+  Field("string")
+], UserEntity.prototype, "lastName", 2);
+__decorateClass([
+  Field("string")
+], UserEntity.prototype, "cpf", 2);
+__decorateClass([
+  Field("string")
+], UserEntity.prototype, "phone", 2);
+__decorateClass([
+  Field("string")
+], UserEntity.prototype, "email", 2);
+__decorateClass([
+  Field("object")
+], UserEntity.prototype, "address", 2);
+__decorateClass([
+  Field("string")
+], UserEntity.prototype, "status", 2);
+UserEntity = __decorateClass([
+  Entity()
+], UserEntity);
 
 // src/infrastructure/config/type-injector.ts
 var TYPES = {
-  IUserSaveUC: Symbol.for("IUserSaveUC"),
-  IUserUpdateUC: Symbol.for("IUserUpdateUC"),
-  IUserViewUC: Symbol.for("IUserViewUC"),
-  IUserDeleteUC: Symbol.for("IUserDeleteUC"),
+  IUserUC: Symbol.for("IUserUC"),
   LambdaHandler: Symbol.for("LambdaHandler"),
   DatabaseAdapter: Symbol.for("DatabaseAdapter"),
-  MongoConnectionService: Symbol.for("MongoConnectionService")
+  MongoConnectionService: Symbol.for("MongoConnectionService"),
+  PostgresAdapter: Symbol.for("PostgresAdapter")
 };
 
 // src/application/use_case/user-save-uc.ts
@@ -75601,7 +80242,7 @@ var UserSaveUC = class {
       input.address,
       input.status
     );
-    await this.databaseAdapter.setConfig(user_scheme_default, "User");
+    await this.databaseAdapter.setConfig("public", "User");
     return await this.databaseAdapter.create(user);
   }
 };
@@ -75691,60 +80332,16 @@ LambdaHandler = __decorateClass([
 ], LambdaHandler);
 
 // src/infrastructure/config/index.ts
-var import_inversify8 = __toESM(require_inversify());
-
-// src/infrastructure/adapter/database/mongodb/mongo-service.ts
-var import_inversify3 = __toESM(require_inversify());
-var MongoService = class {
-  constructor(mongoConnectionService) {
-    this.mongoConnectionService = mongoConnectionService;
-  }
-  async connect() {
-    this.connection = await this.mongoConnectionService.getConnection();
-  }
-  async setConfig(schema, location) {
-    await this.connect();
-    this.model = this.connection.model(location, schema);
-  }
-  async create(entity) {
-    if (!this.connection) {
-      console.log("deu ruim");
-    }
-    ;
-    const created = await this.model.create(entity);
-    return created;
-  }
-  async findAll() {
-    const entities = await this.model.find();
-    return entities;
-  }
-  async findOne(id) {
-    const entity = await this.model.findById(id);
-    return entity;
-  }
-  async update(id, updated) {
-    const entity = await this.model.findByIdAndUpdate(id, updated, { new: true });
-    return entity;
-  }
-  // DELETE
-  async delete(id) {
-    const deletedUser = await this.model.findByIdAndDelete(id);
-    return deletedUser;
-  }
-};
-MongoService = __decorateClass([
-  (0, import_inversify3.injectable)(),
-  __decorateParam(0, (0, import_inversify3.inject)(TYPES.MongoConnectionService))
-], MongoService);
+var import_inversify9 = __toESM(require_inversify());
 
 // src/infrastructure/adapter/database/mongodb/mongo-connect.ts
-var import_mongoose2 = __toESM(require_mongoose());
-var import_inversify4 = __toESM(require_inversify());
+var import_mongoose = __toESM(require_mongoose());
+var import_inversify3 = __toESM(require_inversify());
 var MongoConnectionService = class {
   async getConnection() {
     try {
       if (!this._connection) {
-        this._connection = await import_mongoose2.default.connect("mongodb://balta:e296cd9f@localhost:27017/admin");
+        this._connection = await import_mongoose.default.connect("mongodb://balta:e296cd9f@localhost:27017/admin");
       }
       return this._connection;
     } catch (error) {
@@ -75753,11 +80350,11 @@ var MongoConnectionService = class {
   }
 };
 MongoConnectionService = __decorateClass([
-  (0, import_inversify4.injectable)()
+  (0, import_inversify3.injectable)()
 ], MongoConnectionService);
 
 // src/application/use_case/user-update-uc.ts
-var import_inversify5 = __toESM(require_inversify());
+var import_inversify4 = __toESM(require_inversify());
 var UserUpdateUC = class {
   constructor(databaseAdapter) {
     this.databaseAdapter = databaseAdapter;
@@ -75775,33 +80372,69 @@ var UserUpdateUC = class {
       input.address,
       input.status
     );
-    await this.databaseAdapter.setConfig(user_scheme_default, "User");
+    await this.databaseAdapter.setConfig("public", "User");
     return await this.databaseAdapter.update(input.id, user);
   }
 };
 UserUpdateUC = __decorateClass([
-  (0, import_inversify5.injectable)(),
-  __decorateParam(0, (0, import_inversify5.inject)(TYPES.DatabaseAdapter))
+  (0, import_inversify4.injectable)(),
+  __decorateParam(0, (0, import_inversify4.inject)(TYPES.DatabaseAdapter))
 ], UserUpdateUC);
 
 // src/application/use_case/user-view-uc.ts
-var import_inversify6 = __toESM(require_inversify());
+var import_inversify5 = __toESM(require_inversify());
 var UserViewUC = class {
   constructor(databaseAdapter) {
     this.databaseAdapter = databaseAdapter;
   }
   async execute(id) {
-    await this.databaseAdapter.setConfig(user_scheme_default, "User");
+    await this.databaseAdapter.setConfig("public", "User");
     return await this.databaseAdapter.findOne(id);
   }
 };
 UserViewUC = __decorateClass([
-  (0, import_inversify6.injectable)(),
-  __decorateParam(0, (0, import_inversify6.inject)(TYPES.DatabaseAdapter))
+  (0, import_inversify5.injectable)(),
+  __decorateParam(0, (0, import_inversify5.inject)(TYPES.DatabaseAdapter))
 ], UserViewUC);
 
+// src/infrastructure/adapter/database/mongodb/scheme/user-scheme.ts
+var import_mongoose2 = __toESM(require_mongoose());
+var AddressSchema = new import_mongoose2.default.Schema({
+  street: String,
+  streetLine2: String,
+  number: String,
+  city: String,
+  state: String,
+  country: String,
+  postalCode: String,
+  complement: String
+}, { _id: false });
+var UserMongoSchema = new import_mongoose2.default.Schema({
+  _id: { type: String, default: v4_default },
+  username: String,
+  pass: String,
+  name: String,
+  lastName: String,
+  cpf: String,
+  phone: String,
+  email: String,
+  address: AddressSchema,
+  status: { type: String, enum: ["ACTIVE", "INACTIVE"], default: "ACTIVE" }
+}, { versionKey: false });
+UserMongoSchema.virtual("id").get(function() {
+  return this._id.toString();
+});
+UserMongoSchema.set("toJSON", {
+  virtuals: true,
+  transform: function(doc, ret, options) {
+    delete ret._id;
+    return ret;
+  }
+});
+var user_scheme_default = UserMongoSchema;
+
 // src/application/use_case/user-delete-uc.ts
-var import_inversify7 = __toESM(require_inversify());
+var import_inversify6 = __toESM(require_inversify());
 var UserDeleteUC = class {
   constructor(databaseAdapter) {
     this.databaseAdapter = databaseAdapter;
@@ -75812,24 +80445,119 @@ var UserDeleteUC = class {
   }
 };
 UserDeleteUC = __decorateClass([
-  (0, import_inversify7.injectable)(),
-  __decorateParam(0, (0, import_inversify7.inject)(TYPES.DatabaseAdapter))
+  (0, import_inversify6.injectable)(),
+  __decorateParam(0, (0, import_inversify6.inject)(TYPES.DatabaseAdapter))
 ], UserDeleteUC);
 
+// src/application/use_case/user-list-uc.ts
+var import_inversify7 = __toESM(require_inversify());
+var UserListUC = class {
+  constructor(databaseAdapter) {
+    this.databaseAdapter = databaseAdapter;
+  }
+  async execute() {
+    await this.databaseAdapter.setConfig("public", "User");
+    return await this.databaseAdapter.findAll();
+  }
+};
+UserListUC = __decorateClass([
+  (0, import_inversify7.injectable)(),
+  __decorateParam(0, (0, import_inversify7.inject)(TYPES.DatabaseAdapter))
+], UserListUC);
+
+// src/infrastructure/adapter/database/postgres/adapter.ts
+var import_inversify8 = __toESM(require_inversify());
+var import_pg = __toESM(require_lib8());
+
+// src/infrastructure/adapter/database/postgres/pg-uteis.ts
+function extractNamesAndValues(instance) {
+  const metadata = Reflect.getMetadata("field", instance);
+  let fieldNames = [];
+  let fieldValues = [];
+  for (let key in metadata) {
+    fieldNames.push(key);
+    if (metadata[key] === "object") {
+      fieldValues.push(JSON.stringify(instance[key]));
+    } else {
+      fieldValues.push(instance[key]);
+    }
+  }
+  return [fieldNames, fieldValues];
+}
+
+// src/infrastructure/adapter/database/postgres/adapter.ts
+var PostgresAdapter = class {
+  constructor() {
+    this.client = new import_pg.Client({
+      user: "postgres",
+      host: "localhost",
+      database: "api",
+      password: "postgres",
+      port: 5432
+    });
+    this.client.connect();
+  }
+  setConfig(schema, location) {
+    console.log(schema);
+    this.table = `"${schema}"."${location}"`;
+  }
+  async create(entity) {
+    const values = extractNamesAndValues(entity);
+    const placeholders = Array.from({ length: values[1].length }, (_, i) => `$${i + 1}`).join(",");
+    const fields = values[0].join(",");
+    const query = `INSERT INTO ${this.table} (${fields}) VALUES(${placeholders}) RETURNING *`;
+    console.log(query);
+    const result = await this.client.query(query, values[1]);
+    return result.rows[0];
+  }
+  async findAll() {
+    const result = await this.client.query(`SELECT * FROM ${this.table}`);
+    return result.rows;
+  }
+  async findOne(id) {
+    const result = await this.client.query(`SELECT * FROM ${this.table} WHERE id = $1`, [id]);
+    return result.rows[0] || null;
+  }
+  async update(id, updated) {
+    const keys = Object.keys(updated);
+    const values = Object.values(updated);
+    const setClause = keys.map((key, i) => `${key} = $${i + 2}`).join(", ");
+    values.unshift(id);
+    const query = {
+      text: `UPDATE ${this.table} SET ${setClause} WHERE id = $1 RETURNING *`,
+      values
+    };
+    const result = await this.client.query(query);
+    return result.rows[0] || null;
+  }
+  async delete(id) {
+    const result = await this.client.query(`DELETE FROM ${this.table} WHERE id = $1 RETURNING *`, [id]);
+    return result.rows[0] || null;
+  }
+};
+PostgresAdapter = __decorateClass([
+  (0, import_inversify8.injectable)()
+], PostgresAdapter);
+
 // src/infrastructure/config/index.ts
-var container = new import_inversify8.Container();
+var container = new import_inversify9.Container();
 container.bind(TYPES.MongoConnectionService).to(MongoConnectionService).inSingletonScope();
-container.bind(TYPES.DatabaseAdapter).to(MongoService).inSingletonScope();
-container.bind(TYPES.IUserSaveUC).to(UserSaveUC).inTransientScope();
-container.bind(TYPES.IUserUpdateUC).to(UserUpdateUC).inTransientScope();
-container.bind(TYPES.IUserViewUC).to(UserViewUC).inTransientScope();
-container.bind(TYPES.IUserDeleteUC).to(UserDeleteUC).inTransientScope();
+container.bind(TYPES.MongoConnectionService).to(MongoConnectionService).inSingletonScope();
+container.bind(TYPES.DatabaseAdapter).to(PostgresAdapter).inSingletonScope();
+container.bind(TYPES.IUserUC).to(UserSaveUC).whenTargetNamed("save");
+container.bind(TYPES.IUserUC).to(UserUpdateUC).whenTargetNamed("update");
+container.bind(TYPES.IUserUC).to(UserViewUC).whenTargetNamed("view");
+container.bind(TYPES.IUserUC).to(UserDeleteUC).whenTargetNamed("delete");
+container.bind(TYPES.IUserUC).to(UserListUC).whenTargetNamed("list");
 container.bind(TYPES.LambdaHandler).to(LambdaHandler).inSingletonScope();
 
 // src/infrastructure/config/inject.ts
 var Inject = class {
   static getClass(classRequire) {
     return container.get(classRequire);
+  }
+  static getClassNamed(classRequire, named) {
+    return container.getNamed(classRequire, named);
   }
 };
 
@@ -75845,11 +80573,11 @@ var NotFoundError = class extends HttpError2 {
 };
 
 // src/presentation/validators/user-delete-delete-validator.ts
-var import_joi2 = __toESM(require_lib10());
+var import_joi2 = __toESM(require_lib12());
 
 // src/infrastructure/utils/validators/joi-validate.helper.ts
-var import_joi = __toESM(require_lib10());
-var import_joi_translation_pt_br = __toESM(require_dist());
+var import_joi = __toESM(require_lib12());
+var import_joi_translation_pt_br = __toESM(require_dist2());
 
 // src/infrastructure/utils/validators/cnpj.ts
 var CNPJValidator = class {
@@ -76022,7 +80750,7 @@ var UserDeleteDeleteValidator = class {
 };
 
 // src/presentation/validators/user-save-post-validator.ts
-var import_joi3 = __toESM(require_lib10());
+var import_joi3 = __toESM(require_lib12());
 var UserSavePostValidator = class {
   constructor(data) {
     this.validate(data);
@@ -76074,7 +80802,7 @@ var UserSavePostValidator = class {
 };
 
 // src/presentation/validators/user-update-put-validator.ts
-var import_joi4 = __toESM(require_lib10());
+var import_joi4 = __toESM(require_lib12());
 var UserUpdatePutValidator = class {
   constructor(data) {
     this.validate(data);
@@ -76128,7 +80856,7 @@ var UserUpdatePutValidator = class {
 };
 
 // src/presentation/validators/user-view-get-validator.ts
-var import_joi5 = __toESM(require_lib10());
+var import_joi5 = __toESM(require_lib12());
 var UserViewGetValidator = class {
   constructor(id) {
     this.validate({ id });
@@ -76156,10 +80884,11 @@ var UserViewGetValidator = class {
 // src/presentation/controllers/user-controller.ts
 var UserController = class {
   constructor() {
-    this.userSaveUC = Inject.getClass(TYPES.IUserSaveUC);
-    this.userUpdateUC = Inject.getClass(TYPES.IUserUpdateUC);
-    this.userViewUC = Inject.getClass(TYPES.IUserViewUC);
-    this.userDeleteUC = Inject.getClass(TYPES.IUserDeleteUC);
+    this.userSaveUC = Inject.getClassNamed(TYPES.IUserUC, "save");
+    this.userUpdateUC = Inject.getClassNamed(TYPES.IUserUC, "update");
+    this.userViewUC = Inject.getClassNamed(TYPES.IUserUC, "view");
+    this.userDeleteUC = Inject.getClassNamed(TYPES.IUserUC, "delete");
+    this.userListUC = Inject.getClassNamed(TYPES.IUserUC, "list");
   }
   async save(input) {
     const data = new UserSavePostValidator(input).isValid();
@@ -76168,6 +80897,9 @@ var UserController = class {
   async update(input) {
     const data = new UserUpdatePutValidator(input).isValid();
     return this.userUpdateUC.execute(data);
+  }
+  async list() {
+    return this.userListUC.execute();
   }
   async view(id) {
     const data = new UserViewGetValidator(id).isValid();

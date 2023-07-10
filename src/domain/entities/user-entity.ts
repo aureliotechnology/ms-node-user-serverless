@@ -2,20 +2,34 @@
 import { v4 as uuidv4 } from 'uuid';
 import { Address } from '../objects-value/address-object';
 import { UserStatusEnum } from '../enums/user-status-enum';
+import { Entity, Field } from '@infrastructure/config/decorator';
 
+@Entity()
 export class UserEntity {
-  private id: string
-  private username: string
-  private pass: string
-  private name: string
-  private lastName: string
-  private cpf: string
-  private phone: string
-  private email: string
-  private address: Address
-  private status: UserStatusEnum
+  @Field("uuid")
+  id: string
+  @Field("string")
+  username: string
+  @Field("string")
+  pass: string
+  @Field("string")
+  name: string
+  @Field("string")
+  lastName: string
+  @Field("string")
+  cpf: string
+  @Field("string")
+  phone: string
+  @Field("string")
+  email: string
+  @Field("object")
+  address: Address
+  @Field("string")
+  status: UserStatusEnum
   
-  private constructor() {}
+  constructor() {
+    JSON.stringify
+  }
 
   
   public static create(
@@ -61,5 +75,9 @@ export class UserEntity {
 
   public changeAddress(address: Address): void {
     this.address = address;
+  }
+
+  get metadata() {
+    return Reflect.getMetadata('field', this);
   }
 }

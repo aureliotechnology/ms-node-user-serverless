@@ -42,6 +42,13 @@ functions:
       - http:
           method: delete
           path: /user/{id}
+  user-list:
+    handler: src/presentation/routes/user-list-get.main
+    timeout: 30
+    events:
+      - http:
+          method: get
+          path: /user
 package:
   individually: true
 custom:

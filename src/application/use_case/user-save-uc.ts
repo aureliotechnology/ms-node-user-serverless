@@ -1,6 +1,5 @@
 
 import { DatabaseAdapter } from '@adapter/database/database-interface';
-import UserMongoSchema from '@adapter/database/mongodb/scheme/user-scheme';
 import IUserSavePostUC from '@application/interfaces/user-save-post-interface';
 import { IUserSaveUC } from '@application/interfaces/user-save-uc-interface';
 import { UserEntity } from '@domain/entities/user-entity';
@@ -25,7 +24,7 @@ export class UserSaveUC implements IUserSaveUC {
       input.address,
       input.status
     );
-    await this.databaseAdapter.setConfig(UserMongoSchema, 'User');
+    await this.databaseAdapter.setConfig('public', 'User');
     return await this.databaseAdapter.create<UserEntity>(user);
   }
 }
