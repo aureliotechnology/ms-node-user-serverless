@@ -1,12 +1,29 @@
 import Joi from "joi";
 import { messages } from "joi-translation-pt-br";
 
-import CNPJValidator from "./cnpj";
-import { StringValidator } from "./stringValidator";
+import CNPJValidator from "./cnpj-validator";
+import { StringValidator } from "./string-validator";
+import CPFValidator from "./cpf-validator";
 
 export abstract class JoiValidateHelper {
   static uuid(): Joi.StringSchema<string> {
     return Joi.string().regex(StringValidator.uuidValidationRegExp());
+  }
+
+  static mongoID(): Joi.StringSchema<string> {
+    return Joi.string().regex(StringValidator.mongoidValidationRegExp());
+  }
+
+  static id(): Joi.StringSchema<string> | Joi.NumberSchema<number> {
+    const type = process.env.DB_PRIMARY;
+    switch(type) {
+      case 'UUID':
+        return this.uuid();
+      case 'MONGO':
+        return this.mongoID();
+      default:
+        return Joi.number();
+    }  
   }
 
   static cnpj(): Joi.StringSchema<string> {
@@ -21,7 +38,7 @@ export abstract class JoiValidateHelper {
 
   static cpf(): Joi.StringSchema<string> {
     return Joi.string().custom((value, helper) => {
-      if (!StringValidator.validateCPF(value)) {
+      if (!CPFValidator.validateCPF(value)) {
         return helper.error("any.invalid");
       }
       return true;

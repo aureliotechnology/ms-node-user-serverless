@@ -45,7 +45,7 @@ export class UserUpdatePutValidator {
     };
 
     const validators = {
-      id: JoiValidateHelper.uuid().required(),
+      id: JoiValidateHelper.id().required(),
       username: Joi.string().required(),
       pass: Joi.string().required(),
       name: Joi.string().required(),

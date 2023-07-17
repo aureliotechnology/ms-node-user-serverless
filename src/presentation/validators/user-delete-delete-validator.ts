@@ -14,7 +14,7 @@ export class UserDeleteDeleteValidator {
   validate(data: any) {
     
     const validators = {
-      id: JoiValidateHelper.uuid().required(),
+      id: JoiValidateHelper.id().required(),
     };
 
     const errors = JoiValidateHelper.validate(Joi.object(validators), data);
