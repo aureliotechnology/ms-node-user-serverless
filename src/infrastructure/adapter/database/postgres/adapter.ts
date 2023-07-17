@@ -10,18 +10,22 @@ export class PostgresAdapter implements DatabaseAdapter {
   private table: string;
 
   constructor() {
+    const host = process.env.DB_PG_HOST;
+    const port = parseInt(process.env.DB_PG_PORT);
+    const user = process.env.DB_PG_USER;
+    const pass = process.env.DB_PG_PASS;
+    const db = process.env.DB_NAME;
     this.client = new Client({
-      user: 'postgres',
-      host: 'localhost',
-      database: 'api',
-      password: 'postgres',
-      port: 5432,
+      host: host,
+      port: port,
+      user: user,
+      password: pass,
+      database: db,
     });
     this.client.connect();
   }
 
   setConfig(schema: string, location: string) {
-    console.log(schema);
     this.table = `"${schema}"."${location}"`;
   }
 
@@ -32,18 +36,16 @@ export class PostgresAdapter implements DatabaseAdapter {
     const placeholders = Array.from({ length: values[1].length }, (_, i) => `$${i + 1}`).join(',')
     const fields = values[0].join(',');
     const query = `INSERT INTO ${this.table} (${fields}) VALUES(${placeholders}) RETURNING *`;
-    console.log(query)
     const result = await this.client.query(query, values[1]);
-    // console.log(result);
     return result.rows[0] as T;
 }
 
-  async findAll<T>(): Promise<T[]> {
+  async findAll<T>(_entity: any): Promise<T[]> {
     const result = await this.client.query(`SELECT * FROM ${this.table}`);
     return result.rows as T[];
   }
 
-  async findOne<T>(id: string): Promise<T | null> {
+  async findOne<T>(id: string, _entity: any): Promise<T | null> {
     const result = await this.client.query(`SELECT * FROM ${this.table} WHERE id = $1`, [id]);
     return result.rows[0] as T || null;
   }
@@ -64,7 +66,7 @@ export class PostgresAdapter implements DatabaseAdapter {
     return result.rows[0] as T || null;
   }
 
-  async delete<T>(id: string): Promise<T | null> {
+  async delete<T>(id: string, _entity: any): Promise<T | null> {
     const result = await this.client.query(`DELETE FROM ${this.table} WHERE id = $1 RETURNING *`, [id]);
     return result.rows[0] as T || null;
   }

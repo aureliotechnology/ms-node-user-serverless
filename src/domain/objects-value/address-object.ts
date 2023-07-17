@@ -1,14 +1,43 @@
+import { Entity, Field } from "@infrastructure/config/decorator"
+
+@Entity()
 export class Address {
+  @Field("string")
+   street: string
+  @Field("string")
+   streetLine2: string | null
+  @Field("string")
+   number: string
+  @Field("string")
+   city: string
+  @Field("string")
+   state: string
+  @Field("string")
+   country: string
+  @Field("string")
+   postalCode: string
+  @Field("string")
+   complement: string | null
      constructor(
-     readonly street: string,
-     readonly streetLine2: string | null,
-     readonly number: string,
-     readonly city: string,
-     readonly state: string,
-     readonly country: string,
-     readonly postalCode: string,
-     readonly complement: string | null
-    ) {}
+      street: string,
+      streetLine2: string | null,
+      number: string,
+      city: string,
+      state: string,
+      country: string,
+      postalCode: string,
+      complement: string | null
+    ) {
+      this.street = street;
+      this.streetLine2 = streetLine2;
+      this.number = number;
+      this.city = city;
+      this.state = state;
+      this.country = country;
+      this.postalCode = postalCode;
+      this.complement = complement;
+    }
+
   
   
     public static create(
@@ -36,4 +65,4 @@ export class Address {
         this.postalCode === other.postalCode
       );
     }
-  }
+}

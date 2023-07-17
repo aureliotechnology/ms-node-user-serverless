@@ -1,50 +1,77 @@
-import { inject, injectable } from 'inversify';
-import { MongoConnectionService } from './mongo-connect';
-import { TYPES } from '@infrastructure/config/type-injector';
+import { injectable } from 'inversify';
+import { schemaGenerate } from './scheme/generate-scheme';
+import { DatabaseAdapter } from '../database-interface';
+import mongoose, { Mongoose } from 'mongoose';
+import { InternalServerError } from '@presentation/errors/http-errors/internal-server-error';
 
 @injectable()
-export class MongoService {
-    private model
+export class MongoService implements DatabaseAdapter {
+    public location
     private connection
-    constructor(@inject(TYPES.MongoConnectionService) private mongoConnectionService: MongoConnectionService) {
-    }
-    
-    async connect() {
-        this.connection = await this.mongoConnectionService.getConnection();
+    private _connection: Mongoose | undefined;
+    constructor() {
     }
 
-    async setConfig(schema, location) {
-       
+    public async getConnection(): Promise<Mongoose> {
+        try {
+            if (!this._connection) {
+                const query = process.env.DB_MONGO_QUERY
+                this._connection = await mongoose.connect(query, {
+                    dbName: process.env.DB_NAME,
+                    autoCreate: false,
+
+                });
+              }
+              return this._connection;
+        } catch (error) {
+            throw new InternalServerError(99, "Erro ao conectar ao banco");
+        }
+        
+      }
+    
+    async connect() {
+        this.connection = await this.getConnection();
+    }
+
+    async setConfig(_schema, location) {
         await this.connect();
-        this.model = this.connection.model(location, schema);
+        this.location = location
     }
 
     async create<T>(entity: any): Promise<T> {
-        if(!this.connection){
-            console.log("deu ruim");
-        };
-        const created = await this.model.create(entity);
+
+        const schema = await schemaGenerate(entity)
+        const model = this.connection.model(this.location, schema);
+        const created = await model.create(entity);
         return created;
     }
 
-    async findAll<T>(): Promise<T[]> {
-        const entities = await this.model.find();
+    async findAll<T>(entity: any): Promise<T[]> {
+        const schema = await schemaGenerate(entity)
+        const model = this.connection.model(this.location, schema);
+        const entities = await model.find();
         return entities;
     }
 
-    async findOne<T>(id: string): Promise<T | null> {
-        const entity = await this.model.findById(id);
-        return entity;
+    async findOne<T>(id: string, entity: any): Promise<T | null> {
+        const schema = await schemaGenerate(entity)
+        const model = this.connection.model(this.location, schema);
+        const one = await model.findById(id);
+        return one;
     }
 
     async update<T>(id: string, updated: Partial<T>): Promise<T | null> {
-        const entity = await this.model.findByIdAndUpdate(id, updated, { new: true });
+        const schema = await schemaGenerate(updated)
+        const model = this.connection.model(this.location, schema);
+        const entity = await model.findByIdAndUpdate(id, updated, { new: true });
         return entity;
     }
 
     // DELETE
-    async delete<T>(id: string): Promise<T | null> {
-        const deletedUser = await this.model.findByIdAndDelete(id);
+    async delete<T>(id: string, entity: any): Promise<T | null> {
+        const schema = await schemaGenerate(entity)
+        const model = this.connection.model(this.location, schema);
+        const deletedUser = await model.findByIdAndDelete(id);
         return deletedUser;
     }
 }

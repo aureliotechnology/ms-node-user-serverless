@@ -6,7 +6,6 @@ import { Container } from 'inversify';
 import { TYPES } from './type-injector';
 import { DatabaseAdapter } from '@adapter/database/database-interface';
 import { MongoService } from '@adapter/database/mongodb/mongo-service';
-import { MongoConnectionService } from '@adapter/database/mongodb/mongo-connect';
 import { UserUpdateUC } from '@application/use_case/user-update-uc';
 import { IUserUpdateUC } from '@application/interfaces/user-update-uc-interface';
 import { IUserViewUC } from '@application/interfaces/user-view-uc-interface';
@@ -19,9 +18,17 @@ import { PostgresAdapter } from '@adapter/database/postgres/adapter';
 
 const container = new Container();
 
-container.bind<MongoConnectionService>(TYPES.MongoConnectionService).to(MongoConnectionService).inSingletonScope();
-container.bind<MongoConnectionService>(TYPES.MongoConnectionService).to(MongoConnectionService).inSingletonScope();
-container.bind<DatabaseAdapter>(TYPES.DatabaseAdapter).to(PostgresAdapter).inSingletonScope();
+switch(process.env.DB_PROJECT){
+    case "MONGO":
+        container.bind<DatabaseAdapter>(TYPES.DatabaseAdapter).to(MongoService).inSingletonScope();
+        break;
+    case "PSQL":
+        container.bind<DatabaseAdapter>(TYPES.DatabaseAdapter).to(PostgresAdapter).inSingletonScope();
+        break;
+    default:
+        container.bind<DatabaseAdapter>(TYPES.DatabaseAdapter).to(MongoService).inSingletonScope();
+}
+
 container.bind<IUserSaveUC>(TYPES.IUserUC).to(UserSaveUC).whenTargetNamed('save');
 container.bind<IUserUpdateUC>(TYPES.IUserUC).to(UserUpdateUC).whenTargetNamed('update');
 container.bind<IUserViewUC>(TYPES.IUserUC).to(UserViewUC).whenTargetNamed('view');
