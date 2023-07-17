@@ -52,6 +52,8 @@ functions:
 package:
   individually: true
 custom:
+  serverless-offline:
+    httpPort: 3001
   esbuild:
     bundle: true
     minify: false
