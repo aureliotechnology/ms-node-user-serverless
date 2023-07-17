@@ -1,5 +1,3 @@
-
-import { v4 as uuidv4 } from 'uuid';
 import { Address } from '../objects-value/address-object';
 import { UserStatusEnum } from '../enums/user-status-enum';
 import { Entity, Field } from '@infrastructure/config/decorator';
