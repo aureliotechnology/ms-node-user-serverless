@@ -11,6 +11,6 @@ export class UserViewUC implements IUserViewUC {
 
   async execute(id: string): Promise<UserEntity | null> {
     await this.databaseAdapter.setConfig('public', 'User');
-    return await this.databaseAdapter.findOne<UserEntity>(id);
+    return await this.databaseAdapter.findOne<UserEntity>(id, UserEntity);
   }
 }

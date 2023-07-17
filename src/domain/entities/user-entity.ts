@@ -22,7 +22,7 @@ export class UserEntity {
   phone: string
   @Field("string")
   email: string
-  @Field("object")
+  @Field("object", { Reference: Address})
   address: Address
   @Field("string")
   status: UserStatusEnum
@@ -45,9 +45,6 @@ export class UserEntity {
     status: UserStatusEnum = UserStatusEnum.ACTIVE
   ): UserEntity {
     const model = new UserEntity();
-    if(!id) {
-      id = uuidv4();
-    }
     model.id = id;
     model.username = username;
     model.pass = pass;

@@ -11,6 +11,6 @@ export class UserListUC implements IUserListUC {
 
   async execute(): Promise<UserEntity[]> {
     await this.databaseAdapter.setConfig('public', 'User');
-    return await this.databaseAdapter.findAll<UserEntity>();
+    return await this.databaseAdapter.findAll<UserEntity>(UserEntity);
   }
 }
